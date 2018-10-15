@@ -10,8 +10,8 @@ namespace apryx {
 
 		HGLRC m_GLContext;
 
-		bool m_CloseRequested;
-		bool m_Resized;
+		bool m_CloseRequested = false;
+		bool m_Resized = false;
 
 		float m_DPIScale = 1;
 	public:

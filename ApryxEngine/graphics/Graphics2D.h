@@ -9,6 +9,8 @@
 #include "math/Vector2.h"
 #include "math/Rectangle.h"
 
+#include "graphics/Camera2D.h"
+
 namespace apryx {
 
 	typedef std::array<float, 4> Rounding;
@@ -16,11 +18,13 @@ namespace apryx {
 	class Graphics2D {
 
 	public:
-		virtual void setSize(float width, float height) = 0;
-
 		// Implementable interface
-		virtual void drawElipse(Paint &paint, Rectanglef rectangle) = 0;
+		virtual void setCamera(Camera2D camera) = 0;
+
 		virtual void drawRectangle(Paint &paint, Rectanglef rectangle) = 0;
+		virtual void drawLine(Paint &paint, Vector2f pos1, Vector2f pos2) = 0;
+
+		virtual void drawElipse(Paint &paint, Rectanglef rectangle) = 0;
 
 		virtual void drawRoundedRectangle(Paint &paint, Rectanglef rectangle, Rounding rounding) = 0;
 

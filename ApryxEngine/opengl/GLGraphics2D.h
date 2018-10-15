@@ -7,16 +7,18 @@
 
 namespace apryx {
 
-	class GLGraphics2D : Graphics2D{
+	class GLGraphics2D : public Graphics2D{
+	public:
 		std::shared_ptr<GLTexture> m_WhiteTexture;
 
 		GLBatch m_Batch;
 	public:
 		GLGraphics2D();
 
-		virtual void setSize(float width, float height);
+		virtual void setCamera(Camera2D camera);
 
 		virtual void drawRectangle(Paint &paint, Rectanglef rectangle) override;
+		virtual void drawLine(Paint &paint, Vector2f pos1, Vector2f pos2) override;
 
 		virtual void drawElipse(Paint &paint, Rectanglef rectangle) override;
 		virtual void drawRoundedRectangle(Paint &paint, Rectanglef rectangle, Rounding rounding) override;

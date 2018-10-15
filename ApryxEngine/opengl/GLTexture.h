@@ -30,7 +30,6 @@ namespace apryx {
 		void setFiltering(TextureFiltering filtering);
 		void setWrapping(WrappingMode wrapping);
 
-		// TODO use some caching or something to find the correct width and height yafeelme
 		void setData(const Image &image) override;
 	};
 

@@ -7,6 +7,9 @@ namespace apryx {
 	GLTexture::GLTexture()
 	{
 		glGenTextures(1, &m_ID);
+
+		setFiltering(TextureFiltering::NearestNeighbour);
+		setWrapping(WrappingMode::Repeat);
 	}
 
 	GLTexture::~GLTexture()
@@ -49,7 +52,11 @@ namespace apryx {
 
 		m_Width = image.getWidth();
 		m_Height = image.getHeight();
-		
+
+		checkGLError();
+
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getWidth(), image.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, &image.getColors()[0]);
+		
+		checkGLError();
 	}
 }

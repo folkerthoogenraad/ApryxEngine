@@ -140,8 +140,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="game\Scene.cpp" />
+    <ClCompile Include="graphics\Camera2D.cpp" />
     <ClCompile Include="graphics\Image.cpp" />
+    <ClCompile Include="graphics\Paint.cpp" />
     <ClCompile Include="graphics\Sprite.cpp" />
+    <ClCompile Include="input\Event.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Curve.cpp" />
     <ClCompile Include="math\Matrix2.cpp" />
@@ -155,15 +159,23 @@
     <ClCompile Include="opengl\GLTexture.cpp" />
     <ClCompile Include="opengl\GLVertexBufferObject.cpp" />
     <ClCompile Include="time\Timer.cpp" />
+    <ClCompile Include="win32\Win32ResourceManager.cpp" />
     <ClCompile Include="win32\Win32Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="application\Application.h" />
+    <ClInclude Include="game\Entity.h" />
+    <ClInclude Include="game\Game.h" />
+    <ClInclude Include="game\Scene.h" />
+    <ClInclude Include="graphics\Camera.h" />
+    <ClInclude Include="graphics\Camera2D.h" />
     <ClInclude Include="graphics\Font.h" />
     <ClInclude Include="graphics\Graphics2D.h" />
     <ClInclude Include="graphics\Image.h" />
     <ClInclude Include="graphics\Paint.h" />
     <ClInclude Include="graphics\Sprite.h" />
     <ClInclude Include="graphics\Texture.h" />
+    <ClInclude Include="input\Event.h" />
     <ClInclude Include="math\Circle.h" />
     <ClInclude Include="math\collision.h" />
     <ClInclude Include="math\CollisionResult.h" />
@@ -196,7 +208,10 @@
     <ClInclude Include="opengl\GLShaderProgram.h" />
     <ClInclude Include="opengl\GLTexture.h" />
     <ClInclude Include="opengl\GLVertexBufferObject.h" />
+    <ClInclude Include="resources\ResourceManager.h" />
     <ClInclude Include="time\Timer.h" />
+    <ClInclude Include="win32\Win32Engine.h" />
+    <ClInclude Include="win32\Win32ResourceManager.h" />
     <ClInclude Include="win32\Win32Window.h" />
     <ClInclude Include="graphics\Window.h" />
   </ItemGroup>

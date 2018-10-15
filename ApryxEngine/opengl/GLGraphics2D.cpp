@@ -11,16 +11,17 @@ namespace apryx {
 	GLGraphics2D::GLGraphics2D()
 	{
 		Image image = Image::colored(1, 1);
-		
+
 		m_WhiteTexture = std::make_shared<GLTexture>();
 		m_WhiteTexture->setData(image);
 
 		m_Batch.texture(m_WhiteTexture);
 	}
 
-	void GLGraphics2D::setSize(float width, float height)
+	void GLGraphics2D::setCamera(Camera2D camera)
 	{
-		m_Batch.setSize(width, height);
+		m_Batch.setMatrixView(camera.getMatrixView());
+		m_Batch.setMatrixProjection(camera.getMatrixProjection());
 	}
 
 	void GLGraphics2D::drawRectangle(Paint & paint, Rectanglef rectangle)
@@ -37,15 +38,23 @@ namespace apryx {
 		m_Batch.vertex(rectangle.bottomright());
 		m_Batch.vertex(rectangle.bottomleft());
 	}
+
+	void GLGraphics2D::drawLine(Paint & paint, Vector2f pos1, Vector2f pos2)
+	{
+	}
+
 	void GLGraphics2D::drawElipse(Paint & paint, Rectanglef rectangle)
 	{
 	}
+
 	void GLGraphics2D::drawRoundedRectangle(Paint & paint, Rectanglef rectangle, Rounding rounding)
 	{
 	}
+
 	void GLGraphics2D::drawArc(Paint & paint, Vector2f center, float radius, float startAngle, float sweepAngle)
 	{
 	}
+
 	void GLGraphics2D::drawText(Paint & paint, Vector2f pos, std::string text)
 	{
 	}
@@ -65,7 +74,9 @@ namespace apryx {
 		// In case we are not drawing yet
 		m_Batch.begin();
 
-		m_Batch.texture(std::static_pointer_cast<GLTexture>(sprite.getTexture()));
+		auto texture = std::static_pointer_cast<GLTexture>(sprite.getTexture());
+
+		m_Batch.texture(texture);
 
 		Rectanglef uvs = sprite.getUVRectangle();
 		Rectanglef rect = Rectanglef(-sprite.getOrigin(), sprite.getSize());
