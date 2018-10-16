@@ -16,21 +16,31 @@ namespace apryx {
 	class TestGame : public Game {
 	public:
 		std::shared_ptr<ResourceManager> m_Manager;
+		std::shared_ptr<Texture> m_Texture;
 		
 		virtual void init(std::shared_ptr<ResourceManager> manager) 
 		{
 			m_Manager = manager;
+
+			Image image = Image::checkerboard(32, 32);
+
+			m_Texture = m_Manager->createTexture();
+			m_Texture->setData(image);
 		}
 
 		virtual void draw(Graphics2D &graphics)
 		{
-			Camera2D camera(m_Manager->getWindow()->getWidth(), m_Manager->getWindow()->getHeight());
+			Camera2D camera(m_Manager->getWindow()->getWidth() / 5, m_Manager->getWindow()->getHeight() / 5);
 			graphics.setCamera(camera);
+
+			Sprite sprite(m_Texture);
 
 			Paint paint;
 
 			graphics.drawClear();
 			graphics.drawRectangle(paint, Rectanglef(0, 0, 16, 16));
+
+			graphics.drawSprite(paint, sprite, Vector2f(48, 48));
 		}
 
 		virtual void update() { }
@@ -46,50 +56,5 @@ int main()
 
 	startWin32Application<TestGame>();
 
-	std::cout << "Pest." << std::endl;
-	std::cin.get();
-
-	Win32Window window("Game Window", 1280, 720, true);
-	window.setVisible(true);
-
-	Image image = Image::checkerboard(8, 8, Color32::red(), Color32::white());
-
-	std::shared_ptr<GLTexture> texture = std::make_shared<GLTexture>();
-	texture->setData(image);
-
-	Sprite sprite = Sprite(texture);
-	sprite.setOrigin(Vector2f(4, 4));
-
-	GLGraphics2D graphics;
-
-	Camera2D camera(window.getWidth() / 5, window.getHeight() / 5);
-	graphics.setCamera(camera);
-
-	float angle = 0;
-	
-	Timer timer;
-	timer.start();
-
-	while (!window.isCloseRequested()) {
-		window.poll();
-
-		float delta = timer.lap();
-		angle += delta * 360 / 4;
-
-		graphics.drawClear();
-		
-		Paint paint;
-		
-		graphics.drawRectangle(paint, Rectanglef(0, 0, camera.getWidth(), 16));
-		graphics.drawSprite(paint, sprite, Vector2f(24, 24), Vector2f(1, 1), angle);
-
-		graphics.flush();
-
-		window.swap();
-	}
-
-	window.destroy();
-
 	return 0;
-
 }
