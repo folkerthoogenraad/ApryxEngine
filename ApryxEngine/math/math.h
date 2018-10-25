@@ -37,26 +37,27 @@ namespace apryx {
 		return value > min && value < max;
 	}
 
-	template<typename T>
-	inline const T & max(const T &a, const T &b)
-	{
-		if (a > b)
-			return a;
-		return b;
-	}
 
 	inline double random()
 	{
 		return static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
 	}
 
-	template<typename T>
+	/*template<typename T>
 	inline const T & min(const T &a, const T &b)
 	{
 		if (a < b)
 			return a;
 		return b;
 	}
+
+	template<typename T>
+	inline const T & max(const T &a, const T &b)
+	{
+		if (a > b)
+			return a;
+		return b;
+	}*/
 
 	template<typename T>
 	inline T distance(const T &a, const T &b)

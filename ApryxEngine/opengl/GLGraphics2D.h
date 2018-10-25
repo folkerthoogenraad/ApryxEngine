@@ -10,6 +10,8 @@ namespace apryx {
 	class GLGraphics2D : Graphics2D{
 		std::shared_ptr<GLTexture> m_WhiteTexture;
 
+		float m_CirclePrecision = (3.141592654 * 2) / 36;
+
 		GLBatch m_Batch;
 	public:
 		GLGraphics2D();
@@ -18,10 +20,15 @@ namespace apryx {
 
 		virtual void drawRectangle(Paint &paint, Rectanglef rectangle) override;
 
-		virtual void drawElipse(Paint &paint, Rectanglef rectangle) override;
 		virtual void drawRoundedRectangle(Paint &paint, Rectanglef rectangle, Rounding rounding) override;
 
+		virtual void drawCircle(Paint &paint, Vector2f center, float radius) override;
+		virtual void drawElipse(Paint &paint, Rectanglef rectangle) override;
+		virtual void drawElipse(Paint &paint, Vector2f center, float radiusx, float radiusy) override;
 		virtual void drawArc(Paint &paint, Vector2f center, float radius, float startAngle, float sweepAngle) override;
+		virtual void drawArc(Paint &paint, Vector2f center, float radiusx, float radiusy, float startAngle, float sweepAngle) override;
+		virtual void drawSpiral(Paint &paint, Vector2f center, float radiusStart, float radiusEnd, float startAngle, float sweepAngle) override;
+
 
 		virtual void drawText(Paint &paint, Vector2f pos, std::string text) override;
 

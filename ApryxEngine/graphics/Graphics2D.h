@@ -19,12 +19,16 @@ namespace apryx {
 		virtual void setSize(float width, float height) = 0;
 
 		// Implementable interface
-		virtual void drawElipse(Paint &paint, Rectanglef rectangle) = 0;
 		virtual void drawRectangle(Paint &paint, Rectanglef rectangle) = 0;
 
 		virtual void drawRoundedRectangle(Paint &paint, Rectanglef rectangle, Rounding rounding) = 0;
 
+		virtual void drawCircle(Paint &paint, Vector2f center, float radius) = 0;
+		virtual void drawElipse(Paint &paint, Rectanglef rectangle) = 0;
+		virtual void drawElipse(Paint &paint, Vector2f center, float radiusx, float radiusy) = 0;
 		virtual void drawArc(Paint &paint, Vector2f center, float radius, float startAngle, float sweepAngle) = 0;
+		virtual void drawArc(Paint &paint, Vector2f center, float radiusx, float radiusy, float startAngle, float sweepAngle) = 0;
+		virtual void drawSpiral(Paint &paint, Vector2f center, float radiusStart, float radiusEnd, float startAngle, float sweepAngle) = 0;
 
 		virtual void drawText(Paint &paint, Vector2f pos, std::string text) = 0;
 
