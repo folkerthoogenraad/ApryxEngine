@@ -1,43 +1,62 @@
 #include "win32/Win32Window.h"
+#include "win32/Win32Engine.h"
+
 #include <iostream>
 
 #include "time\Timer.h"
 #include "opengl/GLGraphics2D.h"
 #include "math/math.h"
 
+#include "graphics/Camera2D.h"
+#include "graphics/Image.h"
+
+#include "time/Timer.h"
+
+#include "game/Game.h"
+
+namespace apryx {
+	class TestGame : public Game {
+	public:
+		std::shared_ptr<ResourceManager> m_Manager;
+		std::shared_ptr<Texture> m_Texture;
+		
+		virtual void init(std::shared_ptr<ResourceManager> manager) 
+		{
+			m_Manager = manager;
+
+			Image image = Image::checkerboard(2, 2);
+
+			m_Texture = m_Manager->createTexture();
+			m_Texture->setData(image);
+		}
+
+		virtual void draw(Graphics2D &graphics)
+		{
+			Camera2D camera(m_Manager->getWindow()->getWidth() / 5, m_Manager->getWindow()->getHeight() / 5);
+			graphics.setCamera(camera);
+
+			Sprite sprite(m_Texture);
+
+			Paint paint;
+
+			graphics.drawClear();
+			graphics.drawRectangle(paint, Rectanglef(0, 0, 16, 16));
+
+			graphics.drawSprite(paint, sprite, Vector2f(48, 48));
+		}
+
+		virtual void update() { }
+		virtual void destroy() { }
+
+		virtual bool shouldQuit() { return m_Manager->getWindow()->isCloseRequested(); }
+	};
+}
+
 int main()
 {
 	using namespace apryx;
 
-	Win32Window window("Not yet OpenGL window", 1280, 720, false);
-	window.setVisible(true);
-
-	GLGraphics2D graphics;
-
-	float x = 0;
-	
-	while (!window.isCloseRequested()) {
-		window.poll();
-		x += 1;
-
-		graphics.drawClear();
-		graphics.setSize(1280/5, 720/5);
-		
-		Paint paint;
-		paint.setColor(Color32::red());
-
-		paint.setColor(Color32::red());
-		graphics.drawSpiral(paint, Vector2f(128, 48), 16, 32, 3.14, sin(x / 10) * PI * 2);
-
-		graphics.flush();
-
-		window.swap();
-
-		Timer::sleep(0.2);
-	}
-
-	window.destroy();
+	startWin32Application<TestGame>();
 
 	return 0;
-
 }

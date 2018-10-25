@@ -51,6 +51,22 @@
 	}
 )glsl"
 
+#define FRAGMENT_DEBUG_TEXTURE R"glsl(
+    #version 150 core
+
+	in vec2 v_UV;
+	in vec4 v_Color;
+
+	uniform sampler2D u_MainTexture;
+
+	out vec4 outColor;
+
+	void main()
+	{
+		outColor = vec4(v_UV.x, v_UV.y, 1, 1);
+	}
+)glsl"
+
 #define FRAGMENT_ERROR_SOURCE R"glsl(
     #version 150 core
 

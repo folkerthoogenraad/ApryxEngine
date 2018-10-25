@@ -1,12 +1,14 @@
 #include "Win32Window.h"
 
 #include <Windowsx.h>
+
 #include <iostream>
 #include "opengl/GL.h"
 
 #define CLASS_NAME "ApryxWindowClass"
 
 namespace apryx {
+
 
 	static LRESULT CALLBACK DefaultWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
@@ -53,6 +55,9 @@ namespace apryx {
 		wc.lpfnWndProc = DefaultWindowProc;
 		wc.hInstance = GetModuleHandle(NULL);
 		wc.lpszClassName = CLASS_NAME;
+		wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);          // Load The Default Icon
+		wc.hCursor = LoadCursor(NULL, IDC_ARROW);          // Load The Arrow Pointer
+
 
 		RegisterClass(&wc);
 
@@ -61,6 +66,14 @@ namespace apryx {
 	static void initGL()
 	{
 		glewInit();
+
+		glEnable(GL_TEXTURE_2D);
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
 
 		glClearColor(0, 0, 1, 1);
 	}
@@ -203,14 +216,15 @@ namespace apryx {
 			point.y = GET_Y_LPARAM(lParam);
 
 			ScreenToClient(m_Hwnd, &point);
-
 		}
 		break;
+
 		case WM_CLOSE:
 			m_CloseRequested = true;
 			break;
 
 		case WM_SIZE:
+		{
 			int width = LOWORD(lParam);  // Macro to get the low-order word. 
 			int height = HIWORD(lParam); // Macro to get the high-order word. 
 
@@ -218,7 +232,20 @@ namespace apryx {
 			m_Height = height;
 
 			m_Resized = true;
-			break;
+		}
+		break;
+
+		case WM_SYSCOMMAND:                     // Intercept System Commands
+		{
+			switch (wParam)                     // Check System Calls
+			{
+				case SC_SCREENSAVE:             // Screensaver Trying To Start?
+				case SC_MONITORPOWER:               // Monitor Trying To Enter Powersave?
+				return 0;                   // Prevent From Happening
+			}
+		}
+		break;
+
 		}
 
 		return DefWindowProc(m_Hwnd, message, wParam, lParam);

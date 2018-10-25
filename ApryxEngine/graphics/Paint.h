@@ -18,8 +18,13 @@ namespace apryx {
 		Color32 m_Color;
 		Style m_Style;
 
+		float m_StrokeWidth = 1.0f;
+
 		std::shared_ptr<Font> m_Font;
 	public:
+		Paint();
+		Paint(Color32 color);
+
 		void setColor(Color32 c) { m_Color = c; }
 		Color32 getColor() const { return m_Color; }
 

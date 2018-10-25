@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 namespace apryx {
 
 	//Forward declare for the typedefs
