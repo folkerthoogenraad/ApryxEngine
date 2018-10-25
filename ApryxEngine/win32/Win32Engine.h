@@ -18,7 +18,7 @@ namespace apryx {
 
 		window->setVisible(true);
 
-		GLGraphics2D graphics;
+		GLGraphics2D graphics(window);
 
 		while (!application.shouldQuit()) {
 			window->poll();

@@ -9,6 +9,7 @@ bool checkGLError()
 	if (error == GL_NO_ERROR)
 		return false;
 
+	// TODO check logging
 	std::cout << "glGetError(" << error << ") : ";
 
 

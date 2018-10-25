@@ -10,7 +10,9 @@ namespace apryx {
 		Win32ResourceManager(std::shared_ptr<Window> window);
 
 		virtual std::shared_ptr<Window> getWindow() { return m_Window; }
+
 		virtual std::shared_ptr<Texture> createTexture();
+		virtual std::shared_ptr<Surface> createSurface(int width, int height);
 	};
 
 }

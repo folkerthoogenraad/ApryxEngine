@@ -31,6 +31,11 @@ namespace apryx {
 		void setWrapping(WrappingMode wrapping);
 
 		void setData(const Image &image) override;
+
+
+		// RAW API. USE WITH CARE
+		int getID() const { return m_ID; }
+		void setSize(float width, float height)  { m_Width = width; m_Height = height; }
 	};
 
 }

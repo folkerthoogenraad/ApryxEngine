@@ -6,23 +6,58 @@
 #include "math/Matrix3.h"
 #include "math/math.h"
 
+#include "GLSurface.h"
+#include "GLTexture.h"
+
+#include <assert.h>
 
 namespace apryx {
 
-	GLGraphics2D::GLGraphics2D()
+	// TODO make this better (no duplicate code)
+	GLGraphics2D::GLGraphics2D(std::shared_ptr<Window> window)
+		: m_Window(window)
 	{
+		assert(window != nullptr);
+
 		Image image = Image::colored(1, 1);
 
 		m_WhiteTexture = std::make_shared<GLTexture>();
 		m_WhiteTexture->setData(image);
 
 		m_Batch.texture(m_WhiteTexture);
+
+		setCamera(Camera2D(m_Window->getWidth(), m_Window->getHeight()));
+	}
+	GLGraphics2D::GLGraphics2D(std::shared_ptr<GLSurface> surface)
+		: m_Surface(surface)
+	{
+		assert(surface != nullptr);
+		Image image = Image::colored(1, 1);
+
+		m_WhiteTexture = std::make_shared<GLTexture>();
+		m_WhiteTexture->setData(image);
+
+		m_Batch.texture(m_WhiteTexture);
+
+		setCamera(Camera2D(surface->getWidth(), surface->getHeight()));
+	}
+
+	void GLGraphics2D::save()
+	{
 	}
 
 	void GLGraphics2D::setCamera(Camera2D camera)
 	{
 		m_Batch.setMatrixView(camera.getMatrixView());
 		m_Batch.setMatrixProjection(camera.getMatrixProjection());
+	}
+
+	void GLGraphics2D::clipRect(Rectanglef rectangle)
+	{
+	}
+
+	void GLGraphics2D::restore()
+	{
 	}
 
 	void GLGraphics2D::drawRectangle(Paint & paint, Rectanglef rectangle)
@@ -57,7 +92,6 @@ namespace apryx {
 	{
 		drawElipse(paint, rectangle.center(), rectangle.width() / 2, rectangle.height() / 2);
 	}
-
 
 	void GLGraphics2D::drawElipse(Paint & paint, Vector2f center, float radiusx, float radiusy)
 	{
@@ -192,16 +226,29 @@ namespace apryx {
 		m_Batch.vertex(matrix * rect.bottomleft());
 	}
 
-	void GLGraphics2D::drawClear()
+	void GLGraphics2D::drawClear(Color32 color)
 	{
 		//TODO discard, instead of flush.
 		flush();
 
+		glClearColor(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void GLGraphics2D::flush()
 	{
+		assert(m_Surface != nullptr || m_Window != nullptr);
+
+		//Not sure if i should do this here but whatever
+		if (m_Surface == nullptr) {
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			glViewport(0, 0, m_Window->getWidth(), m_Window->getHeight());
+		}
+		else {
+			m_Surface->bind();
+			glViewport(0, 0, m_Surface->getWidth(), m_Surface->getHeight());
+		}
+		
 		m_Batch.end();
 	}
 }

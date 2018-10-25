@@ -19,30 +19,40 @@ namespace apryx {
 	public:
 		std::shared_ptr<ResourceManager> m_Manager;
 		std::shared_ptr<Texture> m_Texture;
+		std::shared_ptr<Surface> m_Surface;
 		
 		virtual void init(std::shared_ptr<ResourceManager> manager) 
 		{
 			m_Manager = manager;
 
-			Image image = Image::checkerboard(2, 2);
+			Image image = Image::colored(4, 4, Color32::green());
+
+			image.setColor(0, 3, Color32::red());
 
 			m_Texture = m_Manager->createTexture();
 			m_Texture->setData(image);
+
+			m_Surface = m_Manager->createSurface(32, 32);
 		}
 
 		virtual void draw(Graphics2D &graphics)
 		{
-			Camera2D camera(m_Manager->getWindow()->getWidth() / 5, m_Manager->getWindow()->getHeight() / 5);
-			graphics.setCamera(camera);
-
 			Sprite sprite(m_Texture);
+			Sprite sprite2(m_Surface->getTexture());
 
-			Paint paint;
+			Paint paint(Color32::white());
 
-			graphics.drawClear();
-			graphics.drawRectangle(paint, Rectanglef(0, 0, 16, 16));
+			m_Surface->getGraphics().drawClear(Color32::blue());
+			m_Surface->getGraphics().drawCircle(paint, Vector2f(16, 16), 16);
+			m_Surface->getGraphics().flush();
+
+			graphics.setCamera(Camera2D(128, 72));
+			graphics.drawClear(Color32::white());
 
 			graphics.drawSprite(paint, sprite, Vector2f(48, 48));
+			graphics.drawSprite(paint, sprite2, Vector2f(48, 0));
+
+			graphics.flush();
 		}
 
 		virtual void update() { }

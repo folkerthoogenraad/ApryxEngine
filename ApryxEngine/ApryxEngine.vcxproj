@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="debug\Debug.cpp" />
     <ClCompile Include="game\Scene.cpp" />
     <ClCompile Include="graphics\Camera2D.cpp" />
     <ClCompile Include="graphics\Image.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="opengl\GLGraphics2D.cpp" />
     <ClCompile Include="opengl\GLShader.cpp" />
     <ClCompile Include="opengl\GLShaderProgram.cpp" />
+    <ClCompile Include="opengl\GLSurface.cpp" />
     <ClCompile Include="opengl\GLTexture.cpp" />
     <ClCompile Include="opengl\GLVertexBufferObject.cpp" />
     <ClCompile Include="time\Timer.cpp" />
@@ -164,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\Application.h" />
+    <ClInclude Include="debug\Debug.h" />
     <ClInclude Include="game\Entity.h" />
     <ClInclude Include="game\Game.h" />
     <ClInclude Include="game\Scene.h" />
@@ -174,6 +177,7 @@
     <ClInclude Include="graphics\Image.h" />
     <ClInclude Include="graphics\Paint.h" />
     <ClInclude Include="graphics\Sprite.h" />
+    <ClInclude Include="graphics\Surface.h" />
     <ClInclude Include="graphics\Texture.h" />
     <ClInclude Include="input\Event.h" />
     <ClInclude Include="math\Circle.h" />
@@ -206,6 +210,7 @@
     <ClInclude Include="opengl\GLGraphics2D.h" />
     <ClInclude Include="opengl\GLShader.h" />
     <ClInclude Include="opengl\GLShaderProgram.h" />
+    <ClInclude Include="opengl\GLSurface.h" />
     <ClInclude Include="opengl\GLTexture.h" />
     <ClInclude Include="opengl\GLVertexBufferObject.h" />
     <ClInclude Include="resources\ResourceManager.h" />

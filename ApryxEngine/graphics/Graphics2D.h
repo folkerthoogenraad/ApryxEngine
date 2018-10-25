@@ -7,19 +7,28 @@
 #include "Sprite.h"
 
 #include "math/Vector2.h"
+#include "math/Vector4.h"
+
 #include "math/Rectangle.h"
 
 #include "graphics/Camera2D.h"
+
+#include <stack>
+
 
 namespace apryx {
 
 	typedef std::array<float, 4> Rounding;
 
 	class Graphics2D {
-
 	public:
-		
+		// TODO engineer this
+		virtual void save() = 0; // Save the state (current clipping and camera)
+
 		virtual void setCamera(Camera2D camera) = 0;
+		virtual void clipRect(Rectanglef rectangle) = 0;
+
+		virtual void restore() = 0;
 
 		virtual void drawRectangle(Paint &paint, Rectanglef rectangle) = 0;
 		virtual void drawLine(Paint &paint, Vector2f pos1, Vector2f pos2) = 0;
@@ -39,7 +48,7 @@ namespace apryx {
 		virtual void drawSprite(Paint &paint, Sprite &sprite, Vector2f pos, Vector2f scale) = 0;
 		virtual void drawSprite(Paint &paint, Sprite &sprite, Vector2f pos, Vector2f scale, float angle) = 0;
 
-		virtual void drawClear() = 0;
+		virtual void drawClear(Color32 color) = 0;
 
 		virtual void flush() = 0;
 	};
