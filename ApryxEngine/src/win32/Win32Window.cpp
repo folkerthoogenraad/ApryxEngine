@@ -343,7 +343,18 @@ namespace apryx {
 			if (wParam == VK_RETURN)
 				if ((HIWORD(lParam) & KF_ALTDOWN))
 					setFullscreen(!m_Fullscreen);
+
+			if (wParam == VK_F4)
+				if ((HIWORD(lParam) & KF_ALTDOWN))
+					PostMessage(m_Hwnd, WM_CLOSE, 0, 0);
+			return TRUE;
+
+		case WM_SYSKEYUP:
+			return TRUE;
 		break;
+
+		case WM_SYSCHAR:
+			return TRUE;
 		}
 
 		return DefWindowProc(m_Hwnd, message, wParam, lParam);

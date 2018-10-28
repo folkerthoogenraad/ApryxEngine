@@ -27,13 +27,13 @@ namespace apryx {
 		float x = 0;
 
 		Sprite sprite;
-		
-		virtual void init(std::shared_ptr<ResourceManager> manager) 
+
+		virtual void init(std::shared_ptr<ResourceManager> manager)
 		{
 			m_Manager = manager;
 
 			m_Texture = m_Manager->loadTexture("Player.png");
-			
+
 			m_Surface = m_Manager->createSurface(32, 32);
 		}
 
@@ -65,7 +65,7 @@ namespace apryx {
 		virtual void update(float delta) {
 			previousX = x;
 
-			x += delta * 20;
+			x += delta * 80;
 
 			if (x > 128)
 				x = 0;
