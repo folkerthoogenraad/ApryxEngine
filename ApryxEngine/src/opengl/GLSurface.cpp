@@ -1,5 +1,7 @@
 #include "GLSurface.h"
 
+#include "graphics/Image.h"
+
 #include "GL.h"
 #include "GLGraphics2D.h"
 #include "debug/Debug.h"
@@ -47,6 +49,19 @@ namespace apryx {
 	void GLSurface::unbind() const
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	void GLSurface::setData(const Image & image)
+	{
+		m_ColorAttachment->setData(image);
+
+		if (image.getWidth() != m_Width || image.getHeight() != m_Height) {
+			m_Width = image.getHeight();
+			m_Height = image.getHeight();
+
+			m_DepthAttachment->bind();
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, m_Width, m_Height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, NULL);
+		}
 	}
 
 	Graphics2D & GLSurface::getGraphics()

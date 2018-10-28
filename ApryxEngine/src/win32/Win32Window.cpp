@@ -5,6 +5,8 @@
 #include <iostream>
 #include "opengl/GL.h"
 
+#include "debug/Debug.h"
+
 #define CLASS_NAME "ApryxWindowClass"
 
 namespace apryx {
@@ -55,6 +57,7 @@ namespace apryx {
 		wc.lpfnWndProc = DefaultWindowProc;
 		wc.hInstance = GetModuleHandle(NULL);
 		wc.lpszClassName = CLASS_NAME;
+		wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 		wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);          // Load The Default Icon
 		wc.hCursor = LoadCursor(NULL, IDC_ARROW);          // Load The Arrow Pointer
 
@@ -79,7 +82,7 @@ namespace apryx {
 	}
 
 	Win32Window::Win32Window(std::string title, int width, int height, bool full)
-		: Window(title, width, height, full)
+		: Window(title, width, height, false)
 	{
 		m_Width = width;
 		m_Height = height;
@@ -93,14 +96,17 @@ namespace apryx {
 		AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);    // adjust the size
 		RegisterTouchWindow(m_Hwnd, 0);
 
-		m_Hwnd = CreateWindowEx(
-			0,                              // Optional window styles.
-			CLASS_NAME,                     // Window class
-			m_Title.c_str(),				// Window text
-			WS_OVERLAPPEDWINDOW,            // Window style
 
-											// Size and position
-			0, 0, wr.right - wr.left, wr.bottom - wr.top,
+		dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;           // Window Extended Style
+		dwStyle = WS_OVERLAPPEDWINDOW;                    // Windows Style
+
+		m_Hwnd = CreateWindowEx(
+			dwExStyle,                              // Optional window styles.
+			CLASS_NAME,								// Window class
+			m_Title.c_str(),						// Window text
+			dwStyle,								// Window style
+
+			0, 0, wr.right - wr.left, wr.bottom - wr.top, // Size and position
 
 			NULL,       // Parent window    
 			NULL,       // Menu
@@ -121,17 +127,17 @@ namespace apryx {
 
 		int pixelFormat;
 
-		HDC deviceContext = GetDC(m_Hwnd);
+		m_DeviceContext = GetDC(m_Hwnd);
 
-		if (!deviceContext) {
+		if (!m_DeviceContext) {
 			MessageBox(NULL, "Failed to obtain the device context.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
 			return;                               // Return FALSE
 		}
 
 		// Get the device scaling stuff
-		m_DPIScale = GetDeviceCaps(deviceContext, LOGPIXELSX) / 96.f;
+		m_DPIScale = GetDeviceCaps(m_DeviceContext, LOGPIXELSX) / 96.f;
 
-		pixelFormat = ChoosePixelFormat(deviceContext, &descriptor);
+		pixelFormat = ChoosePixelFormat(m_DeviceContext, &descriptor);
 
 		if (!pixelFormat)
 		{
@@ -139,13 +145,13 @@ namespace apryx {
 			return;
 		}
 
-		if (!SetPixelFormat(deviceContext, pixelFormat, &descriptor))
+		if (!SetPixelFormat(m_DeviceContext, pixelFormat, &descriptor))
 		{
 			MessageBox(NULL, "Failed to set the pixel format.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
 			return;
 		}
 
-		m_GLContext = wglCreateContext(deviceContext);
+		m_GLContext = wglCreateContext(m_DeviceContext);
 
 		if (!m_GLContext)
 		{
@@ -153,15 +159,43 @@ namespace apryx {
 			return;
 		}
 
-		if (!wglMakeCurrent(deviceContext, m_GLContext))
+		if (!wglMakeCurrent(m_DeviceContext, m_GLContext))
 		{
 			MessageBox(NULL, "Failed to make OpenGL context active on this thread.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
 			return;
 		}
 
-		ReleaseDC(m_Hwnd, deviceContext);
+		if (full) {
+			setFullscreen(true);
+		}
 
 		initGL();
+	}
+
+	Win32Window::~Win32Window()
+	{
+		if (m_Fullscreen) {
+			ChangeDisplaySettings(NULL, 0);
+		}
+		if (m_GLContext) {
+			if (!wglMakeCurrent(NULL, NULL)) {
+				Debug::logError("Failed to reset context");
+			}
+			if (!wglDeleteContext(m_GLContext))
+			{
+				Debug::logError("Failed to delete context");
+			}
+		}
+
+		if (m_DeviceContext) {
+			ReleaseDC(m_Hwnd, m_DeviceContext);
+		}
+
+		if (m_Hwnd) {
+			if(!DestroyWindow(m_Hwnd)){
+				Debug::logError("Failed to destroy window");
+			}
+		}
 	}
 
 	void Win32Window::setVisible(bool f)
@@ -171,6 +205,8 @@ namespace apryx {
 
 	void Win32Window::setVisible(bool visible, bool maximize)
 	{
+		m_Visible = visible;
+
 		if (maximize && visible) {
 			ShowWindow(m_Hwnd, SW_MAXIMIZE);
 		}
@@ -179,6 +215,64 @@ namespace apryx {
 		}
 		else if (!visible) {
 			ShowWindow(m_Hwnd, SW_HIDE);
+		}
+	}
+
+	void Win32Window::setFullscreen(bool f)
+	{
+		if (f == m_Fullscreen)
+			return;
+
+		if (f) {
+			// Save info
+			m_Maximized = IsZoomed(m_Hwnd);
+
+			if(m_Maximized)
+				SendMessage(m_Hwnd, WM_SYSCOMMAND, SC_RESTORE, 0);
+
+			RECT r; GetWindowRect(m_Hwnd, &r);
+
+			m_PreviousPosition = Rectanglei(r.left, r.top, r.right - r.left, r.bottom - r.top);
+
+			// Enable fullscreen
+			SetWindowLong(m_Hwnd, GWL_STYLE,
+				dwStyle & ~(WS_CAPTION | WS_THICKFRAME));
+			SetWindowLong(m_Hwnd, GWL_EXSTYLE,
+				dwExStyle & ~(WS_EX_DLGMODALFRAME |
+					WS_EX_WINDOWEDGE | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE));
+
+			MONITORINFO monitorInfo;
+			monitorInfo.cbSize = sizeof(monitorInfo);
+			GetMonitorInfo(MonitorFromWindow(m_Hwnd, MONITOR_DEFAULTTONEAREST), &monitorInfo);
+
+			SetWindowPos(m_Hwnd, NULL, monitorInfo.rcMonitor.left, monitorInfo.rcMonitor.top,
+				monitorInfo.rcMonitor.right - monitorInfo.rcMonitor.left, monitorInfo.rcMonitor.bottom - monitorInfo.rcMonitor.top,
+				SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
+
+			m_Width = monitorInfo.rcMonitor.right - monitorInfo.rcMonitor.left;
+			m_Height = monitorInfo.rcMonitor.bottom - monitorInfo.rcMonitor.top;
+
+			m_Fullscreen = true;
+
+			setVisible(true);
+		}
+		else {
+			SetWindowLong(m_Hwnd, GWL_STYLE, dwStyle);
+			SetWindowLong(m_Hwnd, GWL_EXSTYLE, dwExStyle);
+
+			
+			SetWindowPos(m_Hwnd, NULL, m_PreviousPosition.x(), m_PreviousPosition.y(), m_PreviousPosition.width(), m_PreviousPosition.height(),
+				SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
+			
+			m_Width = m_PreviousPosition.width();
+			m_Height = m_PreviousPosition.height();
+
+			m_Fullscreen = false;
+			setVisible(true);
+
+			if (m_Maximized)
+				SendMessage(m_Hwnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+
 		}
 	}
 
@@ -245,7 +339,11 @@ namespace apryx {
 			}
 		}
 		break;
-
+		case WM_SYSKEYDOWN:
+			if (wParam == VK_RETURN)
+				if ((HIWORD(lParam) & KF_ALTDOWN))
+					setFullscreen(!m_Fullscreen);
+		break;
 		}
 
 		return DefWindowProc(m_Hwnd, message, wParam, lParam);

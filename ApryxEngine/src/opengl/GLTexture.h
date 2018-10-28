@@ -16,7 +16,8 @@ namespace apryx {
 			NearestNeighbour
 		};
 
-		float m_Width, m_Height;
+		int m_Width, m_Height;
+		bool m_Flip = false;
 	public:
 		GLTexture();
 		~GLTexture();
@@ -24,8 +25,8 @@ namespace apryx {
 		void bind();
 		void unbind();
 
-		float getWidth() const override { return m_Width; }
-		float getHeight() const override { return m_Height; }
+		int getWidth() const override { return m_Width; }
+		int getHeight() const override { return m_Height; }
 
 		void setFiltering(TextureFiltering filtering);
 		void setWrapping(WrappingMode wrapping);
@@ -35,6 +36,8 @@ namespace apryx {
 
 		// RAW API. USE WITH CARE
 		int getID() const { return m_ID; }
+		bool isFlipped() const { return m_Flip; }
+		void setFlipped(bool flip) { m_Flip = flip; }
 		void setSize(float width, float height)  { m_Width = width; m_Height = height; }
 	};
 

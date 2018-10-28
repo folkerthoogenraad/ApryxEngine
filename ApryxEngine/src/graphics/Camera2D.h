@@ -12,8 +12,9 @@ namespace apryx {
 	public:
 		Vector2f size;
 		Vector2f position;
+		bool flipped = false;
 	public:
-		Camera2D(float width, float height);
+		Camera2D(float width, float height, bool flipped = false);
 
 		virtual Matrix4f getMatrixView();
 		virtual Matrix4f getMatrixProjection();

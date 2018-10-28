@@ -39,7 +39,7 @@ namespace apryx {
 
 		m_Batch.texture(m_WhiteTexture);
 
-		setCamera(Camera2D(surface->getWidth(), surface->getHeight()));
+		setCamera(Camera2D(surface->getWidth(), surface->getHeight(), true));
 	}
 
 	void GLGraphics2D::save()
@@ -60,7 +60,7 @@ namespace apryx {
 	{
 	}
 
-	void GLGraphics2D::drawRectangle(Paint & paint, Rectanglef rectangle)
+	void GLGraphics2D::drawRectangle(const Paint & paint, Rectanglef rectangle)
 	{
 		// In case we are not drawing yet
 		m_Batch.begin();
@@ -74,37 +74,37 @@ namespace apryx {
 		m_Batch.vertex(rectangle.bottomright());
 		m_Batch.vertex(rectangle.bottomleft());
 	}
-	void GLGraphics2D::drawRoundedRectangle(Paint & paint, Rectanglef rectangle, Rounding rounding)
+	void GLGraphics2D::drawRoundedRectangle(const Paint & paint, Rectanglef rectangle, Rounding rounding)
 	{
 	}
 
 	// Functions that just call other functions with standard arguments
-	void GLGraphics2D::drawCircle(Paint & paint, Vector2f center, float radius)
+	void GLGraphics2D::drawCircle(const Paint & paint, Vector2f center, float radius)
 	{
 		drawElipse(paint, center, radius, radius);
 	}
 
-	void GLGraphics2D::drawLine(Paint & paint, Vector2f pos1, Vector2f pos2)
+	void GLGraphics2D::drawLine(const Paint & paint, Vector2f pos1, Vector2f pos2)
 	{
 	}
 
-	void GLGraphics2D::drawElipse(Paint & paint, Rectanglef rectangle)
+	void GLGraphics2D::drawElipse(const Paint & paint, Rectanglef rectangle)
 	{
 		drawElipse(paint, rectangle.center(), rectangle.width() / 2, rectangle.height() / 2);
 	}
 
-	void GLGraphics2D::drawElipse(Paint & paint, Vector2f center, float radiusx, float radiusy)
+	void GLGraphics2D::drawElipse(const Paint & paint, Vector2f center, float radiusx, float radiusy)
 	{
 		drawArc(paint, center, radiusx, radiusy, 0, PI * 2);
 	}
 
-	void GLGraphics2D::drawArc(Paint & paint, Vector2f center, float radius, float startAngle, float sweepAngle)
+	void GLGraphics2D::drawArc(const Paint & paint, Vector2f center, float radius, float startAngle, float sweepAngle)
 	{
 		drawArc(paint, center, radius, radius, startAngle, sweepAngle);
 	}
 
 	// Actual drawing of the arc
-	void GLGraphics2D::drawArc(Paint & paint, Vector2f center, float radiusx, float radiusy, float startAngle, float sweepAngle)
+	void GLGraphics2D::drawArc(const Paint & paint, Vector2f center, float radiusx, float radiusy, float startAngle, float sweepAngle)
 	{
 		// Setting up the batch
 		m_Batch.begin();
@@ -142,7 +142,7 @@ namespace apryx {
 		}
 	}
 
-	void GLGraphics2D::drawSpiral(Paint & paint, Vector2f center, float radiusStart, float radiusEnd, float startAngle, float sweepAngle)
+	void GLGraphics2D::drawSpiral(const Paint & paint, Vector2f center, float radiusStart, float radiusEnd, float startAngle, float sweepAngle)
 	{
 		// Setting up the batch
 		m_Batch.begin();
@@ -183,31 +183,76 @@ namespace apryx {
 		}
 	}
 
-	void GLGraphics2D::drawText(Paint & paint, Vector2f pos, std::string text)
+	void GLGraphics2D::drawText(const Paint & paint, Vector2f pos, std::string text)
 	{
 	}
 
-	void GLGraphics2D::drawSprite(Paint & paint, Sprite &sprite, Vector2f pos)
+	void GLGraphics2D::drawSprite(const Paint & paint, const Sprite &sprite, Vector2f pos)
 	{
 		drawSprite(paint, sprite, pos, Vector2f(1, 1), 0);
 	}
 
-	void GLGraphics2D::drawSprite(Paint & paint, Sprite & sprite, Vector2f pos, Vector2f scale)
+	void GLGraphics2D::drawSprite(const Paint & paint, const Sprite & sprite, Vector2f pos, Vector2f scale)
 	{
 		drawSprite(paint, sprite, pos, scale, 0);
 	}
 
-	void GLGraphics2D::drawSprite(Paint & paint, Sprite &sprite, Vector2f pos, Vector2f scale, float angle)
+	void GLGraphics2D::drawSprite(const Paint & paint, const Sprite &sprite, Vector2f pos, Vector2f scale, float angle)
 	{
 		// In case we are not drawing yet
 		m_Batch.begin();
 
-		auto texture = std::static_pointer_cast<GLTexture>(sprite.getTexture());
+		auto texture = std::dynamic_pointer_cast<GLTexture>(sprite.getTexture());
+		auto surface = std::dynamic_pointer_cast<GLSurface>(sprite.getTexture());
 
-		m_Batch.texture(texture);
+		if (texture != nullptr) {
+			m_Batch.texture(texture);
+		}
+		if (surface != nullptr) {
+			m_Batch.texture(surface->getGLTexture());
+		}
 
 		Rectanglef uvs = sprite.getUVRectangle();
 		Rectanglef rect = Rectanglef(-sprite.getOrigin(), sprite.getSize());
+
+		Matrix3f matrix = Matrix3f::identity().translate(pos.x, pos.y).rotate(angle).scale(scale.x, scale.y);
+
+		m_Batch.color(paint.getColor());
+
+		m_Batch.uv(uvs.topleft());
+		m_Batch.vertex(matrix * rect.topleft());
+
+		m_Batch.uv(uvs.topright());
+		m_Batch.vertex(matrix * rect.topright());
+
+		m_Batch.uv(uvs.bottomright());
+		m_Batch.vertex(matrix * rect.bottomright());
+
+		m_Batch.uv(uvs.bottomleft());
+		m_Batch.vertex(matrix * rect.bottomleft());
+	}
+
+	void GLGraphics2D::drawSurface(const Paint & paint, const Surface & surface, Vector2f pos)
+	{
+		drawSurface(paint, surface, pos, Vector2f(1, 1), 0);
+	}
+
+	void GLGraphics2D::drawSurface(const Paint & paint, const Surface & surface, Vector2f pos, Vector2f scale)
+	{
+		drawSurface(paint, surface, pos, scale, 0);
+	}
+
+	void GLGraphics2D::drawSurface(const Paint & paint, const Surface & surface, Vector2f pos, Vector2f scale, float angle)
+	{// In case we are not drawing yet
+		m_Batch.begin();
+
+		// Ugly
+		auto texture = (GLSurface*)(&surface);
+
+		m_Batch.texture(texture->getGLTexture());
+
+		Rectanglef uvs = Rectanglef(0, 0, 1, 1);
+		Rectanglef rect = Rectanglef(0, 0, surface.getWidth(), surface.getHeight());
 
 		Matrix3f matrix = Matrix3f::identity().translate(pos.x, pos.y).rotate(angle).scale(scale.x, scale.y);
 
@@ -233,6 +278,13 @@ namespace apryx {
 
 		glClearColor(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
+
+	void GLGraphics2D::drawClearDepth()
+	{
+		//TODO discard, instead of flush.
+		flush();
+		glClear(GL_DEPTH_BUFFER_BIT);
 	}
 
 	void GLGraphics2D::flush()

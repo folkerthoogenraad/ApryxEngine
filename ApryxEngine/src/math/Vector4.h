@@ -190,6 +190,7 @@ namespace apryx {
 		inline static Color32 black() { return Color32(0, 0, 0, 255); }
 		inline static Color32 yellow() { return Color32(255, 255, 0, 255); }
 		inline static Color32 cyan() { return Color32(0, 255, 255, 255); }
+		inline static Color32 magenta() { return Color32(255, 0, 255, 255); }
 
 
 		inline static Color32 ltgray() { return Color32(200, 200, 200, 255); }

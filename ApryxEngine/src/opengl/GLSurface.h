@@ -29,7 +29,7 @@ namespace apryx {
 		int getWidth() const override { return m_Width; }
 		int getHeight() const override { return m_Height; }
 
-		std::shared_ptr<Texture> getTexture() const override { return m_ColorAttachment; }
+		void setData(const Image &image) override;
 
 		std::shared_ptr<GLTexture> getGLTexture() const { return m_ColorAttachment; }
 		std::shared_ptr<GLTexture> getDepthTexture() const { return m_DepthAttachment; }

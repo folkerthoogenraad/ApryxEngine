@@ -17,7 +17,7 @@ namespace apryx {
 
 		std::shared_ptr<Texture> m_Texture;
 	public:
-		Sprite(std::shared_ptr<Texture> texture);
+		Sprite(std::shared_ptr<Texture> texture = nullptr);
 		Sprite(std::shared_ptr<Texture> texture, float x, float y, float width, float height);
 
 		Rectanglef getUVRectangle() const { return m_TextureRectangle; }

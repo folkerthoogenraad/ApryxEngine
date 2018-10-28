@@ -20,16 +20,40 @@ namespace apryx {
 
 		GLGraphics2D graphics(window);
 
+		Timer timer;
+		timer.start();
+
+		float sum = 0;
+
+		const bool useDtMax = true;
+
+		float dtMax = 1.0f / 20.0f;
+
 		while (!application.shouldQuit()) {
 			window->poll();
 
-			application.update();
+			float delta = timer.lap();
+
+			delta = min(delta, 0.25);
+
+			if (useDtMax) {
+				sum += delta;
+
+				while (sum > dtMax) {
+					application.update(dtMax);
+					sum -= dtMax;
+				}
+			}
+			else {
+				application.update(delta);
+			}
 
 			if (application.shouldRedraw()) {
-				application.draw(graphics);
+				application.draw(graphics, sum / dtMax);
 
 				graphics.flush();
 				window->swap();
+				// TODO check for vsync
 			}
 			else {
 				Timer::sleep(1.0 / 60.0);
