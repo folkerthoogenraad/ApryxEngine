@@ -1,6 +1,9 @@
 #include "Scene.h"
 
+#include "Entity.h"
+
 #include <assert.h>
+
 
 namespace apryx {
 	Scene::Scene(std::shared_ptr<ResourceManager> manager)
@@ -8,6 +11,16 @@ namespace apryx {
 	{
 		assert(manager != nullptr);
 	}
+
+	void Scene::update()
+	{
+	}
+
+	void Scene::draw(Graphics2D & graphics)
+	{
+
+	}
+
 	void Scene::addEntity(std::shared_ptr<Entity> entity)
 	{
 		entity->setScene(this);

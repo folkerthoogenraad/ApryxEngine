@@ -1,22 +1,24 @@
 #pragma once
 
+#include "Scene.h"
+
+#include "graphics/Graphics2D.h"
+
+#include <optional>
+
 namespace apryx {
 
-	class Graphics2D;
-
 	class Entity {
+		Scene *m_Scene;
+	public:
+		virtual void init(Scene *scene) {};
+		virtual void update() {};
+		virtual void draw(Graphics2D &graphics) {};
 
-		void update();
-		void draw(Graphics2D &graphics);
+		virtual std::optional<Rectanglef> getBoundingBox() const { return std::nullopt; };
 
-	};
-
-	class Player : public Entity{
-		Sprite sprite;
-
-		void update();
-		void interpolate();
-		void draw(Graphics2D &graphics);
+		void setScene(Scene* scene) { m_Scene = scene; }
+		Scene *getScene() { return m_Scene; }
 	};
 
 }

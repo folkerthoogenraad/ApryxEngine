@@ -104,6 +104,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -132,6 +133,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -140,13 +142,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\debug\Debug.cpp" />
-    <ClCompile Include="src\game\Scene.cpp" />
+    <ClCompile Include="src\log\Debug.cpp" />
+    <ClCompile Include="src\scene\Scene.cpp" />
     <ClCompile Include="src\graphics\Camera2D.cpp" />
     <ClCompile Include="src\graphics\Image.cpp" />
     <ClCompile Include="src\graphics\Paint.cpp" />
     <ClCompile Include="src\graphics\Sprite.cpp" />
-    <ClCompile Include="src\input\Event.cpp" />
+    <ClCompile Include="src\input\InputEvent.cpp" />
     <ClCompile Include="src\math\Curve.cpp" />
     <ClCompile Include="src\math\Matrix2.cpp" />
     <ClCompile Include="src\math\Matrix3.cpp" />
@@ -165,10 +167,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\application\Application.h" />
-    <ClInclude Include="src\debug\Debug.h" />
-    <ClInclude Include="src\game\Entity.h" />
+    <ClInclude Include="src\log\Debug.h" />
     <ClInclude Include="src\game\Game.h" />
-    <ClInclude Include="src\game\Scene.h" />
+    <ClInclude Include="src\scene\Scene.h" />
     <ClInclude Include="src\graphics\Camera.h" />
     <ClInclude Include="src\graphics\Camera2D.h" />
     <ClInclude Include="src\graphics\Font.h" />
@@ -178,7 +179,7 @@
     <ClInclude Include="src\graphics\Sprite.h" />
     <ClInclude Include="src\graphics\Surface.h" />
     <ClInclude Include="src\graphics\Texture.h" />
-    <ClInclude Include="src\input\Event.h" />
+    <ClInclude Include="src\input\InputEvent.h" />
     <ClInclude Include="src\math\Circle.h" />
     <ClInclude Include="src\math\collision.h" />
     <ClInclude Include="src\math\CollisionResult.h" />
@@ -215,7 +216,6 @@
     <ClInclude Include="src\resources\ResourceManager.h" />
     <ClInclude Include="src\scene\Entity.h" />
     <ClInclude Include="src\time\Timer.h" />
-    <ClInclude Include="src\scene\Scene.h" />
     <ClInclude Include="src\win32\stb_image.h" />
     <ClInclude Include="src\win32\Win32Engine.h" />
     <ClInclude Include="src\win32\Win32ResourceManager.h" />

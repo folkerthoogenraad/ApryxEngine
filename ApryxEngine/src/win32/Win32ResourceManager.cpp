@@ -3,7 +3,7 @@
 #include "opengl/GLTexture.h"
 #include "opengl/GLSurface.h"
 
-#include "debug/Debug.h"
+#include "log/Log.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"

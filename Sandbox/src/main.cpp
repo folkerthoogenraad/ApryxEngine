@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "log/Debug.h"
+
 #include "time\Timer.h"
 #include "opengl/GLGraphics2D.h"
 #include "math/math.h"
@@ -57,8 +59,7 @@ namespace apryx {
 			graphics.drawClear(Color32::white());
 
 			graphics.drawSprite(Paint(Color32::white()), sprite, Vector2f(lerp(previousX, x, frame), 48));
-
-
+			
 			graphics.flush();
 		}
 
@@ -81,6 +82,8 @@ int main()
 	using namespace apryx;
 
 	startWin32Application<TestGame>();
+
+	Debug::pause();
 
 	return 0;
 }

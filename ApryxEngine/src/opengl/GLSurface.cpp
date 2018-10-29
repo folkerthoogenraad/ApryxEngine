@@ -4,7 +4,7 @@
 
 #include "GL.h"
 #include "GLGraphics2D.h"
-#include "debug/Debug.h"
+#include "log/Log.h"
 
 namespace apryx {
 	GLSurface::GLSurface(int width, int height)

@@ -5,7 +5,7 @@
 #include <iostream>
 #include "opengl/GL.h"
 
-#include "debug/Debug.h"
+#include "log/Log.h"
 
 #define CLASS_NAME "ApryxWindowClass"
 
