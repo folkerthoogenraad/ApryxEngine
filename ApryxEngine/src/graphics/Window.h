@@ -24,6 +24,7 @@ namespace apryx {
 		virtual float getHeight() const = 0;
 
 		virtual void setVisible(bool f) = 0;
+		virtual void setFullscreen(bool f) = 0;
 		
 		// Poll should return event queue
 		virtual void poll() = 0;

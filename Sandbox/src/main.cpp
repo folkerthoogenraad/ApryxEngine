@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "log/Debug.h"
+#include "log/Log.h"
 
 #include "time\Timer.h"
 #include "opengl/GLGraphics2D.h"

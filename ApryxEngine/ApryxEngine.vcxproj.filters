@@ -81,7 +81,7 @@
     <ClCompile Include="src\input\InputEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\log\Debug.cpp">
+    <ClCompile Include="src\log\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -248,7 +248,7 @@
     <ClInclude Include="src\input\InputEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\log\Debug.h">
+    <ClInclude Include="src\log\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

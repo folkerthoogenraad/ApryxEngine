@@ -142,7 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\log\Debug.cpp" />
+    <ClCompile Include="src\log\Log.cpp" />
     <ClCompile Include="src\scene\Scene.cpp" />
     <ClCompile Include="src\graphics\Camera2D.cpp" />
     <ClCompile Include="src\graphics\Image.cpp" />
@@ -167,7 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\application\Application.h" />
-    <ClInclude Include="src\log\Debug.h" />
+    <ClInclude Include="src\log\Log.h" />
     <ClInclude Include="src\game\Game.h" />
     <ClInclude Include="src\scene\Scene.h" />
     <ClInclude Include="src\graphics\Camera.h" />

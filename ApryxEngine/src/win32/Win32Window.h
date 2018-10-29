@@ -33,7 +33,7 @@ namespace apryx {
 		void setVisible(bool f) override;
 		void setVisible(bool visible, bool maximize);
 
-		void setFullscreen(bool f);
+		void setFullscreen(bool f) override;
 
 		float getWidth() const override;
 		float getHeight() const override;

@@ -7,10 +7,37 @@
 
 #include "log/Log.h"
 
+#include "input/InputEvent.h"
+
+#include <vector>
+#include <bitset>
+
 #define CLASS_NAME "ApryxWindowClass"
 
 namespace apryx {
 
+	static bool IsRepeated(LPARAM lParam) {
+		return HIWORD(lParam) & KF_REPEAT;
+	}
+
+	static WPARAM GetVirtualKey(WPARAM wParam, LPARAM lParam) 
+	{
+		UINT scancode = (lParam & 0x00ff0000) >> 16;
+		bool extended = (lParam & 0x01000000) != 0;
+
+		if (wParam == KEY_ANY_CONTROL)
+		{
+			if (extended) return KEY_RCONTROL;
+			else return KEY_LCONTROL;
+		}
+
+		if (wParam == KEY_ANY_SHIFT)
+		{
+			return MapVirtualKey(scancode, MAPVK_VSC_TO_VK_EX);
+		}
+
+		return wParam;
+	}
 
 	static LRESULT CALLBACK DefaultWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
@@ -298,6 +325,8 @@ namespace apryx {
 
 	LRESULT Win32Window::handleWindowsMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	{
+		std::vector<InputEvent> events;
+
 		switch (message)
 		{
 		case WM_POINTERDOWN:
@@ -355,6 +384,40 @@ namespace apryx {
 
 		case WM_SYSCHAR:
 			return TRUE;
+
+
+		case WM_KEYDOWN:
+		{
+			InputEvent event;
+			event.m_EventType = InputEvent::KeyboardPressed;
+			event.m_KeyCode = GetVirtualKey(wParam, lParam);
+
+			if (!IsRepeated(lParam)) {
+				events.push_back(event);
+			}
+		}
+		break;
+
+		case WM_KEYUP:
+		{
+			InputEvent event;
+			event.m_EventType = InputEvent::KeyboardReleased;
+			event.m_KeyCode = GetVirtualKey(wParam, lParam);
+
+			events.push_back(event);
+		}
+
+		case WM_CHAR:
+		{
+			InputEvent event;
+			event.m_EventType = InputEvent::KeyboardTyped;
+			event.m_UnicodeKey = wParam;
+
+			if (!(HIWORD(lParam) & 0x8000)) {
+				events.push_back(event);
+			}
+		}
+		break;
 		}
 
 		return DefWindowProc(m_Hwnd, message, wParam, lParam);

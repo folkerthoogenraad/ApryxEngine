@@ -16,6 +16,7 @@
 #define KEY_ENTER			0x0D
 #define KEY_ESCAPE			0x1B
 #define KEY_SPACE			0x20
+#define KEY_BACKSPACE		0x08
 
 #define KEY_ANY_SHIFT		0x10
 #define KEY_ANY_CONTROL		0x11
