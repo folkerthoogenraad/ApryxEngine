@@ -5,6 +5,10 @@
 
 #include <Windows.h>
 
+#include <vector>
+
+#include "input/InputEvent.h"
+
 namespace apryx {
 	class Win32Window : public Window {
 		HWND m_Hwnd;
@@ -23,6 +27,8 @@ namespace apryx {
 		bool m_Resized = false;
 
 		float m_DPIScale = 1;
+
+		std::vector<InputEvent> m_InputEvents;
 	public:
 		Win32Window(std::string title, int width, int height, bool full);
 		~Win32Window();
@@ -43,6 +49,8 @@ namespace apryx {
 
 		void destroy() override;
 		float dpiScale() const override;
+
+		const std::vector<InputEvent> &getWindowEvents() const { return m_InputEvents; };
 
 		LRESULT handleWindowsMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
 

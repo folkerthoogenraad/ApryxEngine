@@ -7,13 +7,22 @@
 #include "graphics/Surface.h"
 #include "graphics/Image.h"
 
+#include "input/InputManager.h"
+
 namespace apryx {
 
-	class ResourceManager {
+	class Context {
 	public:
+		// Time
+		float deltaTime = 0;
+		float frameTime = 0; // Frame Advance Time (interpolation time lerp(previousX, x, frameTime))
+		float runTime = 0;
+
+		InputManager input;
+
 		virtual std::shared_ptr<Window> getWindow() = 0;
 
-		// Loading GPU resources, cached
+		// Loading resources, cached
 		virtual std::shared_ptr<Texture> loadTexture(std::string path) = 0;
 
 		// Loading raw resources (CPU side, uncached)

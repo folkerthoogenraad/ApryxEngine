@@ -325,7 +325,6 @@ namespace apryx {
 
 	LRESULT Win32Window::handleWindowsMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	{
-		std::vector<InputEvent> events;
 
 		switch (message)
 		{
@@ -386,26 +385,18 @@ namespace apryx {
 			return TRUE;
 
 
+		case WM_KEYUP:
 		case WM_KEYDOWN:
 		{
 			InputEvent event;
-			event.m_EventType = InputEvent::KeyboardPressed;
+			event.m_EventType = message == WM_KEYUP ? InputEvent::KeyboardReleased : InputEvent::KeyboardPressed;
 			event.m_KeyCode = GetVirtualKey(wParam, lParam);
 
-			if (!IsRepeated(lParam)) {
-				events.push_back(event);
+			if (!IsRepeated(lParam) || message == WM_KEYUP) {
+				m_InputEvents.push_back(event);
 			}
 		}
 		break;
-
-		case WM_KEYUP:
-		{
-			InputEvent event;
-			event.m_EventType = InputEvent::KeyboardReleased;
-			event.m_KeyCode = GetVirtualKey(wParam, lParam);
-
-			events.push_back(event);
-		}
 
 		case WM_CHAR:
 		{
@@ -414,7 +405,7 @@ namespace apryx {
 			event.m_UnicodeKey = wParam;
 
 			if (!(HIWORD(lParam) & 0x8000)) {
-				events.push_back(event);
+				m_InputEvents.push_back(event);
 			}
 		}
 		break;
@@ -438,6 +429,7 @@ namespace apryx {
 	{
 		m_CloseRequested = false;
 		m_Resized = false;
+		m_InputEvents.clear();
 
 
 		MSG msg = {};

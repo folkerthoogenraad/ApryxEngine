@@ -18,62 +18,40 @@
 
 #include <assert.h>
 
+#include "EntityPlayer.h"
+
 namespace apryx {
 	class TestGame : public Game {
 	public:
-		std::shared_ptr<ResourceManager> m_Manager;
-		std::shared_ptr<Texture> m_Texture;
-		std::shared_ptr<Surface> m_Surface;
+		std::shared_ptr<Context> m_Context;
+		Scene m_Scene;
 
-		float previousX = 0;
-		float x = 0;
-
-		Sprite sprite;
-
-		virtual void init(std::shared_ptr<ResourceManager> manager)
+		virtual void init(std::shared_ptr<Context> context)
 		{
-			m_Manager = manager;
-
-			m_Texture = m_Manager->loadTexture("Player.png");
-
-			m_Surface = m_Manager->createSurface(32, 32);
+			m_Context = context;
+			m_Scene.init(context);
+			m_Scene.addEntity(std::make_shared<EntityPlayer>());
 		}
 
-		virtual void draw(Graphics2D &graphics, float frame)
+		virtual void draw(Graphics2D &graphics)
 		{
-			Sprite sprite(m_Texture);
-
-			Paint paint(Color32::white());
-
-			m_Surface->getGraphics().drawClear(Color32::blue());
-			m_Surface->getGraphics().drawSprite(Paint(Color32::white()), sprite, Vector2f(0, 0));
-			m_Surface->getGraphics().drawCircle(Paint(Color32::white()), Vector2f(16, 16), 8);
-			m_Surface->getGraphics().flush();
-
-			Sprite sprite2(m_Surface);
-			graphics.drawSprite(paint, sprite2, Vector2f(0, 0));
-
-			graphics.drawSurface(paint, *m_Surface, Vector2f(0, 0));
-
-			graphics.setCamera(Camera2D(128, 72));
 			graphics.drawClear(Color32::white());
 
-			graphics.drawSprite(Paint(Color32::white()), sprite, Vector2f(lerp(previousX, x, frame), 48));
-			
+			graphics.setCamera(Camera2D(480, 270, false));
+
+
+			m_Scene.draw(graphics);
+
 			graphics.flush();
 		}
 
-		virtual void update(float delta) {
-			previousX = x;
+		virtual void update() {
+			m_Scene.update();
 
-			x += delta * 80;
-
-			if (x > 128)
-				x = 0;
 		}
 		virtual void destroy() { }
 
-		virtual bool shouldQuit() { return m_Manager->getWindow()->isCloseRequested(); }
+		virtual bool shouldQuit() { return m_Context->getWindow()->isCloseRequested(); }
 	};
 }
 

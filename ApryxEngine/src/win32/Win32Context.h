@@ -1,6 +1,6 @@
 #pragma once
 
-#include "resources/ResourceManager.h"
+#include "resources/Context.h"
 
 #include <memory>
 #include <map>
@@ -8,12 +8,12 @@
 
 namespace apryx {
 
-	class Win32ResourceManager : public ResourceManager{
+	class Win32Context : public Context{
 		std::shared_ptr<Window> m_Window;
 
 		std::map<std::string, std::weak_ptr<Texture>> m_Textures;
 	public:
-		Win32ResourceManager(std::shared_ptr<Window> window);
+		Win32Context(std::shared_ptr<Window> window);
 
 		virtual std::shared_ptr<Window> getWindow() { return m_Window; }
 

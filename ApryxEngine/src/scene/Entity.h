@@ -9,9 +9,10 @@
 namespace apryx {
 
 	class Entity {
+	protected:
 		Scene *m_Scene;
 	public:
-		virtual void init(Scene *scene) {};
+		virtual void init(Scene *m_Scene) {};
 		virtual void update() {};
 		virtual void draw(Graphics2D &graphics) {};
 
@@ -19,6 +20,9 @@ namespace apryx {
 
 		void setScene(Scene* scene) { m_Scene = scene; }
 		Scene *getScene() { return m_Scene; }
+
+		static bool clipVector(Vector2f &motion, const Entity &first, const Entity &other);
 	};
+
 
 }

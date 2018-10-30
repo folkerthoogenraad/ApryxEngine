@@ -1,4 +1,4 @@
-#include "Win32ResourceManager.h"
+#include "Win32Context.h"
 
 #include "opengl/GLTexture.h"
 #include "opengl/GLSurface.h"
@@ -9,17 +9,17 @@
 #include "stb_image.h"
 
 namespace apryx {
-	Win32ResourceManager::Win32ResourceManager(std::shared_ptr<Window> window)
+	Win32Context::Win32Context(std::shared_ptr<Window> window)
 		: m_Window(window)
 	{
 	}
 
-	std::shared_ptr<Texture> Win32ResourceManager::createTexture()
+	std::shared_ptr<Texture> Win32Context::createTexture()
 	{
 		return std::make_shared<GLTexture>();
 	}
 
-	std::shared_ptr<Texture> Win32ResourceManager::loadTexture(std::string path)
+	std::shared_ptr<Texture> Win32Context::loadTexture(std::string path)
 	{
 		auto it = m_Textures.find(path);
 		
@@ -41,7 +41,7 @@ namespace apryx {
 		return texture;
 	}
 
-	Image Win32ResourceManager::loadImage(std::string path)
+	Image Win32Context::loadImage(std::string path)
 	{
 		int width, height, channels;
 
@@ -89,7 +89,7 @@ namespace apryx {
 
 		return std::move(img);
 	}
-	std::shared_ptr<Surface> Win32ResourceManager::createSurface(int width, int height)
+	std::shared_ptr<Surface> Win32Context::createSurface(int width, int height)
 	{
 		return std::make_shared<GLSurface>(width, height);
 	}

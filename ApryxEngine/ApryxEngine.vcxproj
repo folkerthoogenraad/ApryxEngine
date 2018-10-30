@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\input\InputManager.cpp" />
     <ClCompile Include="src\log\Log.cpp" />
     <ClCompile Include="src\scene\Scene.cpp" />
     <ClCompile Include="src\graphics\Camera2D.cpp" />
@@ -162,11 +163,13 @@
     <ClCompile Include="src\opengl\GLTexture.cpp" />
     <ClCompile Include="src\opengl\GLVertexBufferObject.cpp" />
     <ClCompile Include="src\time\Timer.cpp" />
-    <ClCompile Include="src\win32\Win32ResourceManager.cpp" />
+    <ClCompile Include="src\win32\Win32Context.cpp" />
+    <ClCompile Include="src\win32\Win32Timer.cpp" />
     <ClCompile Include="src\win32\Win32Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\application\Application.h" />
+    <ClInclude Include="src\input\InputManager.h" />
     <ClInclude Include="src\log\Log.h" />
     <ClInclude Include="src\game\Game.h" />
     <ClInclude Include="src\scene\Scene.h" />
@@ -213,12 +216,13 @@
     <ClInclude Include="src\opengl\GLSurface.h" />
     <ClInclude Include="src\opengl\GLTexture.h" />
     <ClInclude Include="src\opengl\GLVertexBufferObject.h" />
-    <ClInclude Include="src\resources\ResourceManager.h" />
+    <ClInclude Include="src\resources\Context.h" />
     <ClInclude Include="src\scene\Entity.h" />
     <ClInclude Include="src\time\Timer.h" />
     <ClInclude Include="src\win32\stb_image.h" />
     <ClInclude Include="src\win32\Win32Engine.h" />
-    <ClInclude Include="src\win32\Win32ResourceManager.h" />
+    <ClInclude Include="src\win32\Win32Context.h" />
+    <ClInclude Include="src\win32\Win32Timer.h" />
     <ClInclude Include="src\win32\Win32Window.h" />
     <ClInclude Include="src\graphics\Window.h" />
   </ItemGroup>

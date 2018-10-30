@@ -25,8 +25,10 @@ namespace apryx {
 		Vector2f getOrigin() const { return m_Origin; }
 		Vector2f getSize() const { return m_Size; }
 
-		void setSize(Vector2f size) { m_Size = size; }
+		void setSisze(Vector2f size) { m_Size = size; }
 		void setOrigin(Vector2f origin) { m_Origin = origin; }
+
+		void setCenter();
 
 		const std::shared_ptr<Texture> &getTexture() const { return m_Texture; }
 	};
