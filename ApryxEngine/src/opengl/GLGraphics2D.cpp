@@ -294,7 +294,7 @@ namespace apryx {
 		//Not sure if i should do this here but whatever
 		if (m_Surface == nullptr) {
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
-			glViewport(0, 0, m_Window->getWidth(), m_Window->getHeight());
+			glViewport(0, 0, m_Window->getRawWidth(), m_Window->getRawHeight());
 		}
 		else {
 			m_Surface->bind();

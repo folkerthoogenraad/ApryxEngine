@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "opengl/GL.h"
+#include "wglext.h"
 
 #include "log/Log.h"
 
@@ -15,6 +16,38 @@
 #define CLASS_NAME "ApryxWindowClass"
 
 namespace apryx {
+
+	static bool WGLExtensionSupported(const char *extension_name)
+	{
+		// this is pointer to function which returns pointer to string with list of all wgl extensions
+		PFNWGLGETEXTENSIONSSTRINGEXTPROC _wglGetExtensionsStringEXT = NULL;
+
+		// determine pointer to wglGetExtensionsStringEXT function
+		_wglGetExtensionsStringEXT = (PFNWGLGETEXTENSIONSSTRINGEXTPROC)wglGetProcAddress("wglGetExtensionsStringEXT");
+
+		if (strstr(_wglGetExtensionsStringEXT(), extension_name) == NULL)
+		{
+			// string was not found
+			return false;
+		}
+
+		// extension is supported
+		return true;
+	}
+
+	PFNWGLSWAPINTERVALEXTPROC       wglSwapIntervalEXT = NULL;
+	PFNWGLGETSWAPINTERVALEXTPROC    wglGetSwapIntervalEXT = NULL;
+
+	static void InitWGL() {
+		if ((wglSwapIntervalEXT == NULL || wglGetSwapIntervalEXT == NULL) && WGLExtensionSupported("WGL_EXT_swap_control"))
+		{
+			// Extension is supported, init pointers.
+			wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
+
+			// this is another function from WGL_EXT_swap_control extension
+			wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC)wglGetProcAddress("wglGetSwapIntervalEXT");
+		}
+	}
 
 	static bool IsRepeated(LPARAM lParam) {
 		return HIWORD(lParam) & KF_REPEAT;
@@ -96,6 +129,7 @@ namespace apryx {
 	static void initGL()
 	{
 		glewInit();
+		InitWGL();
 
 		glEnable(GL_TEXTURE_2D);
 
@@ -108,8 +142,8 @@ namespace apryx {
 		glClearColor(0, 0, 1, 1);
 	}
 
-	Win32Window::Win32Window(std::string title, int width, int height, bool full)
-		: Window(title, width, height, false)
+	Win32Window::Win32Window(std::string title, int width, int height, bool full, bool vsync)
+		: Window(title, width, height, false, false)
 	{
 		m_Width = width;
 		m_Height = height;
@@ -192,11 +226,16 @@ namespace apryx {
 			return;
 		}
 
+		initGL();
+
 		if (full) {
 			setFullscreen(true);
 		}
 
-		initGL();
+		if (vsync) {
+			setVSync(vsync);
+		}
+
 	}
 
 	Win32Window::~Win32Window()
@@ -300,6 +339,14 @@ namespace apryx {
 			if (m_Maximized)
 				SendMessage(m_Hwnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
 
+		}
+	}
+
+	void Win32Window::setVSync(bool f)
+	{
+		m_VSync = f;
+		if (wglSwapIntervalEXT != NULL) {
+			wglSwapIntervalEXT(f ? 1 : 0);
 		}
 	}
 

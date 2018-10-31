@@ -10,7 +10,7 @@ namespace apryx {
 	template<class T>
 	void startWin32Application() 
 	{
-		auto window = std::make_shared<Win32Window>("Game Window", 1280, 720, false);
+		auto window = std::make_shared<Win32Window>("Game Window", 1280, 720, false, true);
 		auto context = std::make_shared<Win32Context>(window);
 
 		T application;

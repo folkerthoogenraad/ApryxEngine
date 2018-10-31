@@ -37,8 +37,11 @@ namespace apryx {
 		{
 			graphics.drawClear(Color32::white());
 
-			graphics.setCamera(Camera2D(480, 270, false));
+			float aspect = m_Context->getWindow()->getWidth() / m_Context->getWindow()->getHeight();
+			float width = 480;
+			float height = width / aspect;
 
+			graphics.setCamera(Camera2D(width, height, false));
 
 			m_Scene.draw(graphics);
 

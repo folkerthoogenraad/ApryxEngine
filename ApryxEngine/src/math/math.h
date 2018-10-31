@@ -89,6 +89,18 @@ namespace apryx {
 		return a + (b - a) * f;
 	}
 
+	template <typename T>
+	Vector2<T> lerp(Vector2<T> a, Vector2<T> b, T f)
+	{
+		return a + (b - a) * f;
+	}
+
+	template <typename T>
+	Vector3<T> lerp(Vector3<T> a, Vector3<T> b, T f)
+	{
+		return a + (b - a) * f;
+	}
+
 
 	template <typename T, typename S>
 	Vector4<T> lerp(Vector4<T> a, Vector4<T> b, S f)
