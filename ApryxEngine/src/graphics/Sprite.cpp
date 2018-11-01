@@ -27,9 +27,10 @@ namespace apryx {
 
 	}
 
-	void Sprite::setCenter()
+	Sprite &Sprite::setCenter()
 	{
 		m_Origin = m_Size / 2;
+		return *this;
 	}
 }
 

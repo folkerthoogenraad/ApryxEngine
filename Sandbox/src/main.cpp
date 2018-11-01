@@ -19,6 +19,7 @@
 #include <assert.h>
 
 #include "EntityPlayer.h"
+#include "EntityWall.h"
 
 namespace apryx {
 	class TestGame : public Game {
@@ -30,7 +31,27 @@ namespace apryx {
 		{
 			m_Context = context;
 			m_Scene.init(context);
-			m_Scene.addEntity(std::make_shared<EntityPlayer>());
+
+			for (int i = 0; i < 20; i++) {
+				auto wall = std::make_shared<EntityWall>();
+				wall->position = Vector2f(16 + i * 16, 128);
+
+				m_Scene.addEntity(wall);
+			}
+
+			{
+				auto wall = std::make_shared<EntityWall>();
+				wall->position = Vector2f(128, 128 - 16);
+
+				m_Scene.addEntity(wall); 
+			}
+
+			for (int i = 0; i < 10; i++) {
+				auto entity = std::make_shared<EntityPlayer>();
+				entity->position = Vector2f(48 + i * 32, 48);
+				m_Scene.addEntity(entity);
+			}
+
 		}
 
 		virtual void draw(Graphics2D &graphics)

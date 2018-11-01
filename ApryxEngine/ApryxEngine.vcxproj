@@ -142,8 +142,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphics\Animation.cpp" />
+    <ClCompile Include="src\graphics\AnimationController.cpp" />
     <ClCompile Include="src\input\InputManager.cpp" />
     <ClCompile Include="src\log\Log.cpp" />
+    <ClCompile Include="src\scene\Entity.cpp" />
     <ClCompile Include="src\scene\Scene.cpp" />
     <ClCompile Include="src\graphics\Camera2D.cpp" />
     <ClCompile Include="src\graphics\Image.cpp" />
@@ -169,6 +172,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\application\Application.h" />
+    <ClInclude Include="src\graphics\Animation.h" />
+    <ClInclude Include="src\graphics\AnimationController.h" />
     <ClInclude Include="src\input\InputManager.h" />
     <ClInclude Include="src\log\Log.h" />
     <ClInclude Include="src\game\Game.h" />
@@ -185,7 +190,6 @@
     <ClInclude Include="src\input\InputEvent.h" />
     <ClInclude Include="src\math\Circle.h" />
     <ClInclude Include="src\math\collision.h" />
-    <ClInclude Include="src\math\CollisionResult.h" />
     <ClInclude Include="src\math\Cuboid.h" />
     <ClInclude Include="src\math\Curve.h" />
     <ClInclude Include="src\math\Defines.h" />

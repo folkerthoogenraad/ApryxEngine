@@ -49,6 +49,6 @@ namespace apryx {
 
 	void Win32Timer::sleep(double seconds)
 	{
-		Sleep((DWORD)seconds * 1000);
+		Sleep((DWORD)(seconds * 1000));
 	}
 }

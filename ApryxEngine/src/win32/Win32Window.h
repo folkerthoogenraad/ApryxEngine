@@ -42,6 +42,8 @@ namespace apryx {
 		void setFullscreen(bool f) override;
 		void setVSync(bool f) override;
 
+		bool getVSync() const { return m_VSync; }
+
 		float getWidth() const override;
 		float getHeight() const override;
 

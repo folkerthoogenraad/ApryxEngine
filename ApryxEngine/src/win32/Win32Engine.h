@@ -10,7 +10,7 @@ namespace apryx {
 	template<class T>
 	void startWin32Application() 
 	{
-		auto window = std::make_shared<Win32Window>("Game Window", 1280, 720, false, true);
+		auto window = std::make_shared<Win32Window>("Game Window", 1280, 720, false, false);
 		auto context = std::make_shared<Win32Context>(window);
 
 		T application;
@@ -75,9 +75,12 @@ namespace apryx {
 				context->frameTime = (float)sum / dtMax;
 				application.draw(graphics);
 
-				// TODO check for vsync
 				graphics.flush();
+
 				window->swap();
+
+				if(!window->getVSync())
+					Win32Timer::sleep(0.004);
 			}
 			else {
 				Timer::sleep(1.0 / 60.0);

@@ -227,13 +227,10 @@ namespace apryx {
 		}
 
 		initGL();
+		setVSync(vsync);
 
 		if (full) {
 			setFullscreen(true);
-		}
-
-		if (vsync) {
-			setVSync(vsync);
 		}
 
 	}
