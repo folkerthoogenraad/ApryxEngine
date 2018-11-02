@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="src\graphics\Animation.cpp" />
     <ClCompile Include="src\graphics\AnimationController.cpp" />
+    <ClCompile Include="src\graphics\Font.cpp" />
     <ClCompile Include="src\input\InputManager.cpp" />
     <ClCompile Include="src\log\Log.cpp" />
     <ClCompile Include="src\scene\Entity.cpp" />

@@ -185,6 +185,38 @@ namespace apryx {
 
 	void GLGraphics2D::drawText(const Paint & paint, Vector2f pos, std::string text)
 	{
+		auto font = paint.getFont();
+
+		if (font == nullptr)
+			return;
+
+		float xoffset = 0;
+		float yoffset = 0;
+
+		for (int i = 0; i < text.size(); i++) {
+			char c = text[i];
+
+			if (c == '\n') {
+				xoffset = 0;
+				yoffset += font->getHeight() + 1; // TODO nice font spacing
+				continue;
+			}
+			if (c == ' ') {
+				xoffset += 3; // TODO nice spacebar handling
+				continue;
+			}
+
+			auto &r = font->getCharacter(c);
+
+			if (!r)
+				continue;
+
+			auto &fc = *r;
+
+			drawSprite(paint, fc.sprite, Vector2f(pos.x + xoffset + fc.xoffset, pos.y +yoffset + fc.yoffset));
+
+			xoffset += fc.xadvance;
+		}
 	}
 
 	void GLGraphics2D::drawSprite(const Paint & paint, const Sprite &sprite, Vector2f pos)

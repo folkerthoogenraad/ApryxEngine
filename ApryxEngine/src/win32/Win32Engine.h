@@ -80,7 +80,7 @@ namespace apryx {
 				window->swap();
 
 				if(!window->getVSync())
-					Win32Timer::sleep(0.004);
+					Win32Timer::sleep(0.1);
 			}
 			else {
 				Timer::sleep(1.0 / 60.0);
