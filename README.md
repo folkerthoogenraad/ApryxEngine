@@ -1,10 +1,8 @@
-# Apryx Engine
-The second edition of the Apryx Engine!
+![Apryx Engine](https://i.imgur.com/aMiirkY.png)
+This is the main repository for the Apryx Engine. This is a game/application engine. The main purpose for this engine is 2D games. It is, however, not limited to 2D games. To get started [check out the quick start guide](https://github.com/folkerthoogenraad/ApryxEngine2/wiki/Quick-Start)
 
-## Documentation
-Someday there will be a wiki. First the engine needs to be developed
+## Multiplatform
+For supported platforms see [Platforms](https://github.com/folkerthoogenraad/ApryxEngine2/wiki/Platforms).
 
-## TODO
- - Keyboard and mouse input
- - XBox Input
- - UI Library
+## Features
+For supported and planned features see [Features](https://github.com/folkerthoogenraad/ApryxEngine2/wiki/Features).
