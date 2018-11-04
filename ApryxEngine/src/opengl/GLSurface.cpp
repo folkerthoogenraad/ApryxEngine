@@ -4,7 +4,7 @@
 
 #include "GL.h"
 #include "GLGraphics2D.h"
-#include "log/Log.h"
+#include "console/Console.h"
 
 namespace apryx {
 	GLSurface::GLSurface(int width, int height)
@@ -32,7 +32,7 @@ namespace apryx {
 		GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 		if (status != GL_FRAMEBUFFER_COMPLETE) {
-			Debug::logError("Failed to create frame buffer extention");
+			Console::logError("Failed to create frame buffer extention");
 		}
 	}
 

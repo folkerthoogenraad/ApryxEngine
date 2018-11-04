@@ -1,6 +1,6 @@
 #include "InputManager.h"
 
-#include "log/Log.h"
+#include "console/Console.h"
 
 namespace apryx {
 	bool InputManager::isKeyDown(int key)

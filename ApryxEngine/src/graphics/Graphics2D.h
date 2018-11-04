@@ -53,6 +53,8 @@ namespace apryx {
 		virtual void drawSurface(const Paint &paint, const Surface &surface, Vector2f pos, Vector2f scale) = 0;
 		virtual void drawSurface(const Paint &paint, const Surface &surface, Vector2f pos, Vector2f scale, float angle) = 0;
 
+		void drawConsole(const Paint &background, const Paint &foreground);
+
 		virtual void drawClear(Color32 color) = 0;
 		virtual void drawClearDepth() = 0;
 

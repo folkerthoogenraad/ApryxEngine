@@ -3,7 +3,8 @@
 #include "opengl/GLTexture.h"
 #include "opengl/GLSurface.h"
 
-#include "log/Log.h"
+#include "console/Console.h"
+#include "graphics/FontUtils.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -12,6 +13,14 @@ namespace apryx {
 	Win32Context::Win32Context(std::shared_ptr<Window> window)
 		: m_Window(window)
 	{
+	}
+
+	std::shared_ptr<Font> Win32Context::getDefaultFont()
+	{
+		if (m_DefaultFont == nullptr)
+			m_DefaultFont = createDefaultFont(*this);
+
+		return m_DefaultFont;
 	}
 
 	std::shared_ptr<Texture> Win32Context::createTexture()
@@ -54,13 +63,13 @@ namespace apryx {
 			STBI_rgb_alpha);
 
 		if (image == nullptr) {
-			Debug::logError("Failed to load image");
-			Debug::logError(path);
+			Console::logError("Failed to load image");
+			Console::logError(path);
 			return Image::colored(1, 1, Color32::magenta());
 		}
 		if (channels != 4) {
-			Debug::logError("Image has to few components");
-			Debug::logError(path);
+			Console::logError("Image has to few components");
+			Console::logError(path);
 
 			return Image::colored(1, 1, Color32::magenta());
 			stbi_image_free(image);

@@ -6,7 +6,7 @@
 #include "opengl/GL.h"
 #include "wglext.h"
 
-#include "log/Log.h"
+#include "console/Console.h"
 
 #include "input/InputEvent.h"
 
@@ -242,11 +242,11 @@ namespace apryx {
 		}
 		if (m_GLContext) {
 			if (!wglMakeCurrent(NULL, NULL)) {
-				Debug::logError("Failed to reset context");
+				Console::logError("Failed to reset context");
 			}
 			if (!wglDeleteContext(m_GLContext))
 			{
-				Debug::logError("Failed to delete context");
+				Console::logError("Failed to delete context");
 			}
 		}
 
@@ -256,7 +256,7 @@ namespace apryx {
 
 		if (m_Hwnd) {
 			if(!DestroyWindow(m_Hwnd)){
-				Debug::logError("Failed to destroy window");
+				Console::logError("Failed to destroy window");
 			}
 		}
 	}

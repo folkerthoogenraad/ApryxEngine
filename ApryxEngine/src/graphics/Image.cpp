@@ -14,7 +14,7 @@ namespace apryx {
 
 		m_Colors[x + y * m_Width] = color;
 	}
-	Color32 Image::getColor(int x, int y)
+	Color32 Image::getColor(int x, int y) const
 	{
 		if (x < 0 || x > m_Width || y < 0 || y > m_Height)
 			return Color32(0, 0, 0, 1);

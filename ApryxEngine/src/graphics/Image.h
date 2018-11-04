@@ -15,7 +15,7 @@ namespace apryx {
 		Image(int width, int height);
 
 		void setColor(int x, int y, Color32 color);
-		Color32 getColor(int x, int y);
+		Color32 getColor(int x, int y) const;
 
 		int getWidth() const { return m_Width; }
 		int getHeight() const { return m_Height; }

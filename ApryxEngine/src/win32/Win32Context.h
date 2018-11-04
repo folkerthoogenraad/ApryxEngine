@@ -11,11 +11,14 @@ namespace apryx {
 	class Win32Context : public Context{
 		std::shared_ptr<Window> m_Window;
 
+		std::shared_ptr<Font> m_DefaultFont;
+
 		std::map<std::string, std::weak_ptr<Texture>> m_Textures;
 	public:
 		Win32Context(std::shared_ptr<Window> window);
 
 		virtual std::shared_ptr<Window> getWindow() { return m_Window; }
+		virtual std::shared_ptr<Font> getDefaultFont() override;
 
 		// Loading GPU resources
 		virtual std::shared_ptr<Texture> loadTexture(std::string path) override;

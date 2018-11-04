@@ -21,6 +21,7 @@ namespace apryx {
 		InputManager input;
 
 		virtual std::shared_ptr<Window> getWindow() = 0;
+		virtual std::shared_ptr<Font> getDefaultFont() = 0;
 
 		// Loading resources, cached
 		virtual std::shared_ptr<Texture> loadTexture(std::string path) = 0;

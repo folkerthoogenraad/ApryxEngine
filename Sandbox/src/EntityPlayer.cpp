@@ -3,7 +3,7 @@
 #include "math/math.h"
 #include "EntityWall.h"
 
-#include "log/Log.h"
+#include "console/Console.h"
 
 namespace apryx {
 	void EntityPlayer::init(Scene * scene)
