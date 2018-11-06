@@ -212,7 +212,7 @@ namespace apryx {
 			jumpHop = false;
 
 		if (jumpHop && grounded) {
-			velocity.y = -2.73 * 60;
+			velocity.y = -2.85 * 60; // -2.73 in game maker?
 			jumped = true;
 			jumpHop = false;
 		}

@@ -53,6 +53,22 @@ namespace apryx {
 				m_Scene.addEntity(wall); 
 			}
 
+
+			{
+				auto wall = std::make_shared<EntityWall>();
+				wall->position = Vector2f(128 + 64, 128 - 16);
+
+				m_Scene.addEntity(wall);
+			}
+
+
+			{
+				auto wall = std::make_shared<EntityWall>();
+				wall->position = Vector2f(128 + 64, 128 - 32);
+
+				m_Scene.addEntity(wall);
+			}
+
 			for (int i = 0; i < 1; i++) {
 				auto entity = std::make_shared<EntityPlayer>();
 				entity->position = Vector2f(48 + i * 32, 48);
@@ -73,13 +89,13 @@ namespace apryx {
 
 			m_Scene.draw(graphics);
 
-			Paint fontPaint(Color32::green());
+			Paint fontPaint(Color32::black());
 			fontPaint.setFont(m_Context->getDefaultFont());
 
 			const float scale = 2;
 
 			graphics.setCamera(Camera2D(m_Context->getWindow()->getRawWidth() / scale, m_Context->getWindow()->getRawHeight() / scale, false));
-			graphics.drawConsole(Paint(Color32(0,0,0,128)), fontPaint);
+			graphics.drawText(fontPaint, Vector2f(2,2), "Test text 123");
 
 			graphics.flush();
 		}
