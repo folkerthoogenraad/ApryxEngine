@@ -1,12 +1,12 @@
 #pragma once
 
-#include "scene/Entity.h"
+#include "game/Entity.h"
 
 namespace apryx {
 
-	class EntityWall : public Entity {
+	class EntityWall : public Entity2D {
 	public:
-		virtual void init(Scene *m_Scene) override;
+		virtual void init(Scene2D *m_Scene) override;
 		virtual void update() override;
 		virtual void draw(Graphics2D &graphics) override;
 		

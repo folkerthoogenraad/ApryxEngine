@@ -56,6 +56,10 @@ namespace apryx {
 	{
 	}
 
+	void GLGraphics2D::reset()
+	{
+	}
+
 	void GLGraphics2D::restore()
 	{
 	}
@@ -65,17 +69,50 @@ namespace apryx {
 		// In case we are not drawing yet
 		m_Batch.begin();
 
-		m_Batch.texture(m_WhiteTexture);
+		if (paint.getStyle() == Paint::Fill) {
+			m_Batch.texture(m_WhiteTexture);
 
-		m_Batch.color(paint.getColor());
+			m_Batch.color(paint.getColor());
 
-		m_Batch.vertex(rectangle.topleft());
-		m_Batch.vertex(rectangle.topright());
-		m_Batch.vertex(rectangle.bottomright());
-		m_Batch.vertex(rectangle.bottomleft());
+			m_Batch.vertex(rectangle.topleft());
+			m_Batch.vertex(rectangle.topright());
+			m_Batch.vertex(rectangle.bottomright());
+			m_Batch.vertex(rectangle.bottomleft());
+		}
+		else {
+			drawLine(paint, rectangle.topleft(), rectangle.topright());
+			drawLine(paint, rectangle.topright(), rectangle.bottomright());
+			drawLine(paint, rectangle.bottomright(), rectangle.bottomleft());
+			drawLine(paint, rectangle.bottomleft(), rectangle.topleft());
+		}
 	}
-	void GLGraphics2D::drawRoundedRectangle(const Paint & paint, Rectanglef rectangle, Rounding rounding)
+	void GLGraphics2D::drawRoundedRectangle(const Paint & paint, Rectanglef rectangle, float r)
 	{
+		Vector2f xo = Vector2f(r, 0);
+		Vector2f yo = Vector2f(0, r);
+
+		Rectanglef inner = Rectanglef(rectangle.position + Vector2f(r, r), rectangle.size - Vector2f(r * 2, r * 2));
+
+		// Draw corners
+		drawArc(paint, inner.topleft(), r, -PI, PI / 2);
+		drawArc(paint, inner.topright(), r,-PI / 2, PI / 2);
+		drawArc(paint, inner.bottomright(), r, 0, PI / 2);
+		drawArc(paint, inner.bottomleft(), r, PI / 2, PI / 2);
+
+		if (paint.getStyle() == Paint::Stroke) {
+			drawLine(paint, inner.topleft() - yo, inner.topright() - yo);
+			drawLine(paint, inner.topright() + xo, inner.bottomright() + xo);
+			drawLine(paint, inner.bottomright() + yo, inner.bottomleft() + yo);
+			drawLine(paint, inner.bottomleft() - xo, inner.topleft() - xo);
+		}
+		else {
+			// Fill middle section
+			drawRectangle(paint, Rectanglef(inner.position - yo, inner.size + yo * 2));
+
+			// Fill the left and the right parts
+			drawRectangle(paint, Rectanglef(inner.topleft() - xo, Vector2f(r, inner.height())));
+			drawRectangle(paint, Rectanglef(inner.topright(), Vector2f(r, inner.height())));
+		}
 	}
 
 	// Functions that just call other functions with standard arguments
@@ -86,6 +123,19 @@ namespace apryx {
 
 	void GLGraphics2D::drawLine(const Paint & paint, Vector2f pos1, Vector2f pos2)
 	{
+		Vector2f normal = Vector2f::perp(pos2 - pos1).normalize();
+		float hw = paint.getStrokeWidth() * 0.5f;
+
+		m_Batch.begin();
+
+		m_Batch.texture(m_WhiteTexture);
+
+		m_Batch.color(paint.getColor());
+
+		m_Batch.vertex(pos1 + normal * hw);
+		m_Batch.vertex(pos2 + normal * hw);
+		m_Batch.vertex(pos2 - normal * hw);
+		m_Batch.vertex(pos1 - normal * hw);
 	}
 
 	void GLGraphics2D::drawElipse(const Paint & paint, Rectanglef rectangle)
@@ -133,10 +183,15 @@ namespace apryx {
 
 			Vector2f newPos = calculatePos(currentAngle);
 
-			m_Batch.vertex(center);
-			m_Batch.vertex(center);
-			m_Batch.vertex(previousPos);
-			m_Batch.vertex(newPos);
+			if (paint.getStyle() == Paint::Fill) {
+				m_Batch.vertex(center);
+				m_Batch.vertex(center);
+				m_Batch.vertex(previousPos);
+				m_Batch.vertex(newPos);
+			}
+			else {
+				drawLine(paint, previousPos, newPos);
+			}
 
 			previousPos = newPos;
 		}
@@ -284,7 +339,7 @@ namespace apryx {
 		m_Batch.texture(texture->getGLTexture());
 
 		Rectanglef uvs = Rectanglef(0, 0, 1, 1);
-		Rectanglef rect = Rectanglef(0, 0, surface.getWidth(), surface.getHeight());
+		Rectanglef rect = Rectanglef(0, 0, (float) surface.getWidth(), (float) surface.getHeight());
 
 		Matrix3f matrix = Matrix3f::identity().translate(pos.x, pos.y).rotate(angle).scale(scale.x, scale.y);
 

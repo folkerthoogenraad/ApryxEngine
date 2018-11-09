@@ -20,28 +20,30 @@ namespace apryx {
 		std::shared_ptr<Window> m_Window; // TODO make window a surface too.
 		std::shared_ptr<GLSurface> m_Surface;
 
-		float m_CirclePrecision = (3.141592654 * 2) / 36;
+		float m_CirclePrecision = (3.141592654f * 2) / 36;
 
 		GLBatch m_Batch;
 	public:
 		GLGraphics2D(std::shared_ptr<Window> window);
 		GLGraphics2D(std::shared_ptr<GLSurface> surface);
 		
-		virtual void save(); // Save the state (current clipping and camera)
-		virtual void setCamera(Camera2D camera);
-		virtual void clipRect(Rectanglef rectangle);
-		virtual void restore();
+		virtual void save() override; // Save the state (current clipping and camera)
+		virtual void setCamera(Camera2D camera) override;
+		virtual void clipRect(Rectanglef rectangle) override;
+		virtual void reset() override;
+		virtual void restore() override;
 
 		virtual void drawRectangle(const Paint &paint, Rectanglef rectangle) override;
 		virtual void drawLine(const Paint &paint, Vector2f pos1, Vector2f pos2) override;
 
-		virtual void drawRoundedRectangle(const Paint &paint, Rectanglef rectangle, Rounding rounding) override;
+		virtual void drawRoundedRectangle(const Paint &paint, Rectanglef rectangle, float roundingRadius) override;
 
 		virtual void drawCircle(const Paint &paint, Vector2f center, float radius) override;
 		virtual void drawElipse(const Paint &paint, Rectanglef rectangle) override;
 		virtual void drawElipse(const Paint &paint, Vector2f center, float radiusx, float radiusy) override;
 		virtual void drawArc(const Paint &paint, Vector2f center, float radius, float startAngle, float sweepAngle) override;
 		virtual void drawArc(const Paint &paint, Vector2f center, float radiusx, float radiusy, float startAngle, float sweepAngle) override;
+		
 		virtual void drawSpiral(const Paint &paint, Vector2f center, float radiusStart, float radiusEnd, float startAngle, float sweepAngle) override;
 
 		virtual void drawText(const Paint &paint, Vector2f pos, std::string text) override;

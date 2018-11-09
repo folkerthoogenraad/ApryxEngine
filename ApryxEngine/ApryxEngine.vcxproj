@@ -149,8 +149,8 @@
     <ClCompile Include="src\graphics\Graphics2D.cpp" />
     <ClCompile Include="src\input\InputManager.cpp" />
     <ClCompile Include="src\console\Console.cpp" />
-    <ClCompile Include="src\scene\Entity.cpp" />
-    <ClCompile Include="src\scene\Scene.cpp" />
+    <ClCompile Include="src\game\Entity.cpp" />
+    <ClCompile Include="src\game\Scene.cpp" />
     <ClCompile Include="src\graphics\Camera2D.cpp" />
     <ClCompile Include="src\graphics\Image.cpp" />
     <ClCompile Include="src\graphics\Paint.cpp" />
@@ -168,6 +168,7 @@
     <ClCompile Include="src\opengl\GLSurface.cpp" />
     <ClCompile Include="src\opengl\GLTexture.cpp" />
     <ClCompile Include="src\opengl\GLVertexBufferObject.cpp" />
+    <ClCompile Include="src\game\SceneLoader.cpp" />
     <ClCompile Include="src\time\Timer.cpp" />
     <ClCompile Include="src\win32\Win32Context.cpp" />
     <ClCompile Include="src\win32\Win32Timer.cpp" />
@@ -175,13 +176,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\application\Application.h" />
+    <ClInclude Include="src\application\EntryPoint.h" />
     <ClInclude Include="src\graphics\Animation.h" />
     <ClInclude Include="src\graphics\AnimationController.h" />
     <ClInclude Include="src\graphics\FontUtils.h" />
     <ClInclude Include="src\input\InputManager.h" />
     <ClInclude Include="src\console\Console.h" />
     <ClInclude Include="src\game\Game.h" />
-    <ClInclude Include="src\scene\Scene.h" />
+    <ClInclude Include="src\game\Scene.h" />
     <ClInclude Include="src\graphics\Camera.h" />
     <ClInclude Include="src\graphics\Camera2D.h" />
     <ClInclude Include="src\graphics\Font.h" />
@@ -225,11 +227,11 @@
     <ClInclude Include="src\opengl\GLTexture.h" />
     <ClInclude Include="src\opengl\GLVertexBufferObject.h" />
     <ClInclude Include="src\resources\Context.h" />
-    <ClInclude Include="src\scene\Entity.h" />
+    <ClInclude Include="src\game\Entity.h" />
+    <ClInclude Include="src\game\SceneLoader.h" />
     <ClInclude Include="src\time\Timer.h" />
     <ClInclude Include="src\win32\stb_image.h" />
     <ClInclude Include="src\win32\wglext.h" />
-    <ClInclude Include="src\win32\Win32Engine.h" />
     <ClInclude Include="src\win32\Win32Context.h" />
     <ClInclude Include="src\win32\Win32Timer.h" />
     <ClInclude Include="src\win32\Win32Window.h" />

@@ -38,7 +38,7 @@ namespace apryx {
 		int getID() const { return m_ID; }
 		bool isFlipped() const { return m_Flip; }
 		void setFlipped(bool flip) { m_Flip = flip; }
-		void setSize(float width, float height)  { m_Width = width; m_Height = height; }
+		void setSize(int width, int height)  { m_Width = width; m_Height = height; }
 	};
 
 }

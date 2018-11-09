@@ -14,7 +14,7 @@ namespace apryx {
 		m_To(to),
 		m_Variable(variable),
 		m_Condition(Equal),
-		m_Threshold(value ? 1 : 0)
+		m_Threshold(value ? 1.0f : 0.0f)
 	{ }
 
 	bool AnimationTransition::evaluate(float value)

@@ -14,13 +14,26 @@ namespace apryx {
 			Fill,
 			Stroke
 		};
+		enum class HAlign {
+			Left,
+			Right,
+			Center
+		};
+		enum class VAlign {
+			Top,
+			Bottom, 
+			Center
+		};
 	private:
 		Color32 m_Color;
-		Style m_Style;
+		Style m_Style = Fill;
+
+		HAlign m_HAlign = HAlign::Left;
+		VAlign m_VAlign = VAlign::Top;
 
 		float m_StrokeWidth = 1.0f;
 
-		std::shared_ptr<Font> m_Font;
+		std::shared_ptr<Font> m_Font = nullptr;
 	public:
 		Paint();
 		Paint(Color32 color);
@@ -33,6 +46,15 @@ namespace apryx {
 
 		std::shared_ptr<Font> getFont() const { return m_Font; }
 		void setFont(std::shared_ptr<Font> font) { m_Font = font; }
+
+		float getStrokeWidth() const { return m_StrokeWidth; }
+		void setStrokeWidth(float width) { m_StrokeWidth = width; }
+
+		void setVerticalAlignment(VAlign align) { m_VAlign = align; }
+		VAlign getVerticalAlignment() { return m_VAlign; }
+
+		void setHorizontalAlignment(HAlign align) { m_HAlign = align; }
+		HAlign getHorizontalAlignment() { return m_HAlign; }
 	};
 
 }

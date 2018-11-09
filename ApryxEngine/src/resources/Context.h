@@ -7,11 +7,13 @@
 #include "graphics/Surface.h"
 #include "graphics/Image.h"
 
+#include "game/SceneLoader.h"
 #include "input/InputManager.h"
 
 namespace apryx {
 
 	class Context {
+		SceneLoader m_SceneLoader;
 	public:
 		// Time
 		float deltaTime = 0;
@@ -22,6 +24,10 @@ namespace apryx {
 
 		virtual std::shared_ptr<Window> getWindow() = 0;
 		virtual std::shared_ptr<Font> getDefaultFont() = 0;
+
+		// Misc
+		SceneLoader &getSceneLoader() { return m_SceneLoader; }
+		const SceneLoader &getSceneLoader() const { return m_SceneLoader; }
 
 		// Loading resources, cached
 		virtual std::shared_ptr<Texture> loadTexture(std::string path) = 0;

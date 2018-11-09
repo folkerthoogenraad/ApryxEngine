@@ -3,12 +3,12 @@
 #include "math/math.h"
 
 namespace apryx {
-	void Entity::preUpdate()
+	void Entity2D::preUpdate()
 	{
 		previousPosition = position;
 	}
 
-	EntityState Entity::getState()
+	EntityState Entity2D::getState()
 	{
 		return EntityState
 		{
@@ -18,7 +18,7 @@ namespace apryx {
 		};
 	}
 
-	Vector2f apryx::Entity::getDrawPosition() const {
+	Vector2f apryx::Entity2D::getDrawPosition() const {
 		return m_Scene == nullptr ?
 			position :
 			lerp(previousPosition, position, m_Scene->getContext()->frameTime);

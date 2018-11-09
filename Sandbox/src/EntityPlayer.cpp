@@ -6,9 +6,9 @@
 #include "console/Console.h"
 
 namespace apryx {
-	void EntityPlayer::init(Scene * scene)
+	void EntityPlayer::init(Scene2D * scene)
 	{
-		auto tx = scene->getContext()->loadTexture("sprites/Player1.png");
+		auto tx = scene->getContext()->loadTexture("sprites/characters/Player1.png");
 
 		Animation idle;
 		Animation running;

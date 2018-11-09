@@ -4232,7 +4232,7 @@ namespace apryx {
 
 		builder.addChar('|', 1, 5, 2, 0, 0, 2);
 		builder.addChar('~', 5, 5, 6, 0, 0, 6);
-		builder.addChar('\_', 3, 5, 4, 0, 0, 4);
+		builder.addChar('_', 3, 5, 4, 0, 0, 4);
 		builder.addChar('^', 3, 5, 4, 0, 0, 4);
 		builder.addChar('.', 1, 5, 2, 0, 0, 2);
 		builder.addChar(',', 2, 5, 2, -1, 1, 3);

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "scene/Entity.h"
-#include "scene/Scene.h"
+#include "game/Entity.h"
+#include "game/Scene.h"
 
 #include "graphics/Sprite.h"
 #include "graphics/Animation.h"
@@ -12,7 +12,7 @@
 
 namespace apryx {
 
-	class EntityPlayer : public Entity {
+	class EntityPlayer : public Entity2D {
 		AnimationController controller;
 
 		Vector2f velocity;
@@ -29,7 +29,7 @@ namespace apryx {
 		bool jumped = false;
 		bool jumpHop = false;
 	public:
-		virtual void init(Scene *m_Scene) override;
+		virtual void init(Scene2D *m_Scene) override;
 		virtual void update() override;
 		virtual void draw(Graphics2D &graphics) override;
 

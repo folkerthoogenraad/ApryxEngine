@@ -19,28 +19,29 @@ namespace apryx {
 
 	class Surface;
 
-	typedef std::array<float, 4> Rounding;
-
 	class Graphics2D {
 	public:
 		// TODO engineer this
-		virtual void save() = 0; // Save the state (current clipping and camera)
+		virtual void save() = 0; // Save the state (current clipping and matrices)
 
 		virtual void setCamera(Camera2D camera) = 0;
 		virtual void clipRect(Rectanglef rectangle) = 0;
+		virtual void reset() = 0;
 
 		virtual void restore() = 0;
 
 		virtual void drawRectangle(const Paint &paint, Rectanglef rectangle) = 0;
 		virtual void drawLine(const Paint &paint, Vector2f pos1, Vector2f pos2) = 0;
 
-		virtual void drawRoundedRectangle(const Paint &paint, Rectanglef rectangle, Rounding rounding) = 0;
+		virtual void drawRoundedRectangle(const Paint &paint, Rectanglef rectangle, float roundingRadius) = 0;
 
 		virtual void drawCircle(const Paint &paint, Vector2f center, float radius) = 0;
 		virtual void drawElipse(const Paint &paint, Rectanglef rectangle) = 0;
 		virtual void drawElipse(const Paint &paint, Vector2f center, float radiusx, float radiusy) = 0;
 		virtual void drawArc(const Paint &paint, Vector2f center, float radius, float startAngle, float sweepAngle) = 0;
 		virtual void drawArc(const Paint &paint, Vector2f center, float radiusx, float radiusy, float startAngle, float sweepAngle) = 0;
+
+		// DEPRECATED
 		virtual void drawSpiral(const Paint &paint, Vector2f center, float radiusStart, float radiusEnd, float startAngle, float sweepAngle) = 0;
 
 		virtual void drawText(const Paint &paint, Vector2f pos, std::string text) = 0;

@@ -7,27 +7,27 @@
 
 namespace apryx {
 
-	void Scene::init(std::shared_ptr<Context> context)
+	void Scene2D::init(std::shared_ptr<Context> context)
 	{
 		assert(context != nullptr);
 		m_Context = context;
 	}
 
-	void Scene::update()
+	void Scene2D::update()
 	{
 		for (auto &entity : m_Entities) {
 			entity->update();
 		}
 	}
 
-	void Scene::draw(Graphics2D & graphics)
+	void Scene2D::draw(Graphics2D & graphics)
 	{
 		for (auto &entity : m_Entities) {
 			entity->draw(graphics);
 		}
 	}
 
-	void Scene::addEntity(std::shared_ptr<Entity> entity)
+	void Scene2D::addEntity(std::shared_ptr<Entity2D> entity)
 	{
 		entity->setScene(this);
 		entity->init(this);

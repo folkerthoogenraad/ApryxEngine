@@ -11,7 +11,7 @@ namespace apryx {
 		virtual int getWidth() const = 0;
 		virtual int getHeight() const = 0;
 
-		Vector2f getSize() const { return Vector2f(getWidth(), getHeight()); }
+		Vector2f getSize() const { return Vector2f((float)getWidth(), (float)getHeight()); }
 
 		virtual void setData(const Image &image) = 0;
 	};

@@ -434,7 +434,7 @@ namespace apryx {
 		{
 			InputEvent event;
 			event.m_EventType = message == WM_KEYUP ? InputEvent::KeyboardReleased : InputEvent::KeyboardPressed;
-			event.m_KeyCode = GetVirtualKey(wParam, lParam);
+			event.m_KeyCode = (int) GetVirtualKey(wParam, lParam);
 
 			if (!IsRepeated(lParam) || message == WM_KEYUP) {
 				m_InputEvents.push_back(event);
@@ -446,7 +446,7 @@ namespace apryx {
 		{
 			InputEvent event;
 			event.m_EventType = InputEvent::KeyboardTyped;
-			event.m_UnicodeKey = wParam;
+			event.m_UnicodeKey = (int) wParam;
 
 			if (!(HIWORD(lParam) & 0x8000)) {
 				m_InputEvents.push_back(event);

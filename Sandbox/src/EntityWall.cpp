@@ -2,7 +2,7 @@
 
 namespace apryx {
 
-	void EntityWall::init(Scene * m_Scene)
+	void EntityWall::init(Scene2D * m_Scene)
 	{
 	}
 
