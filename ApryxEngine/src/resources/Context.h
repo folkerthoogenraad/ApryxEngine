@@ -31,6 +31,7 @@ namespace apryx {
 
 		// Loading resources, cached
 		virtual std::shared_ptr<Texture> loadTexture(std::string path) = 0;
+		virtual std::shared_ptr<Font> loadFont(std::string path, int points) = 0;
 
 		// Loading raw resources (CPU side, uncached)
 		virtual Image loadImage(std::string path) = 0;

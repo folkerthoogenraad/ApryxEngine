@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 
 #include "math/math.h"
 
@@ -6,6 +7,9 @@
 
 #include "graphics/Camera2D.h"
 #include "graphics/Image.h"
+
+#include "graphics/Font.h"
+#include "graphics/FontUtils.h"
 
 #include "game/Game.h"
 
@@ -18,11 +22,16 @@ namespace apryx {
 	class TestGame : public Game {
 	public:
 		Scene2D m_Scene;
+		std::shared_ptr<Font> m_ButtonFont;
+		std::shared_ptr<Font> m_ContentFont;
 
 		virtual void init(std::shared_ptr<Context> context)
 		{
 			Game::init(context);
 			m_Scene.init(context);
+
+			m_ButtonFont = context->loadFont("fonts/Exo2.ttf", 16);
+			m_ContentFont = context->loadFont("fonts/OpenSans.ttf", 16);
 
 			for (int i = 0; i < 20; i++) {
 				auto wall = std::make_shared<EntityWall>();
@@ -72,15 +81,14 @@ namespace apryx {
 
 			m_Scene.draw(graphics);
 
-			Paint fontPaint(Color32::black());
+			Paint fontPaint(Color32(128, 160, 128, 255));
 			fontPaint.setVerticalAlignment(Paint::VAlign::Center);
 			fontPaint.setHorizontalAlignment(Paint::HAlign::Center);
-			fontPaint.setFont(m_Context->getDefaultFont());
+			fontPaint.setFont(m_ButtonFont);
 
 			const float scale = 1;
 
 			graphics.setCamera(Camera2D(m_Context->getWindow()->getRawWidth() / scale, m_Context->getWindow()->getRawHeight() / scale, false));
-			graphics.drawText(fontPaint, Vector2f(2,2), "Test text 123");
 
 
 			Paint linePaint(Color32(128, 160, 128, 255));
@@ -89,17 +97,25 @@ namespace apryx {
 
 			Vector2f offset = Vector2f(256, 256);
 
-			graphics.drawLine(linePaint, offset + Vector2f(2, 2), offset + Vector2f(16, 32));
-			graphics.drawLine(linePaint, offset + Vector2f(16, 2), offset + Vector2f(48, 32));
-
-			graphics.drawRectangle(linePaint, Rectanglef(150, 12, 128, 64));
 			graphics.drawRoundedRectangle(linePaint, Rectanglef(12, 12, 128, 40), 20);
-			graphics.drawText(fontPaint, Rectanglef(12, 12, 128, 40).center(), "Test text");
-			graphics.drawElipse(linePaint, Rectanglef(300, 12, 64, 64));
+			graphics.drawText(fontPaint, Rectanglef(12, 12, 128, 40).center(), "Cancel");
 
+			fontPaint.setColor(Color32::white());
+			linePaint.setStyle(Paint::Fill);
 
-			graphics.drawLine(linePaint, Vector2f(100, 100), Vector2f(200, 100));
-			graphics.drawLine(linePaint, Vector2f(100, 100), Vector2f(100, 200));
+			graphics.drawRoundedRectangle(linePaint, Rectanglef(150, 12, 128, 40), 20);
+			graphics.drawText(fontPaint, Rectanglef(150, 12, 128, 40).center(), "Submit");
+
+			fontPaint.setFont(m_ContentFont);
+			fontPaint.setVerticalAlignment(Paint::VAlign::Top);
+			fontPaint.setHorizontalAlignment(Paint::HAlign::Left);
+			fontPaint.setColor(Color32::gray());
+			graphics.drawText(fontPaint, Vector2f(16, 64),
+				"This is some testing content that might actually work pretty well.\n"
+				"I'm not to sure what to write here so this might be the best thing\n"
+				"so far. \n"
+				"The ApryxEngine is actually kinda amazing. lul\n");
+
 
 
 			graphics.flush();

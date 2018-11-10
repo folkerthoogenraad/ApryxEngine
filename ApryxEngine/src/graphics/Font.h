@@ -23,14 +23,19 @@ namespace apryx {
 
 		float m_Height = 5;
 	public:
-		const std::optional<FontCharacter> &getCharacter(char c);
-		void setCharacter(char index, FontCharacter character);
+		const std::optional<FontCharacter> &getCharacter(char c) const;
 
 		float getHeight() const { return m_Height; }
+
+		Rectanglef measureText(const std::string &text) const;
+
+		// Only use if you know what you are doing. So just dont actually.
+		void setHeight(float height) { m_Height = height; }
+		void setCharacter(char index, FontCharacter character);
 	};
 
 	class FontBuilder {
-		std::shared_ptr<Font> m_Font;
+		std::shared_ptr<Font> m_ButtonFont;
 
 		std::shared_ptr<Texture> m_Texture;
 
@@ -50,6 +55,6 @@ namespace apryx {
 
 		void addChar(char c, float w, float h, float xadvance, float xoffset, float yoffset, float nextChar);
 
-		std::shared_ptr<Font> getFont() { return m_Font; };
+		std::shared_ptr<Font> getFont() { return m_ButtonFont; };
 	};
 }

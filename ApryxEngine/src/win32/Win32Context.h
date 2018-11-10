@@ -14,6 +14,7 @@ namespace apryx {
 		std::shared_ptr<Font> m_DefaultFont;
 
 		std::map<std::string, std::weak_ptr<Texture>> m_Textures;
+		std::map<std::pair<std::string, int>, std::weak_ptr<Font>> m_Fonts;
 	public:
 		Win32Context(std::shared_ptr<Window> window);
 
@@ -22,6 +23,7 @@ namespace apryx {
 
 		// Loading GPU resources
 		virtual std::shared_ptr<Texture> loadTexture(std::string path) override;
+		virtual std::shared_ptr<Font> loadFont(std::string path, int points) override;
 
 		// Loading CPU resources (uncached)
 		virtual Image loadImage(std::string path) override;

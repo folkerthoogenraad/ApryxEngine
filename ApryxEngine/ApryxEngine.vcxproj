@@ -231,6 +231,7 @@
     <ClInclude Include="src\game\SceneLoader.h" />
     <ClInclude Include="src\time\Timer.h" />
     <ClInclude Include="src\win32\stb_image.h" />
+    <ClInclude Include="src\win32\stb_true_type.h" />
     <ClInclude Include="src\win32\wglext.h" />
     <ClInclude Include="src\win32\Win32Context.h" />
     <ClInclude Include="src\win32\Win32Timer.h" />

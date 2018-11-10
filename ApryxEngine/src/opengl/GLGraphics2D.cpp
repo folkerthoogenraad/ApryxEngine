@@ -248,6 +248,25 @@ namespace apryx {
 		float xoffset = 0;
 		float yoffset = 0;
 
+		{
+			auto rect = font->measureText(text);
+
+			if (paint.getHorizontalAlignment() == Paint::HAlign::Center) {
+				xoffset = -rect.size.x * 0.5f;
+			}
+			if (paint.getHorizontalAlignment() == Paint::HAlign::Right) {
+				xoffset = -rect.size.x;
+			}
+
+
+			if (paint.getVerticalAlignment() == Paint::VAlign::Center) {
+				yoffset = -rect.size.y * 0.5f;
+			}
+			if (paint.getVerticalAlignment() == Paint::VAlign::Bottom) {
+				yoffset = -rect.size.y;
+			}
+		}
+
 		for (int i = 0; i < text.size(); i++) {
 			char c = text[i];
 

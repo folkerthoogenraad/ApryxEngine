@@ -3,7 +3,9 @@
 #include "Texture.h"
 #include "Image.h"
 
+#include <map>
 #include <fstream>
+#include <sstream>
 
 namespace apryx {
 	std::shared_ptr<Font> apryx::createDefaultFont(Context &context)
@@ -4247,6 +4249,97 @@ namespace apryx {
 		builder.addChar('#', 5, 5, 6, 0, 0, 6);
 
 		return builder.getFont();
+	}
+
+	static std::pair<std::string, std::map<std::string, std::string>> extractProperties(const std::string &input) {
+		std::map<std::string, std::string> output;
+		std::stringstream stream(input);
+
+		std::string intro;
+
+		stream >> intro;
+
+		std::string read;
+		while (stream >> read) {
+			if (read.size() == 0)
+				continue;
+
+			size_t index = read.find('=', 0);
+			std::string key = read.substr(0, index);
+			std::string value = read.substr(index + 1, value.size() - 1);
+
+			output.insert_or_assign(key, value);
+		}
+		
+
+		return std::make_pair(intro, output);
+	}
+
+	static std::string getBMString(const std::string &index, const std::map<std::string, std::string> &values)
+	{
+		return values.at(index).substr(1, values.at(index).size() - 2);
+	}
+
+	static int getBMInt(const std::string &index, const std::map<std::string, std::string> &values)
+	{
+		return std::stoi(values.at(index));
+	}
+
+	std::shared_ptr<Font> loadBitmapFont(Context & context, const std::string &folder, const std::string &fontFile)
+	{
+		std::ifstream fileRead(folder + fontFile);
+
+		if (!fileRead.is_open())
+			return nullptr;
+
+		auto font = std::make_shared<Font>();
+
+		std::map<int, std::shared_ptr<Texture>> pages;
+
+		std::string line;
+
+		while (std::getline(fileRead, line)) {
+			auto properties = extractProperties(line);
+
+			auto &name = properties.first;
+			auto &values = properties.second;
+			
+			if (name == "common") {
+				font->setHeight(getBMInt("lineHeight", values));
+			}
+			if (name == "page") {
+				pages.insert_or_assign(getBMInt("id", values), context.loadTexture(folder + getBMString("file", values)));
+			}
+			if (name == "char") {
+
+				int ch = getBMInt("id", values);
+
+				if (ch < 0)
+					continue;
+
+				FontCharacter fc;
+
+				fc.sprite = Sprite(
+					pages.at(getBMInt("page", values)),
+
+					(float) getBMInt("x", values),
+					(float) getBMInt("y", values),
+					(float) getBMInt("width", values),
+					(float) getBMInt("height", values)
+				);
+
+				fc.xadvance = getBMInt("xadvance", values);
+				fc.xoffset = getBMInt("xoffset", values);
+				fc.yoffset = getBMInt("yoffset", values);
+
+				font->setCharacter(
+					(char)ch,
+					fc
+				);
+			}
+		}
+
+		return font;
 	}
 
 	void writeImageAsCPP(const std::string & fileName, const Image & image)

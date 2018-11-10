@@ -37,6 +37,8 @@ namespace apryx {
 
 	PFNWGLSWAPINTERVALEXTPROC       wglSwapIntervalEXT = NULL;
 	PFNWGLGETSWAPINTERVALEXTPROC    wglGetSwapIntervalEXT = NULL;
+	PFNWGLCHOOSEPIXELFORMATARBPROC	wglChoosePixelFormatARB = NULL;
+	PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = NULL;
 
 	static void InitWGL() {
 		if ((wglSwapIntervalEXT == NULL || wglGetSwapIntervalEXT == NULL) && WGLExtensionSupported("WGL_EXT_swap_control"))
@@ -47,6 +49,9 @@ namespace apryx {
 			// this is another function from WGL_EXT_swap_control extension
 			wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC)wglGetProcAddress("wglGetSwapIntervalEXT");
 		}
+
+		wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC) wglGetProcAddress("wglChoosePixelFormatARB");
+		wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC) wglGetProcAddress("wglCreateContextAttribsARB");
 	}
 
 	static bool IsRepeated(LPARAM lParam) {
@@ -128,8 +133,8 @@ namespace apryx {
 
 	static void initGL()
 	{
+		glewExperimental = true;
 		glewInit();
-		InitWGL();
 
 		glEnable(GL_TEXTURE_2D);
 
@@ -140,6 +145,8 @@ namespace apryx {
 		glDepthFunc(GL_LEQUAL);
 
 		glClearColor(0, 0, 1, 1);
+
+		checkGLError();
 	}
 
 	Win32Window::Win32Window(std::string title, int width, int height, bool full, bool vsync)
@@ -147,7 +154,7 @@ namespace apryx {
 	{
 		m_Width = width;
 		m_Height = height;
-
+		
 		SetProcessDPIAware();
 
 		registerClass();
@@ -155,12 +162,76 @@ namespace apryx {
 		// Make sure its the client size
 		RECT wr = { 0, 0, width, height };    // set the size, but not the position
 		AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);    // adjust the size
-		RegisterTouchWindow(m_Hwnd, 0);
 
+		dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
+		dwStyle = WS_OVERLAPPEDWINDOW;
 
-		dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;           // Window Extended Style
-		dwStyle = WS_OVERLAPPEDWINDOW;                    // Windows Style
+		// ===========================================================//
+		// CREATE FAKE WINDOW TO INIT WGL
+		// ===========================================================//
+		HWND fakeWindow = CreateWindowEx(
+			dwExStyle,                              // Optional window styles.
+			CLASS_NAME,								// Window class
+			m_Title.c_str(),						// Window text
+			dwStyle,								// Window style
 
+			0, 0, wr.right - wr.left, wr.bottom - wr.top, // Size and position
+
+			NULL,       // Parent window    
+			NULL,       // Menu
+			GetModuleHandle(NULL),  // Instance handle
+			NULL        // Additional application data
+		);
+
+		if (!fakeWindow) {
+			MessageBox(NULL, "Failed to create window.", "Error", MB_OK | MB_ICONEXCLAMATION);
+			return;
+		}
+
+		HDC fakeDeviceContext = GetDC(fakeWindow);
+
+		if (!fakeDeviceContext) {
+			MessageBox(NULL, "Failed to obtain the device context.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
+			return;                               // Return FALSE
+		}
+
+		// Get the device scaling stuff
+		m_DPIScale = GetDeviceCaps(fakeDeviceContext, LOGPIXELSX) / 96.f;
+
+		PIXELFORMATDESCRIPTOR descriptor = win32GetPixelFormatDescriptor();
+
+		int fakePixelFormat = ChoosePixelFormat(fakeDeviceContext, &descriptor);
+
+		if (!fakePixelFormat)
+		{
+			MessageBox(NULL, "Failed to find a correct pixel format.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
+			return;
+		}
+
+		if (!SetPixelFormat(fakeDeviceContext, fakePixelFormat, &descriptor))
+		{
+			MessageBox(NULL, "Failed to set the pixel format.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
+			return;
+		}
+
+		HGLRC fakeGLContext = wglCreateContext(fakeDeviceContext);
+		if (!fakeGLContext)
+		{
+			MessageBox(NULL, "Failed to create OpenGL context.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
+			return;
+		}
+
+		if (!wglMakeCurrent(fakeDeviceContext, fakeGLContext))
+		{
+			MessageBox(NULL, "Failed to make OpenGL context active on this thread.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
+			return;
+		}
+
+		InitWGL();
+
+		// ===========================================================//
+		// Create actual window
+		// ===========================================================//
 		m_Hwnd = CreateWindowEx(
 			dwExStyle,                              // Optional window styles.
 			CLASS_NAME,								// Window class
@@ -175,54 +246,72 @@ namespace apryx {
 			NULL        // Additional application data
 		);
 
-
 		if (!m_Hwnd) {
 			MessageBox(NULL, "Failed to create window.", "Error", MB_OK | MB_ICONEXCLAMATION);
 			return;
 		}
-
-		// Set the user data
+		
 		SetWindowLongPtr(m_Hwnd, GWLP_USERDATA, (LONG_PTR)this);
-
-		PIXELFORMATDESCRIPTOR descriptor = win32GetPixelFormatDescriptor();
-
-		int pixelFormat;
 
 		m_DeviceContext = GetDC(m_Hwnd);
 
 		if (!m_DeviceContext) {
-			MessageBox(NULL, "Failed to obtain the device context.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
-			return;                               // Return FALSE
-		}
-
-		// Get the device scaling stuff
-		m_DPIScale = GetDeviceCaps(m_DeviceContext, LOGPIXELSX) / 96.f;
-
-		pixelFormat = ChoosePixelFormat(m_DeviceContext, &descriptor);
-
-		if (!pixelFormat)
-		{
-			MessageBox(NULL, "Failed to find a correct pixel format.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
+			MessageBox(NULL, "Failed to create window.", "Error", MB_OK | MB_ICONEXCLAMATION);
 			return;
 		}
 
-		if (!SetPixelFormat(m_DeviceContext, pixelFormat, &descriptor))
-		{
-			MessageBox(NULL, "Failed to set the pixel format.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
+		// Find the right WGL context
+		int wglAttributes[] = {
+				WGL_DRAW_TO_WINDOW_ARB, GL_TRUE,
+				WGL_SUPPORT_OPENGL_ARB, GL_TRUE,
+				WGL_DOUBLE_BUFFER_ARB, GL_TRUE,
+				WGL_PIXEL_TYPE_ARB, WGL_TYPE_RGBA_ARB,
+				WGL_COLOR_BITS_ARB, 32,
+				WGL_DEPTH_BITS_ARB, 24,
+				WGL_STENCIL_BITS_ARB, 8,
+				WGL_SAMPLE_BUFFERS_ARB, 1, // Number of buffers (must be 1 at time of writing)
+				WGL_SAMPLES_ARB, 4,        // Number of samples
+				0
+		};
+		
+		int pixelFormatID;
+		UINT numFormats;
+
+		bool status = wglChoosePixelFormatARB(m_DeviceContext, wglAttributes, NULL, 1, &pixelFormatID, &numFormats);
+		
+		if (status == false || numFormats == 0) {
+			MessageBox(NULL, "WGL Failed to choose format.", "Error", MB_OK | MB_ICONEXCLAMATION);
 			return;
 		}
 
-		m_GLContext = wglCreateContext(m_DeviceContext);
+		// Use the new pixelformatdescriptor
+		PIXELFORMATDESCRIPTOR PFD;
+		DescribePixelFormat(m_DeviceContext, pixelFormatID, sizeof(PIXELFORMATDESCRIPTOR), &PFD);
+		SetPixelFormat(m_DeviceContext, pixelFormatID, &PFD);
 
-		if (!m_GLContext)
-		{
-			MessageBox(NULL, "Failed to create OpenGL context.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
+		const int major_min = 3, minor_min = 2;
+		int  contextAttribs[] = {
+			WGL_CONTEXT_MAJOR_VERSION_ARB, major_min,
+			WGL_CONTEXT_MINOR_VERSION_ARB, minor_min,
+			WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB,
+			0
+		};
+
+		m_GLContext = wglCreateContextAttribsARB(m_DeviceContext, 0, contextAttribs);
+		if (m_GLContext == NULL) {
+			MessageBox(NULL, "Failed to create gl context.", "Error", MB_OK | MB_ICONEXCLAMATION);
 			return;
 		}
 
-		if (!wglMakeCurrent(m_DeviceContext, m_GLContext))
-		{
-			MessageBox(NULL, "Failed to make OpenGL context active on this thread.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
+		// Destroy the fakes.
+		wglMakeCurrent(NULL, NULL);
+		wglDeleteContext(fakeGLContext);
+		ReleaseDC(fakeWindow, fakeDeviceContext);
+		DestroyWindow(fakeWindow);
+
+		// Use the actual
+		if (!wglMakeCurrent(m_DeviceContext, m_GLContext)) {
+			MessageBox(NULL, "Failed to make context current.", "Error", MB_OK | MB_ICONEXCLAMATION);
 			return;
 		}
 

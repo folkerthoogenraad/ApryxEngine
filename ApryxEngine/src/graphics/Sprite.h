@@ -31,6 +31,9 @@ namespace apryx {
 		Sprite &setCenter();
 
 		const std::shared_ptr<Texture> &getTexture() const { return m_Texture; }
+
+		// Only use with care
+		void setTextureRectangle(Rectanglef rectangle) { m_TextureRectangle = rectangle; }
 	};
 
 }
