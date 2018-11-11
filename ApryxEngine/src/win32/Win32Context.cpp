@@ -117,7 +117,7 @@ namespace apryx {
 			(const unsigned char*)str.c_str(), 
 			0, points, temp_bitmap, width, height, charStart, charCount, cdata);
 
-		auto texture = std::make_shared<GLTexture>();
+		auto texture = createTexture();
 		texture->setFiltering(GLTexture::TextureFiltering::Linear);
 
 		for (int x = 0; x < width; x++) {

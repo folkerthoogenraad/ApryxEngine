@@ -6,15 +6,6 @@ namespace apryx {
 
 	class GLTexture : public Texture{
 		unsigned int m_ID;
-	public:
-		enum WrappingMode {
-			Clamp,
-			Repeat
-		};
-		enum TextureFiltering {
-			Linear,
-			NearestNeighbour
-		};
 
 		int m_Width, m_Height;
 		bool m_Flip = false;
@@ -28,8 +19,8 @@ namespace apryx {
 		int getWidth() const override { return m_Width; }
 		int getHeight() const override { return m_Height; }
 
-		void setFiltering(TextureFiltering filtering);
-		void setWrapping(WrappingMode wrapping);
+		void setFiltering(TextureFiltering filtering) override;
+		void setWrapping(WrappingMode wrapping) override;
 
 		void setData(const Image &image) override;
 

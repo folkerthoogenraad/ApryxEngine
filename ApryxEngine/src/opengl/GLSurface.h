@@ -29,6 +29,9 @@ namespace apryx {
 		int getWidth() const override { return m_Width; }
 		int getHeight() const override { return m_Height; }
 
+		virtual void setFiltering(TextureFiltering filtering) override;
+		virtual void setWrapping(WrappingMode wrapping) override;
+
 		void setData(const Image &image) override;
 
 		std::shared_ptr<GLTexture> getGLTexture() const { return m_ColorAttachment; }

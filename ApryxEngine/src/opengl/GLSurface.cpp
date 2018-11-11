@@ -51,6 +51,16 @@ namespace apryx {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
+	void GLSurface::setFiltering(TextureFiltering filtering)
+	{
+		// TODO implement this
+	}
+
+	void GLSurface::setWrapping(WrappingMode wrapping)
+	{
+		//TODO implement this
+	}
+
 	void GLSurface::setData(const Image & image)
 	{
 		m_ColorAttachment->setData(image);
