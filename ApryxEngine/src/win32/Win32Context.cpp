@@ -136,7 +136,7 @@ namespace apryx {
 			stbtt_bakedchar &bc = cdata[i];
 
 			FontCharacter fc;
-			fc.sprite = Sprite(texture, 
+			fc.sprite = Sprite((std::shared_ptr<Texture>) texture, 
 				(float)bc.x0, 
 				(float)bc.y0, 
 				(float)(bc.x1 - bc.x0), 
