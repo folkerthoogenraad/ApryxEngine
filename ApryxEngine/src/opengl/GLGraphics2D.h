@@ -45,8 +45,8 @@ namespace apryx {
 		virtual void drawArc(const Paint &paint, Vector2f center, float radiusx, float radiusy, float startAngle, float sweepAngle) override;
 		
 		virtual void drawSpiral(const Paint &paint, Vector2f center, float radiusStart, float radiusEnd, float startAngle, float sweepAngle) override;
-
-		virtual void drawText(const Paint &paint, Vector2f pos, std::string text) override;
+		
+		virtual void drawText(const Paint &paint, Vector2f pos, const std::string &text, Vector2f scale) override;
 
 		virtual void drawSprite(const Paint &paint, const Sprite &sprite, Vector2f pos) override;
 		virtual void drawSprite(const Paint &paint, const Sprite &sprite, Vector2f pos, Vector2f scale) override;

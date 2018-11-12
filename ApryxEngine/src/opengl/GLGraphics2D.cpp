@@ -238,7 +238,7 @@ namespace apryx {
 		}
 	}
 
-	void GLGraphics2D::drawText(const Paint & paint, Vector2f pos, std::string text)
+	void GLGraphics2D::drawText(const Paint & paint, Vector2f pos, const std::string &text, Vector2f scale)
 	{
 		auto font = paint.getFont();
 
@@ -255,7 +255,7 @@ namespace apryx {
 				xoffset = -rect.size.x * 0.5f;
 			}
 			if (paint.getHorizontalAlignment() == Paint::HAlign::Right) {
-				xoffset = -rect.size.x;
+				xoffset = -rect.size.x * scale.x;
 			}
 
 
@@ -287,7 +287,7 @@ namespace apryx {
 
 			auto &fc = *r;
 
-			drawSprite(paint, fc.sprite, Vector2f(pos.x + xoffset + fc.xoffset, pos.y +yoffset + fc.yoffset));
+			drawSprite(paint, fc.sprite, pos + Vector2f(xoffset + fc.xoffset, yoffset + fc.yoffset) * scale, scale);
 
 			xoffset += fc.xadvance;
 		}

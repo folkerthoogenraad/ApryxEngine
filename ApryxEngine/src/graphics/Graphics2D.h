@@ -44,7 +44,8 @@ namespace apryx {
 		// DEPRECATED
 		virtual void drawSpiral(const Paint &paint, Vector2f center, float radiusStart, float radiusEnd, float startAngle, float sweepAngle) = 0;
 
-		virtual void drawText(const Paint &paint, Vector2f pos, std::string text) = 0;
+		virtual void drawText(const Paint &paint, Vector2f pos, const std::string &text) { drawText(paint, pos, text, Vector2f(1,1)); };
+		virtual void drawText(const Paint &paint, Vector2f pos, const std::string &text, Vector2f scale) = 0;
 
 		virtual void drawSprite(const Paint &paint, const Sprite &sprite, Vector2f pos) = 0;
 		virtual void drawSprite(const Paint &paint, const Sprite &sprite, Vector2f pos, Vector2f scale) = 0;
