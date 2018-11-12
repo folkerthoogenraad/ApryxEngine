@@ -4,6 +4,9 @@
 
 #include "Component.h"
 
+#include <string>
+#include <memory>
+
 namespace apryx {
 
 	class Button : public Component{
@@ -17,11 +20,13 @@ namespace apryx {
 		std::shared_ptr<Font> m_Font;
 		ButtonType m_Type;
 	public:
-		Button(std::string text = "Sample Text");
+		Button(std::string text = "Sample Text", ButtonType type = ButtonType::Primary);
 
 		virtual void init() override;
 
 		virtual void draw(Graphics2D &graphics) override;
+
+		virtual Size getPreferredSize() const  override;
 
 		void setFont(std::shared_ptr<Font> font) { m_Font = font; }
 		const std::shared_ptr<Font> &getFont() const { return m_Font; }

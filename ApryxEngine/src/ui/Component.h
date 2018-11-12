@@ -18,6 +18,8 @@ namespace apryx {
 
 	class ApryxUI;
 
+	using Size = Vector2f;
+
 	class Component {
 		ApryxUI *m_UI;
 		Component *m_Parent;
@@ -36,11 +38,14 @@ namespace apryx {
 
 		virtual void updateLayout(Rectanglef newSize) { m_LayoutBounds = newSize; }
 
+		virtual Size getPreferredSize() const { return Size(16, 16); };
+
 		const std::string &getID() const { return m_ID; }
 		void setID(std::string id) { m_ID = std::move(id); }
 
 		virtual int getChildCount() const { return 0; }
 		virtual const Component *getChild(int index) const { return nullptr; }
+		virtual Component *getChild(int index) { return nullptr; }
 
 		void setParent(Component *component) { m_Parent = component; }
 		Component *getParent() { return m_Parent; }

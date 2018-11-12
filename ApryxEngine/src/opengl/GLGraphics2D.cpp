@@ -248,6 +248,8 @@ namespace apryx {
 		float xoffset = 0;
 		float yoffset = 0;
 
+		// TODO per line centering
+
 		{
 			auto rect = font->measureText(text);
 
@@ -267,11 +269,13 @@ namespace apryx {
 			}
 		}
 
+		float xStart = xoffset;
+
 		for (int i = 0; i < text.size(); i++) {
 			char c = text[i];
 
 			if (c == '\n') {
-				xoffset = 0;
+				xoffset = xStart;
 				yoffset += font->getHeight() + 1; // TODO nice font spacing
 				continue;
 			}

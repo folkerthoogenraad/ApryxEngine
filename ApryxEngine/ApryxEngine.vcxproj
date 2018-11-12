@@ -173,6 +173,7 @@
     <ClCompile Include="src\ui\ApryxUI.cpp" />
     <ClCompile Include="src\ui\Button.cpp" />
     <ClCompile Include="src\ui\Component.cpp" />
+    <ClCompile Include="src\ui\LinearLayout.cpp" />
     <ClCompile Include="src\win32\Win32Context.cpp" />
     <ClCompile Include="src\win32\Win32Timer.cpp" />
     <ClCompile Include="src\win32\Win32Window.cpp" />
@@ -236,6 +237,7 @@
     <ClInclude Include="src\ui\ApryxUI.h" />
     <ClInclude Include="src\ui\Button.h" />
     <ClInclude Include="src\ui\Component.h" />
+    <ClInclude Include="src\ui\LinearLayout.h" />
     <ClInclude Include="src\win32\stb_image.h" />
     <ClInclude Include="src\win32\stb_true_type.h" />
     <ClInclude Include="src\win32\wglext.h" />

@@ -20,6 +20,7 @@
 
 #include "ui/ApryxUI.h"
 #include "ui/Button.h"
+#include "ui/LinearLayout.h"
 
 namespace apryx {
 	class TestGame : public Game {
@@ -35,10 +36,17 @@ namespace apryx {
 			ui->getStyle().textFont = context->loadFont("fonts/OpenSans.ttf", (int)(16));
 			ui->getStyle().componentFont = context->loadFont("fonts/Exo2.ttf", (int)(16));
 
-			auto button = std::make_shared<Button>("Test text 123");
+			auto layout = std::make_shared<LinearLayout>(LinearLayout::Horizontal);
 
-			ui->setMainComponent(button);
-			ui->updateLayout(m_Context->getWindow()->getWidth(), m_Context->getWindow()->getHeight());
+			auto buttonSubmit = std::make_shared<Button>("Submit", Button::Primary);
+			auto buttonCancel = std::make_shared<Button>("Cancel", Button::Secondary);
+
+			layout->addComponent(buttonCancel);
+			layout->addComponent(buttonSubmit);
+
+			ui->setMainComponent(layout);
+
+			ui->updateLayout(context->getWindow()->getWidth(), context->getWindow()->getHeight());
 		}
 
 		virtual void draw(Graphics2D &graphics)

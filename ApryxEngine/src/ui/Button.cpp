@@ -1,8 +1,10 @@
 #include "Button.h"
 
+#include "math/math.h"
+
 namespace apryx {
-	Button::Button(std::string text)
-		: m_Text(text)
+	Button::Button(std::string text, ButtonType type)
+		: m_Text(text), m_Type(type)
 	{ }
 
 	void Button::init()
@@ -34,7 +36,21 @@ namespace apryx {
 			backgroundPaint.setStyle(Paint::Stroke);
 		}
 
-		graphics.drawRoundedRectangle(backgroundPaint, bounds, bounds.height() / 2);
+		float rounding = min_t(bounds.height() / 2.0f, 20.0f);
+
+		graphics.drawRoundedRectangle(backgroundPaint, bounds, rounding);
 		graphics.drawText(textPaint, bounds.center(), m_Text);
+	}
+
+	Size Button::getPreferredSize() const
+	{
+		Size size = Size(128, 40);
+
+		Rectanglef boundingBox = m_Font->measureText(m_Text);
+
+		size.width = max_t(boundingBox.width() + 40, size.width);
+		size.height = max_t(boundingBox.height() + 24, size.height);
+
+		return size;
 	}
 }
