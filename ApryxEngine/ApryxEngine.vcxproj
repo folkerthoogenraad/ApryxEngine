@@ -237,6 +237,7 @@
     <ClInclude Include="src\ui\ApryxUI.h" />
     <ClInclude Include="src\ui\Button.h" />
     <ClInclude Include="src\ui\Component.h" />
+    <ClInclude Include="src\ui\LayoutParams.h" />
     <ClInclude Include="src\ui\LinearLayout.h" />
     <ClInclude Include="src\win32\stb_image.h" />
     <ClInclude Include="src\win32\stb_true_type.h" />

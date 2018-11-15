@@ -37,9 +37,13 @@ namespace apryx {
 			ui->getStyle().componentFont = context->loadFont("fonts/Exo2.ttf", (int)(16));
 
 			auto layout = std::make_shared<LinearLayout>(LinearLayout::Horizontal);
+			layout->setGap(40);
 
 			auto buttonSubmit = std::make_shared<Button>("Submit", Button::Primary);
+			buttonSubmit->setLayoutParams(LayoutParams(LayoutParams::MatchParent, LayoutParams::WrapContent, Vector2f(2, 1)));
+
 			auto buttonCancel = std::make_shared<Button>("Cancel", Button::Secondary);
+			buttonCancel->setLayoutParams(LayoutParams(LayoutParams::WrapContent, LayoutParams::WrapContent, Vector2f(1,1)));
 
 			layout->addComponent(buttonCancel);
 			layout->addComponent(buttonSubmit);

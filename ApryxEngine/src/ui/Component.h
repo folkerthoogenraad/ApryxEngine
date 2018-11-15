@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ApryxUI.h"
+#include "LayoutParams.h"
 
 #include "math/Rectangle.h"
 
@@ -21,17 +22,20 @@ namespace apryx {
 	using Size = Vector2f;
 
 	class Component {
-		ApryxUI *m_UI;
-		Component *m_Parent;
+		ApryxUI *m_UI = nullptr;
+		Component *m_Parent = nullptr;
 
 		Rectanglef m_LayoutBounds;
 		Insets m_Insets = Insets::defaultInsets();
+		LayoutParams m_LayoutParams;
 
 		std::string m_ID = "";
 	public:
 		virtual void init() { }
 		virtual void update() {}
 		virtual void draw(Graphics2D &graphics) {}
+
+		void requestLayoutUpdate() { if (m_Parent != nullptr) m_Parent->requestLayoutUpdate(); else updateLayout(getLayoutBounds()); }
 
 		Rectanglef getLayoutBounds() { return m_LayoutBounds; }
 		Rectanglef getLocalBounds();
@@ -53,7 +57,14 @@ namespace apryx {
 		ApryxUI *getUI() { return m_UI; }
 		void setUI(ApryxUI *ui) { m_UI = ui; }
 
-		
+		// Update the layout parameters and update the new layout
+		void setLayoutParams(LayoutParams newParams) { m_LayoutParams = newParams; requestLayoutUpdate(); }
+
+		// Update the layout paramters without changing the actual layout (use with care)
+		void setLayoutParamsRaw(LayoutParams newParams) { m_LayoutParams = newParams; }
+
+		// Returns the layout parameters for this component
+		const LayoutParams &getLayoutParams() const { return m_LayoutParams; }
 	};
 
 }

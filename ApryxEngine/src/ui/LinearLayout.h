@@ -26,8 +26,11 @@ namespace apryx {
 
 		virtual void update() override;
 		virtual void draw(Graphics2D &graphics) override;
-	
+
 		void addComponent(std::shared_ptr<Component> component);
+
+		void setGap(float gap) { m_Gap = gap; }
+		float getGap() const { return m_Gap; }
 
 		virtual int getChildCount() const { return m_Children.size(); }
 		virtual const Component *getChild(int index) const { return m_Children[index].get(); }
