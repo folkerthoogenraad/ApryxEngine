@@ -26,7 +26,8 @@ namespace apryx {
 
 		m_Batch.texture(m_WhiteTexture);
 
-		setCamera(Camera2D(m_Window->getWidth(), m_Window->getHeight()));
+		m_MatrixStack.push(Matrix4f::identity());
+		reset();
 	}
 	GLGraphics2D::GLGraphics2D(std::shared_ptr<GLSurface> surface)
 		: m_Surface(surface)
@@ -39,17 +40,43 @@ namespace apryx {
 
 		m_Batch.texture(m_WhiteTexture);
 
-		setCamera(Camera2D(surface->getWidth(), surface->getHeight(), true));
+		m_MatrixStack.push(Matrix4f::identity());
+		reset();
 	}
 
 	void GLGraphics2D::save()
 	{
+		Matrix4f top = m_MatrixStack.top();
+		m_MatrixStack.push(top);
 	}
 
-	void GLGraphics2D::setCamera(Camera2D camera)
+	void GLGraphics2D::setMatrix(Matrix4f matrix)
 	{
-		m_Batch.setMatrixView(camera.getMatrixView());
-		m_Batch.setMatrixProjection(camera.getMatrixProjection());
+		flush();
+		m_MatrixStack.top() = matrix;
+	}
+
+	Matrix4f GLGraphics2D::getMatrix()
+	{
+		return m_MatrixStack.top();
+	}
+
+	void GLGraphics2D::translate(Vector2f translation)
+	{
+		flush();
+		m_MatrixStack.top() = m_MatrixStack.top() * Matrix4f::translation(translation.x, translation.y, 0);
+	}
+
+	void GLGraphics2D::scale(Vector2f scale)
+	{
+		flush();
+		m_MatrixStack.top() = m_MatrixStack.top() * Matrix4f::scaled(scale.x, scale.y, 1);
+	}
+
+	void GLGraphics2D::rotate(float amountInDegrees)
+	{
+		flush();
+		m_MatrixStack.top() = m_MatrixStack.top() * Matrix4f::rotation(amountInDegrees, Vector3f(0,0,1));
 	}
 
 	void GLGraphics2D::clipRect(Rectanglef rectangle)
@@ -58,10 +85,26 @@ namespace apryx {
 
 	void GLGraphics2D::reset()
 	{
+		flush();
+		Vector2f size;
+		
+		if (m_Surface == nullptr) {
+			size = Vector2f(m_Window->getWidth(), m_Window->getHeight());
+		}
+		else {
+			size = Vector2f(m_Surface->getWidth(), m_Surface->getHeight());
+		}
+
+		m_MatrixStack.top() = Matrix4f::orthographic(0, size.width, size.height, 0, -100, 100);
 	}
 
 	void GLGraphics2D::restore()
 	{
+		if (m_MatrixStack.size() <= 1)
+			return;
+			
+		flush();
+		m_MatrixStack.pop();
 	}
 
 	void GLGraphics2D::drawRectangle(const Paint & paint, Rectanglef rectangle)
@@ -410,6 +453,8 @@ namespace apryx {
 			m_Surface->bind();
 			glViewport(0, 0, m_Surface->getWidth(), m_Surface->getHeight());
 		}
+
+		m_Batch.setMatrixView(m_MatrixStack.top());
 		
 		m_Batch.end();
 	}

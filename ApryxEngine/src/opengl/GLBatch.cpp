@@ -83,23 +83,22 @@ namespace apryx {
 		m_Index = 0;
 	}
 
+	// Removed the flushing
 	void GLBatch::setMatrixModel(Matrix4f matrix)
 	{
-		flush();
 		m_MatrixModel = matrix;
 	}
 
 	void GLBatch::setMatrixView(Matrix4f matrix)
 	{
-		flush();
 		m_MatrixView = matrix;
 	}
 
 	void GLBatch::setMatrixProjection(Matrix4f matrix)
 	{
-		flush();
 		m_MatrixProjection = matrix;
 	}
+	// Removed the flushing
 
 	void GLBatch::setSize(float width, float height) 
 	{

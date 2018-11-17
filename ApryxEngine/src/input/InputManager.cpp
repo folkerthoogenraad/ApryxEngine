@@ -9,16 +9,21 @@ namespace apryx {
 	}
 	bool InputManager::isKeyUp(int key)
 	{
-		return m_UpKeys.find(key) != m_UpKeys.end();
+		return m_ButtonsReleased.find(key) != m_ButtonsReleased.end();
 	}
 	bool InputManager::isKeyPressed(int key)
 	{
-		return m_PressedKeys.find(key) != m_PressedKeys.end();
+		return m_ButtonsPressed.find(key) != m_ButtonsPressed.end();
+	}
+
+	const Gamepad & InputManager::getGamepad(int index) const
+	{
+		return m_Gamepads[index];
 	}
 
 	void InputManager::clear() {
-		m_UpKeys.clear();
-		m_PressedKeys.clear();
+		m_ButtonsReleased.clear();
+		m_ButtonsPressed.clear();
 	}
 
 	void InputManager::processEvents(const std::vector<InputEvent>& inputs)
@@ -27,15 +32,20 @@ namespace apryx {
 			switch (event.m_EventType)
 			{
 			case InputEvent::KeyboardPressed:
-				m_PressedKeys.insert(event.m_KeyCode);
+				m_ButtonsPressed.insert(event.m_KeyCode);
 				m_DownKeys.insert(event.m_KeyCode);
 				break;
 
 			case InputEvent::KeyboardReleased:
-				m_UpKeys.insert(event.m_KeyCode);
+				m_ButtonsReleased.insert(event.m_KeyCode);
 				m_DownKeys.erase(event.m_KeyCode); 
 				break;
 			}
+		}
+
+		int index = 0;
+		for (auto &g : m_Gamepads) {
+			g.processEvents(inputs, index++);
 		}
 	}
 }

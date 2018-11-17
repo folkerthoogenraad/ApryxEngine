@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stack>
+
 #include "graphics/Window.h"
 #include "graphics/Graphics2D.h"
 
@@ -20,6 +22,8 @@ namespace apryx {
 		std::shared_ptr<Window> m_Window; // TODO make window a surface too.
 		std::shared_ptr<GLSurface> m_Surface;
 
+		std::stack<Matrix4f> m_MatrixStack;
+
 		float m_CirclePrecision = (3.141592654f * 2) / 36;
 
 		GLBatch m_Batch;
@@ -28,7 +32,14 @@ namespace apryx {
 		GLGraphics2D(std::shared_ptr<GLSurface> surface);
 		
 		virtual void save() override; // Save the state (current clipping and camera)
-		virtual void setCamera(Camera2D camera) override;
+		
+		virtual void setMatrix(Matrix4f matrix) override;
+		virtual Matrix4f getMatrix() override;
+
+		virtual void translate(Vector2f translation) override;
+		virtual void scale(Vector2f scale) override;
+		virtual void rotate(float amountInDegrees) override;
+
 		virtual void clipRect(Rectanglef rectangle) override;
 		virtual void reset() override;
 		virtual void restore() override;

@@ -78,6 +78,9 @@ int main()
 
 		if (application->shouldRedraw()) {
 			context->frameTime = (float)(sum / dtMax);
+			
+			graphics.reset();
+
 			application->draw(graphics);
 
 			graphics.flush();

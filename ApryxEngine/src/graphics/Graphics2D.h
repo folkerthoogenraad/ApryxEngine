@@ -7,10 +7,9 @@
 #include "Sprite.h"
 #include "math/Vector2.h"
 #include "math/Vector4.h"
+#include "math/Matrix4.h"
 
 #include "math/Rectangle.h"
-
-#include "graphics/Camera2D.h"
 
 #include <stack>
 
@@ -24,11 +23,17 @@ namespace apryx {
 		// TODO engineer this
 		virtual void save() = 0; // Save the state (current clipping and matrices)
 
-		virtual void setCamera(Camera2D camera) = 0;
-		virtual void clipRect(Rectanglef rectangle) = 0;
-		virtual void reset() = 0;
+		virtual void setMatrix(Matrix4f matrix) = 0;
+		virtual Matrix4f getMatrix() = 0;
 
+		virtual void translate(Vector2f translation) = 0;
+		virtual void scale(Vector2f scale) = 0;
+		virtual void rotate(float amountInDegrees) = 0;
+
+		virtual void reset() = 0;
 		virtual void restore() = 0;
+		
+		virtual void clipRect(Rectanglef rectangle) = 0;
 
 		virtual void drawRectangle(const Paint &paint, Rectanglef rectangle) = 0;
 		virtual void drawLine(const Paint &paint, Vector2f pos1, Vector2f pos2) = 0;

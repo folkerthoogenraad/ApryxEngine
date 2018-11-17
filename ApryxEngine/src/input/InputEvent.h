@@ -127,31 +127,51 @@ namespace apryx {
 	class InputEvent {
 	public:
 		enum EventType {
-			// I'm really not sure why these are powers of two :')
-			MousePressed = 1 << 0,
-			MouseReleased = 1 << 1,
-			MouseMove = 1 << 2,
-			MouseDrag = 1 << 3,
-			MouseScroll = 1 << 4,
+			MousePressed = 0,
+			MouseReleased,
+			MouseMove,
+			MouseDrag,
+			MouseScroll,
 
-			KeyboardTyped = 1 << 5,
-			KeyboardPressed = 1 << 6,
-			KeyboardReleased = 1 << 7
+			KeyboardTyped,
+			KeyboardPressed,
+			KeyboardReleased,
+
+			GamepadButtonPressed,
+			GamepadButtonReleased,
+			GamepadAxisChanged,
+			GamepadConnected,
+			GamepadDisconnected,
 		};
 	public:
 		bool m_Consumed = false;
 
 		EventType m_EventType;
 
-		int m_UnicodeKey;
-		int m_KeyCode;
-		int m_MouseButton;
+		union {
+			struct {
+				int m_UnicodeKey;
+				int m_KeyCode;
+			};
+			struct {
+				int m_MouseButton;
+			};
+			struct {
+				Vector2f m_MouseStartPosition; 
+				Vector2f m_MousePosition;
+				Vector2f m_MouseDelta;
 
-		Vector2f m_MouseStartPosition; //Mouse Start Position
-		Vector2f m_MousePosition; //Mouse Start Position
-		Vector2f m_MouseDelta; //Mouse Start Position
+				Vector2f m_ScrollDirection;
+			};
+			struct {
+				int m_GamepadIndex;
 
-		Vector2f m_ScrollDirection;
+				int m_GamepadButton;
+				int m_GamepadAxis;
+
+				float m_GamepadAxisValue;
+			};
+		};
 
 		bool m_CrtlDown, m_ShiftDown, m_AltDown;
 		bool m_Repeat = false;
@@ -181,6 +201,12 @@ namespace apryx {
 		Vector2f getMouseDelta() const { return m_MouseDelta; }
 
 		Vector2f getScrollDirection() const { return m_ScrollDirection; }
+
+		int getGamepadIndex() const { return m_GamepadIndex; }
+		int getGamepadButton() const { return m_GamepadButton; }
+
+		int getGamepadAxis() const { return m_GamepadAxis; }
+		float getGamepadAxisValue() const { return m_GamepadAxisValue; }
 
 		int getUnicodeKey() { return m_UnicodeKey; }
 		bool hasUnicodeKey() { return m_UnicodeKey > 0; }
