@@ -1,339 +1,119 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Source Files\Win32">
-      <UniqueIdentifier>{be14c291-3406-449d-93ee-d8de5626b724}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="src\game\Tilemap.cpp" />
+    <ClCompile Include="src\graphics\Animation.cpp" />
+    <ClCompile Include="src\graphics\AnimationController.cpp" />
+    <ClCompile Include="src\graphics\Font.cpp" />
+    <ClCompile Include="src\graphics\FontUtils.cpp" />
+    <ClCompile Include="src\graphics\Graphics2D.cpp" />
+    <ClCompile Include="src\input\Gamepad.cpp" />
+    <ClCompile Include="src\input\InputManager.cpp" />
+    <ClCompile Include="src\console\Console.cpp" />
+    <ClCompile Include="src\game\Entity.cpp" />
+    <ClCompile Include="src\game\Scene.cpp" />
+    <ClCompile Include="src\graphics\Camera2D.cpp" />
+    <ClCompile Include="src\graphics\Image.cpp" />
+    <ClCompile Include="src\graphics\Paint.cpp" />
+    <ClCompile Include="src\graphics\Sprite.cpp" />
+    <ClCompile Include="src\input\InputEvent.cpp" />
+    <ClCompile Include="src\math\Curve.cpp" />
+    <ClCompile Include="src\math\Matrix2.cpp" />
+    <ClCompile Include="src\math\Matrix3.cpp" />
+    <ClCompile Include="src\math\Matrix4.cpp" />
+    <ClCompile Include="src\opengl\GL.cpp" />
+    <ClCompile Include="src\opengl\GLBatch.cpp" />
+    <ClCompile Include="src\opengl\GLGraphics2D.cpp" />
+    <ClCompile Include="src\opengl\GLShader.cpp" />
+    <ClCompile Include="src\opengl\GLShaderProgram.cpp" />
+    <ClCompile Include="src\opengl\GLSurface.cpp" />
+    <ClCompile Include="src\opengl\GLTexture.cpp" />
+    <ClCompile Include="src\opengl\GLVertexBufferObject.cpp" />
+    <ClCompile Include="src\game\SceneLoader.cpp" />
+    <ClCompile Include="src\time\Timer.cpp" />
+    <ClCompile Include="src\ui\ApryxUI.cpp" />
+    <ClCompile Include="src\ui\Button.cpp" />
+    <ClCompile Include="src\ui\LinearLayout.cpp" />
+    <ClCompile Include="src\win32\Win32Context.cpp" />
+    <ClCompile Include="src\win32\Win32Timer.cpp" />
+    <ClCompile Include="src\win32\Win32Window.cpp" />
+    <ClCompile Include="src\ecs\EntityComponentSystem.cpp" />
+    <ClCompile Include="src\ecs\Component.cpp" />
+    <ClCompile Include="src\ui\UIComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\graphics\Camera2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Paint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\math\Curve.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\math\Matrix2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\math\Matrix3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\math\Matrix4.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opengl\GL.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opengl\GLBatch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opengl\GLGraphics2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opengl\GLShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opengl\GLShaderProgram.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opengl\GLSurface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opengl\GLTexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opengl\GLVertexBufferObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\time\Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\win32\Win32Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\input\InputEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\win32\Win32Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\win32\Win32Context.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\input\InputManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Animation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\AnimationController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Font.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\FontUtils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\console\Console.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Graphics2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\SceneLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\Component.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\ApryxUI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\Button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\LinearLayout.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\Tilemap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\input\Gamepad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\application\Application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Camera2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Font.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Graphics2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Paint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Sprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Surface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Window.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Circle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\collision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Cuboid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Curve.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Defines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\epsilon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Line2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Line3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\math.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Matrix2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Matrix3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Matrix4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Plane.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\precision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Quaternion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Rectangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\sorting.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Sphere.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Tetrahedron.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Triangle2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Triangle3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Vector2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Vector3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Vector4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\GL.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\GLBatch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\GLGraphics2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\GLShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\GLShaderProgram.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\GLSurface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\GLTexture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\GLVertexBufferObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\time\Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\win32\stb_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\win32\Win32Window.h">
-      <Filter>Source Files\Win32</Filter>
-    </ClInclude>
-    <ClInclude Include="src\input\InputEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\win32\Win32Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\win32\Win32Context.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\resources\Context.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\input\InputManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\win32\wglext.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Animation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\AnimationController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\FontUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\console\Console.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\EntryPoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\SceneLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\win32\stb_true_type.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ui\ApryxUI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ui\Component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ui\Button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ui\LinearLayout.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\Tilemap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\input\Gamepad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="src\application\Application.h" />
+    <ClInclude Include="src\application\EntryPoint.h" />
+    <ClInclude Include="src\game\Tilemap.h" />
+    <ClInclude Include="src\graphics\Animation.h" />
+    <ClInclude Include="src\graphics\AnimationController.h" />
+    <ClInclude Include="src\graphics\FontUtils.h" />
+    <ClInclude Include="src\input\Gamepad.h" />
+    <ClInclude Include="src\input\InputManager.h" />
+    <ClInclude Include="src\console\Console.h" />
+    <ClInclude Include="src\game\Game.h" />
+    <ClInclude Include="src\game\Scene.h" />
+    <ClInclude Include="src\graphics\Camera.h" />
+    <ClInclude Include="src\graphics\Camera2D.h" />
+    <ClInclude Include="src\graphics\Font.h" />
+    <ClInclude Include="src\graphics\Graphics2D.h" />
+    <ClInclude Include="src\graphics\Image.h" />
+    <ClInclude Include="src\graphics\Paint.h" />
+    <ClInclude Include="src\graphics\Sprite.h" />
+    <ClInclude Include="src\graphics\Surface.h" />
+    <ClInclude Include="src\graphics\Texture.h" />
+    <ClInclude Include="src\input\InputEvent.h" />
+    <ClInclude Include="src\math\Circle.h" />
+    <ClInclude Include="src\math\collision.h" />
+    <ClInclude Include="src\math\Cuboid.h" />
+    <ClInclude Include="src\math\Curve.h" />
+    <ClInclude Include="src\math\Defines.h" />
+    <ClInclude Include="src\math\epsilon.h" />
+    <ClInclude Include="src\math\Line2.h" />
+    <ClInclude Include="src\math\Line3.h" />
+    <ClInclude Include="src\math\math.h" />
+    <ClInclude Include="src\math\Matrix2.h" />
+    <ClInclude Include="src\math\Matrix3.h" />
+    <ClInclude Include="src\math\Matrix4.h" />
+    <ClInclude Include="src\math\Plane.h" />
+    <ClInclude Include="src\math\precision.h" />
+    <ClInclude Include="src\math\Quaternion.h" />
+    <ClInclude Include="src\math\Rectangle.h" />
+    <ClInclude Include="src\math\sorting.h" />
+    <ClInclude Include="src\math\Sphere.h" />
+    <ClInclude Include="src\math\Tetrahedron.h" />
+    <ClInclude Include="src\math\Triangle2.h" />
+    <ClInclude Include="src\math\Triangle3.h" />
+    <ClInclude Include="src\math\Vector2.h" />
+    <ClInclude Include="src\math\Vector3.h" />
+    <ClInclude Include="src\math\Vector4.h" />
+    <ClInclude Include="src\opengl\GL.h" />
+    <ClInclude Include="src\opengl\GLBatch.h" />
+    <ClInclude Include="src\opengl\GLGraphics2D.h" />
+    <ClInclude Include="src\opengl\GLShader.h" />
+    <ClInclude Include="src\opengl\GLShaderProgram.h" />
+    <ClInclude Include="src\opengl\GLSurface.h" />
+    <ClInclude Include="src\opengl\GLTexture.h" />
+    <ClInclude Include="src\opengl\GLVertexBufferObject.h" />
+    <ClInclude Include="src\resources\Context.h" />
+    <ClInclude Include="src\game\Entity.h" />
+    <ClInclude Include="src\game\SceneLoader.h" />
+    <ClInclude Include="src\time\Timer.h" />
+    <ClInclude Include="src\ui\ApryxUI.h" />
+    <ClInclude Include="src\ui\Button.h" />
+    <ClInclude Include="src\ui\LayoutParams.h" />
+    <ClInclude Include="src\ui\LinearLayout.h" />
+    <ClInclude Include="src\win32\stb_image.h" />
+    <ClInclude Include="src\win32\stb_true_type.h" />
+    <ClInclude Include="src\win32\wglext.h" />
+    <ClInclude Include="src\win32\Win32Context.h" />
+    <ClInclude Include="src\win32\Win32Timer.h" />
+    <ClInclude Include="src\win32\Win32Window.h" />
+    <ClInclude Include="src\graphics\Window.h" />
+    <ClInclude Include="src\ecs\Component.h" />
+    <ClInclude Include="src\ecs\Entity.h" />
+    <ClInclude Include="src\ecs\EntityComponentSystem.h" />
+    <ClInclude Include="src\ecs\System.h" />
+    <ClInclude Include="src\ui\UIComponent.h" />
   </ItemGroup>
 </Project>

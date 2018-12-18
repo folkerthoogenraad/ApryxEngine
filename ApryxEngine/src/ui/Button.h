@@ -2,14 +2,14 @@
 
 #include "graphics/Font.h"
 
-#include "Component.h"
+#include "UIComponent.h"
 
 #include <string>
 #include <memory>
 
 namespace apryx {
 
-	class Button : public Component{
+	class Button : public UIComponent {
 	public:
 		enum ButtonType {
 			Primary,

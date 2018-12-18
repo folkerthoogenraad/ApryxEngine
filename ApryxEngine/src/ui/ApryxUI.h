@@ -22,13 +22,13 @@ namespace apryx {
 		std::shared_ptr<Font> componentFont;
 	};
 
-	class Component;
+	class UIComponent;
 
 	class ApryxUI {
 		std::shared_ptr<Context> m_Context;
 
 		// TODO component layers and shit
-		std::shared_ptr<Component> m_MainComponent;
+		std::shared_ptr<UIComponent> m_MainComponent;
 
 		ApryxUIStyle m_Style;
 	public:
@@ -41,7 +41,7 @@ namespace apryx {
 
 		void updateLayout(float width, float height);
 
-		void setMainComponent(std::shared_ptr<Component> component);
+		void setMainComponent(std::shared_ptr<UIComponent> component);
 
 		const ApryxUIStyle &getStyle() const { return m_Style; }
 		ApryxUIStyle &getStyle() { return m_Style; }

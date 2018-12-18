@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ApryxUI.h"
+#include "LayoutParams.h"
 
 #include "math/Rectangle.h"
 
@@ -20,18 +21,21 @@ namespace apryx {
 
 	using Size = Vector2f;
 
-	class Component {
-		ApryxUI *m_UI;
-		Component *m_Parent;
+	class UIComponent {
+		ApryxUI *m_UI = nullptr;
+		UIComponent *m_Parent = nullptr;
 
 		Rectanglef m_LayoutBounds;
 		Insets m_Insets = Insets::defaultInsets();
+		LayoutParams m_LayoutParams;
 
 		std::string m_ID = "";
 	public:
 		virtual void init() { }
 		virtual void update() {}
 		virtual void draw(Graphics2D &graphics) {}
+
+		void requestLayoutUpdate() { if (m_Parent != nullptr) m_Parent->requestLayoutUpdate(); else updateLayout(getLayoutBounds()); }
 
 		Rectanglef getLayoutBounds() { return m_LayoutBounds; }
 		Rectanglef getLocalBounds();
@@ -44,16 +48,23 @@ namespace apryx {
 		void setID(std::string id) { m_ID = std::move(id); }
 
 		virtual int getChildCount() const { return 0; }
-		virtual const Component *getChild(int index) const { return nullptr; }
-		virtual Component *getChild(int index) { return nullptr; }
+		virtual const UIComponent *getChild(int index) const { return nullptr; }
+		virtual UIComponent *getChild(int index) { return nullptr; }
 
-		void setParent(Component *component) { m_Parent = component; }
-		Component *getParent() { return m_Parent; }
+		void setParent(UIComponent *component) { m_Parent = component; }
+		UIComponent *getParent() { return m_Parent; }
 
 		ApryxUI *getUI() { return m_UI; }
 		void setUI(ApryxUI *ui) { m_UI = ui; }
 
-		
+		// Update the layout parameters and update the new layout
+		void setLayoutParams(LayoutParams newParams) { m_LayoutParams = newParams; requestLayoutUpdate(); }
+
+		// Update the layout paramters without changing the actual layout (use with care)
+		void setLayoutParamsRaw(LayoutParams newParams) { m_LayoutParams = newParams; }
+
+		// Returns the layout parameters for this component
+		const LayoutParams &getLayoutParams() const { return m_LayoutParams; }
 	};
 
 }

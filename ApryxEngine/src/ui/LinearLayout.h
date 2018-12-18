@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Component.h"
+#include "UIComponent.h"
 
 #include <memory>
 #include <vector>
 
 namespace apryx {
 	
-	class LinearLayout : public Component{
+	class LinearLayout : public UIComponent {
 	public:
 		enum Direction {
 			Horizontal,
@@ -15,7 +15,7 @@ namespace apryx {
 		};
 	private:
 		Direction m_Direction;
-		std::vector<std::shared_ptr<Component>> m_Children;
+		std::vector<std::shared_ptr<UIComponent>> m_Children;
 		float m_Gap = 0;
 	public:
 		LinearLayout(Direction direction) : m_Direction(direction) {}
@@ -26,12 +26,15 @@ namespace apryx {
 
 		virtual void update() override;
 		virtual void draw(Graphics2D &graphics) override;
-	
-		void addComponent(std::shared_ptr<Component> component);
+
+		void addComponent(std::shared_ptr<UIComponent> component);
+
+		void setGap(float gap) { m_Gap = gap; }
+		float getGap() const { return m_Gap; }
 
 		virtual int getChildCount() const { return m_Children.size(); }
-		virtual const Component *getChild(int index) const { return m_Children[index].get(); }
-		virtual Component *getChild(int index) { return m_Children[index].get(); }
+		virtual const UIComponent *getChild(int index) const { return m_Children[index].get(); }
+		virtual UIComponent *getChild(int index) { return m_Children[index].get(); }
 
 	};
 

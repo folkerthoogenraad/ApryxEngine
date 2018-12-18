@@ -142,6 +142,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ecs\Component.cpp" />
+    <ClCompile Include="src\ecs\EntityComponentSystem.cpp" />
     <ClCompile Include="src\game\Tilemap.cpp" />
     <ClCompile Include="src\graphics\Animation.cpp" />
     <ClCompile Include="src\graphics\AnimationController.cpp" />
@@ -174,7 +176,7 @@
     <ClCompile Include="src\time\Timer.cpp" />
     <ClCompile Include="src\ui\ApryxUI.cpp" />
     <ClCompile Include="src\ui\Button.cpp" />
-    <ClCompile Include="src\ui\Component.cpp" />
+    <ClCompile Include="src\ui\UIComponent.cpp" />
     <ClCompile Include="src\ui\LinearLayout.cpp" />
     <ClCompile Include="src\win32\Win32Context.cpp" />
     <ClCompile Include="src\win32\Win32Timer.cpp" />
@@ -183,6 +185,10 @@
   <ItemGroup>
     <ClInclude Include="src\application\Application.h" />
     <ClInclude Include="src\application\EntryPoint.h" />
+    <ClInclude Include="src\ecs\Component.h" />
+    <ClInclude Include="src\ecs\Entity.h" />
+    <ClInclude Include="src\ecs\EntityComponentSystem.h" />
+    <ClInclude Include="src\ecs\System.h" />
     <ClInclude Include="src\game\Tilemap.h" />
     <ClInclude Include="src\graphics\Animation.h" />
     <ClInclude Include="src\graphics\AnimationController.h" />
@@ -240,7 +246,8 @@
     <ClInclude Include="src\time\Timer.h" />
     <ClInclude Include="src\ui\ApryxUI.h" />
     <ClInclude Include="src\ui\Button.h" />
-    <ClInclude Include="src\ui\Component.h" />
+    <ClInclude Include="src\ui\UIComponent.h" />
+    <ClInclude Include="src\ui\LayoutParams.h" />
     <ClInclude Include="src\ui\LinearLayout.h" />
     <ClInclude Include="src\win32\stb_image.h" />
     <ClInclude Include="src\win32\stb_true_type.h" />

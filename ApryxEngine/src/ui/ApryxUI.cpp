@@ -1,6 +1,6 @@
 #include "ApryxUI.h"
 
-#include "Component.h"
+#include "UIComponent.h"
 
 namespace apryx {
 
@@ -26,7 +26,7 @@ namespace apryx {
 		}
 	}
 
-	void ApryxUI::setMainComponent(std::shared_ptr<Component> component)
+	void ApryxUI::setMainComponent(std::shared_ptr<UIComponent> component)
 	{
 		// TODO update the layout for the main component.
 		m_MainComponent = component;

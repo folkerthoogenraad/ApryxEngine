@@ -1,8 +1,8 @@
-#include "Component.h"
+#include "UIComponent.h"
 
 namespace apryx {
 	
-	Rectanglef apryx::Component::getLocalBounds()
+	Rectanglef apryx::UIComponent::getLocalBounds()
 	{
 		Rectanglef rectangle = getLayoutBounds();
 

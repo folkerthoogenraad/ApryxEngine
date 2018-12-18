@@ -3,6 +3,7 @@
 #define PI 3.141592654f
 #include <math.h> //for sin, cos, tan, etc
 #include <cstdlib>
+#include <stdlib.h>
 
 namespace apryx {
 
@@ -35,12 +36,6 @@ namespace apryx {
 	inline bool inrange(const T &min, const T &max, const T &value)
 	{
 		return value > min && value < max;
-	}
-
-
-	inline double random()
-	{
-		return static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
 	}
 
 	template<typename T>
@@ -100,7 +95,6 @@ namespace apryx {
 	{
 		return a + (b - a) * f;
 	}
-
 
 	template <typename T, typename S>
 	Vector4<T> lerp(Vector4<T> a, Vector4<T> b, S f)
