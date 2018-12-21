@@ -9,18 +9,12 @@
 
 namespace apryx {
 
-	class Button : public UIComponent {
-	public:
-		enum ButtonType {
-			Primary,
-			Secondary
-		};
+	class Label : public UIComponent {
 	private:
 		std::string m_Text;
 		std::shared_ptr<Font> m_Font;
-		ButtonType m_Type;
 	public:
-		Button(std::string text = "Sample Text", ButtonType type = ButtonType::Primary);
+		Label(std::string text = "Sample Text");
 
 		virtual void init(ApryxUI *ui) override;
 
@@ -30,12 +24,9 @@ namespace apryx {
 
 		void setFont(std::shared_ptr<Font> font) { m_Font = font; }
 		const std::shared_ptr<Font> &getFont() const { return m_Font; }
-		
+
 		void setText(std::string str) { m_Text = std::move(str); }
 		const std::string &getText() const { return m_Text; }
-
-		ButtonType getButtonType() const { return m_Type; }
-		void setButtonType(ButtonType type) { m_Type = type; }
 	};
 
 }

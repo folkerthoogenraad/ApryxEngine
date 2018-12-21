@@ -17,9 +17,9 @@ namespace apryx {
 	template <typename T>
 	struct Sphere;
 	template <typename T>
-	struct Line2;
+	struct LineSegment2;
 	template <typename T>
-	struct Line3;
+	struct LineSegment3;
 	template <typename T>
 	struct Plane;
 	template <typename T>
@@ -44,7 +44,7 @@ namespace apryx {
 	}
 
 	template<typename T>
-	std::optional<Vector2<T>> intersect(const Line2<T> &l1, const Line2<T> &l2)
+	std::optional<Vector2<T>> intersect(const LineSegment2<T> &l1, const LineSegment2<T> &l2)
 	{
 		//p + t r = q + u s
 
@@ -63,7 +63,7 @@ namespace apryx {
 	}
 
 	template<typename T>
-	std::optional<Vector2<T>> intersectSegment(const Line2<T> &l1, const Line2<T> &l2)
+	std::optional<Vector2<T>> intersectSegment(const LineSegment2<T> &l1, const LineSegment2<T> &l2)
 	{
 		//p + t r = q + u s
 
@@ -140,7 +140,7 @@ namespace apryx {
 	}
 	
 	template<typename T>
-	std::optional<Vector3<T>> intersect(const Plane<T> &plane, const Line3<T> &line) 
+	std::optional<Vector3<T>> intersect(const Plane<T> &plane, const LineSegment3<T> &line) 
 	{
 		Vector3<T> lineDir = line.direction();
 
@@ -157,7 +157,7 @@ namespace apryx {
 	}
 
 	template<typename T>
-	std::optional<Line3<T>>	intersect(const Plane<T> &p, const Plane<T> &other)
+	std::optional<LineSegment3<T>>	intersect(const Plane<T> &p, const Plane<T> &other)
 	{
 		Vector3<T> dir = Vector3<T>::cross(other.direction, p.direction);
 
@@ -165,12 +165,12 @@ namespace apryx {
 			return std::nullopt;
 
 		//Perform a line intersection with the other plane
-		Line3<T> line(p.origin(), p.origin() + Vector3<T>::cross(dir, p.direction));
+		LineSegment3<T> line(p.origin(), p.origin() + Vector3<T>::cross(dir, p.direction));
 
 		//TODO check if this is needed.
 		Vector3<T> o = intersect(other, line).result;
 
-		return Line3<T>(o, o + dir);
+		return LineSegment3<T>(o, o + dir);
 	}
 
 	template<typename T>

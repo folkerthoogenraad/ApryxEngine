@@ -32,6 +32,8 @@ namespace apryx {
 		// Only use if you know what you are doing. So just dont actually.
 		void setHeight(float height) { m_Height = height; }
 		void setCharacter(char index, FontCharacter character);
+
+		void scale(float scaleFactor);
 	};
 
 	class FontBuilder {

@@ -7,8 +7,10 @@ namespace apryx {
 		: m_Text(text), m_Type(type)
 	{ }
 
-	void Button::init()
+	void Button::init(ApryxUI *ui)
 	{
+		UIComponent::init(ui);
+
 		ApryxUIStyle &style = getUI()->getStyle();
 
 		if (m_Font == nullptr)

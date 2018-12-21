@@ -49,6 +49,18 @@ namespace apryx {
 		m_Characters[index] = sprite;
 	}
 
+	void Font::scale(float scaleFactor)
+	{
+		m_Height *= scaleFactor;
+
+		for (auto c : m_Characters) {
+			if (c) {
+				c->sprite.setSize(c->sprite.getSize() * scaleFactor);
+				c->sprite.setOrigin(c->sprite.getOrigin() * scaleFactor);
+			}
+		}
+	}
+
 	FontBuilder::FontBuilder(std::shared_ptr<Texture> texture)
 		:m_ButtonFont(std::make_shared<Font>()), x(0), y(0), m_Texture(texture)
 	{

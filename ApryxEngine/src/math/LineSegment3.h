@@ -8,12 +8,12 @@ namespace apryx {
 	struct Matrix4;
 
 	template<typename T>
-	struct Line3 {
+	struct LineSegment3 {
 		Vector3<T> a;
 		Vector3<T> b;
 
-		Line3() {}
-		Line3(const Vector3<T> &a, const Vector3<T> &b)
+		LineSegment3() {}
+		LineSegment3(const Vector3<T> &a, const Vector3<T> &b)
 			: a(a), b(b) {}
 
 		Vector3<T> direction() const
@@ -34,10 +34,10 @@ namespace apryx {
 			return (a + b) / (T)2.0;
 		}
 
-		Line3<T> normal() const
+		LineSegment3<T> normal() const
 		{
 			Vector3<T> p = perp();
-			return Line3<T>(center(), center() + p);
+			return LineSegment3<T>(center(), center() + p);
 		}
 
 		//The distance from point to line in line units
@@ -55,12 +55,12 @@ namespace apryx {
 			return (b - a).magnitude();
 		}
 
-		Line3<T> clone()
+		LineSegment3<T> clone()
 		{
-			return Line3<T>(*this);
+			return LineSegment3<T>(*this);
 		}
 
-		Line3<T> &flip()
+		LineSegment3<T> &flip()
 		{
 			T temp = a;
 			a = b;
@@ -68,24 +68,24 @@ namespace apryx {
 
 			return *this;
 		}
-		Line3<T> flipped() const
+		LineSegment3<T> flipped() const
 		{
 			return clone().flip();
 		}
 	
-		Line3<T> &transform(const Matrix4<T> &m)
+		LineSegment3<T> &transform(const Matrix4<T> &m)
 		{
 			a = m * a;
 			b = m * b;
 			return *this;
 		}
-		Line3<T> transformed(const Matrix4<T> &m) const
+		LineSegment3<T> transformed(const Matrix4<T> &m) const
 		{
 			return clone().transform(m);
 		}
 	};
 
-	typedef Line3<float> Line3f;
-	typedef Line3<double> Line3d;
-	typedef Line3<int> Line3i;
+	typedef LineSegment3<float> LineSegment3f;
+	typedef LineSegment3<double> LineSegment3d;
+	typedef LineSegment3<int> LineSegment3i;
 }

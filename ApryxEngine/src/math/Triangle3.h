@@ -5,7 +5,7 @@
 namespace apryx {
 
 	template <typename T>
-	struct Line3;
+	struct LineSegment3;
 
 	template<typename T>
 	struct Triangle3 {
@@ -43,9 +43,9 @@ namespace apryx {
 			return *this;
 		}
 
-		Line3<T> edgeab() const { return Line3<T>(a, b); }
-		Line3<T> edgebc() const { return Line3<T>(b, c); }
-		Line3<T> edgeca() const { return Line3<T>(c, a); }
+		LineSegment3<T> edgeab() const { return LineSegment3<T>(a, b); }
+		LineSegment3<T> edgebc() const { return LineSegment3<T>(b, c); }
+		LineSegment3<T> edgeca() const { return LineSegment3<T>(c, a); }
 
 		template <typename T>
 		static Triangle3<T> unitTriangle()

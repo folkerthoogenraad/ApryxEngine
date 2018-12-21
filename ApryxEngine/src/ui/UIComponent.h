@@ -31,7 +31,7 @@ namespace apryx {
 
 		std::string m_ID = "";
 	public:
-		virtual void init() { }
+		virtual void init(ApryxUI *ui) { m_UI = ui; }
 		virtual void update() {}
 		virtual void draw(Graphics2D &graphics) {}
 
@@ -55,7 +55,6 @@ namespace apryx {
 		UIComponent *getParent() { return m_Parent; }
 
 		ApryxUI *getUI() { return m_UI; }
-		void setUI(ApryxUI *ui) { m_UI = ui; }
 
 		// Update the layout parameters and update the new layout
 		void setLayoutParams(LayoutParams newParams) { m_LayoutParams = newParams; requestLayoutUpdate(); }

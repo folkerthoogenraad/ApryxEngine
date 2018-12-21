@@ -176,6 +176,7 @@
     <ClCompile Include="src\time\Timer.cpp" />
     <ClCompile Include="src\ui\ApryxUI.cpp" />
     <ClCompile Include="src\ui\Button.cpp" />
+    <ClCompile Include="src\ui\Label.cpp" />
     <ClCompile Include="src\ui\UIComponent.cpp" />
     <ClCompile Include="src\ui\LinearLayout.cpp" />
     <ClCompile Include="src\win32\Win32Context.cpp" />
@@ -215,7 +216,8 @@
     <ClInclude Include="src\math\Defines.h" />
     <ClInclude Include="src\math\epsilon.h" />
     <ClInclude Include="src\math\Line2.h" />
-    <ClInclude Include="src\math\Line3.h" />
+    <ClInclude Include="src\math\LineSegment2.h" />
+    <ClInclude Include="src\math\LineSegment3.h" />
     <ClInclude Include="src\math\math.h" />
     <ClInclude Include="src\math\Matrix2.h" />
     <ClInclude Include="src\math\Matrix3.h" />
@@ -246,6 +248,7 @@
     <ClInclude Include="src\time\Timer.h" />
     <ClInclude Include="src\ui\ApryxUI.h" />
     <ClInclude Include="src\ui\Button.h" />
+    <ClInclude Include="src\ui\Label.h" />
     <ClInclude Include="src\ui\UIComponent.h" />
     <ClInclude Include="src\ui\LayoutParams.h" />
     <ClInclude Include="src\ui\LinearLayout.h" />

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <math.h>
+
 namespace apryx {
 
 	template<typename T>
@@ -88,6 +90,10 @@ namespace apryx {
 			return (T) x*x + y*y;
 		}
 
+		T angle() {
+			return atan2(y, x);
+		}
+
 		static T dot(const Vector2<T>&left, const Vector2<T>&right)
 		{
 			return left.x * right.x + left.y * right.y;
@@ -99,6 +105,10 @@ namespace apryx {
 		static Vector2<T> perp(const Vector2<T>&left)
 		{
 			return Vector2<T>(left.y, -left.x);
+		}
+		static Vector2<T> angled(float angle)
+		{
+			return Vector2<T>(cos(angle), sin(angle));
 		}
 
 		Vector2<T> operator+(const Vector2<T>& right) const

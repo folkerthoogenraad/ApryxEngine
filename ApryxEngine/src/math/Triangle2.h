@@ -47,8 +47,8 @@ namespace apryx {
 		Vector2<T> circumcenter()
 		{
 			return intersect(
-				Line2<T>(b, a).normal(),
-				Line2<T>(b, c).normal()
+				LineSegment2<T>(b, a).normal(),
+				LineSegment2<T>(b, c).normal()
 			).result;
 		}
 
@@ -64,14 +64,14 @@ namespace apryx {
 		bool isValid()
 		{
 			return intersects(
-				Line2<T>(b, a),
-				Line2<T>(b, c)
+				LineSegment2<T>(b, a),
+				LineSegment2<T>(b, c)
 			);
 		}
 
-		Line2<T> edgeab() const { return Line2<T>(a, b); }
-		Line2<T> edgebc() const { return Line2<T>(b, c); }
-		Line2<T> edgeca() const { return Line2<T>(c, a); }
+		LineSegment2<T> edgeab() const { return LineSegment2<T>(a, b); }
+		LineSegment2<T> edgebc() const { return LineSegment2<T>(b, c); }
+		LineSegment2<T> edgeca() const { return LineSegment2<T>(c, a); }
 	};
 
 	typedef Triangle2<float> Triangle2f;

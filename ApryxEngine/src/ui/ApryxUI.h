@@ -32,7 +32,7 @@ namespace apryx {
 
 		ApryxUIStyle m_Style;
 	public:
-		ApryxUI(std::shared_ptr<Context> context) : m_Context(context) { };
+		void init(std::shared_ptr<Context> context) { m_Context = context; };
 
 		void update();
 		void draw(Graphics2D &graphics);
@@ -45,6 +45,7 @@ namespace apryx {
 
 		const ApryxUIStyle &getStyle() const { return m_Style; }
 		ApryxUIStyle &getStyle() { return m_Style; }
+		void setStyle(ApryxUIStyle style) { m_Style = style; }
 	public: 
 		// Getters and setters
 		std::shared_ptr<Context> getContext() { return m_Context; }

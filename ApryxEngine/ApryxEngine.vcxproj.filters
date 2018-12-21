@@ -40,6 +40,7 @@
     <ClCompile Include="src\ecs\EntityComponentSystem.cpp" />
     <ClCompile Include="src\ecs\Component.cpp" />
     <ClCompile Include="src\ui\UIComponent.cpp" />
+    <ClCompile Include="src\ui\Label.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\application\Application.h" />
@@ -69,8 +70,6 @@
     <ClInclude Include="src\math\Curve.h" />
     <ClInclude Include="src\math\Defines.h" />
     <ClInclude Include="src\math\epsilon.h" />
-    <ClInclude Include="src\math\Line2.h" />
-    <ClInclude Include="src\math\Line3.h" />
     <ClInclude Include="src\math\math.h" />
     <ClInclude Include="src\math\Matrix2.h" />
     <ClInclude Include="src\math\Matrix3.h" />
@@ -115,5 +114,9 @@
     <ClInclude Include="src\ecs\EntityComponentSystem.h" />
     <ClInclude Include="src\ecs\System.h" />
     <ClInclude Include="src\ui\UIComponent.h" />
+    <ClInclude Include="src\math\LineSegment2.h" />
+    <ClInclude Include="src\math\LineSegment3.h" />
+    <ClInclude Include="src\math\Line2.h" />
+    <ClInclude Include="src\ui\Label.h" />
   </ItemGroup>
 </Project>

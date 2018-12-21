@@ -70,6 +70,9 @@ namespace apryx {
 		virtual void drawClear(Color32 color) override;
 		virtual void drawClearDepth() override;
 
+		virtual float getWidth() override;
+		virtual float getHeight() override;
+
 		virtual void flush();
 	};
 

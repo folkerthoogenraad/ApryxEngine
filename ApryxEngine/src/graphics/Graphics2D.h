@@ -65,6 +65,9 @@ namespace apryx {
 		virtual void drawClear(Color32 color) = 0;
 		virtual void drawClearDepth() = 0;
 
+		virtual float getWidth() = 0;
+		virtual float getHeight() = 0;
+
 		virtual void flush() = 0;
 	};
 

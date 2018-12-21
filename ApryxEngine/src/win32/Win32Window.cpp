@@ -542,6 +542,25 @@ namespace apryx {
 			}
 		}
 		break;
+
+
+		case WM_MOUSEMOVE:
+		{
+			InputEvent event;
+			event.m_EventType = InputEvent::MouseMove;
+
+			POINT p;
+
+			p.x = GET_X_LPARAM(lParam);
+			p.y = GET_Y_LPARAM(lParam);
+
+			event.m_MousePosition = Vector2f(p.x, p.y);
+
+			std::cout << event.getMousePosition().x << std::endl;
+
+			m_InputEvents.push_back(event);
+		}
+		break;
 		}
 
 		return DefWindowProc(m_Hwnd, message, wParam, lParam);

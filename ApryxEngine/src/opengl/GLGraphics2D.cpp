@@ -440,6 +440,29 @@ namespace apryx {
 		glClear(GL_DEPTH_BUFFER_BIT);
 	}
 
+	float GLGraphics2D::getWidth()
+	{
+		assert(m_Surface != nullptr || m_Window != nullptr);
+
+		if (m_Surface == nullptr) {
+			return m_Window->getWidth();
+		}
+		else {
+			return m_Surface->getWidth();
+		}
+	}
+	float GLGraphics2D::getHeight()
+	{
+		assert(m_Surface != nullptr || m_Window != nullptr);
+
+		if (m_Surface == nullptr) {
+			return m_Window->getHeight();
+		}
+		else {
+			return m_Surface->getHeight();
+		}
+	}
+
 	void GLGraphics2D::flush()
 	{
 		assert(m_Surface != nullptr || m_Window != nullptr);

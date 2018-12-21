@@ -7,7 +7,7 @@ namespace apryx {
 	template <typename T>
 	struct Triangle3;
 	template <typename T>
-	struct Line3;
+	struct LineSegment3;
 	template <typename T>
 	struct Plane;
 

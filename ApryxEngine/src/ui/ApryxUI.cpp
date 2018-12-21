@@ -14,6 +14,8 @@ namespace apryx {
 
 	void ApryxUI::draw(Graphics2D & graphics)
 	{
+		graphics.drawClear(Color32::white());
+
 		if (m_MainComponent == nullptr)
 			return;
 
@@ -31,8 +33,7 @@ namespace apryx {
 		// TODO update the layout for the main component.
 		m_MainComponent = component;
 
-		component->setUI(this);
-		component->init();
+		component->init(this);
 		
 	}
 

@@ -22,7 +22,7 @@ namespace apryx {
 
 		virtual void updateLayout(Rectanglef newSize);
 
-		virtual void init() override;
+		virtual void init(ApryxUI *ui) override;
 
 		virtual void update() override;
 		virtual void draw(Graphics2D &graphics) override;

@@ -74,11 +74,12 @@ namespace apryx {
 		}
 	}
 
-	void LinearLayout::init()
+	void LinearLayout::init(ApryxUI *ui)
 	{
+		UIComponent::init(ui);
+
 		for (auto &c : m_Children) {
-			c->setUI(getUI());
-			c->init();
+			c->init(ui);
 		}
 	}
 

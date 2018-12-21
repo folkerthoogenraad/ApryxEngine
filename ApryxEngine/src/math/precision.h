@@ -13,14 +13,14 @@ https://www.cs.cmu.edu/~quake/robust.html
 namespace apryx {
 
 	template <typename T>
-	struct Line2;
+	struct LineSegment2;
 	template <typename T>
 	struct Triangle2;
 	template <typename T>
 	struct Circle;
 
 	template <typename T>
-	T side(Line2<T> line, Vector2<T> p)
+	T side(LineSegment2<T> line, Vector2<T> p)
 	{
 		return Matrix2<T>({
 			line.a.x - p.x, line.a.y - p.y,
