@@ -556,8 +556,6 @@ namespace apryx {
 
 			event.m_MousePosition = Vector2f(p.x, p.y);
 
-			std::cout << event.getMousePosition().x << std::endl;
-
 			m_InputEvents.push_back(event);
 		}
 		break;

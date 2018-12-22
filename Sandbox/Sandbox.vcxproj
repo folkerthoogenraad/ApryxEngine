@@ -128,7 +128,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\city\CityApplication.cpp" />
+    <ClCompile Include="src\gui\GUIApplication.cpp" />
     <ClCompile Include="src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\city\BSP2.h" />
+    <ClInclude Include="src\city\CityApplication.h" />
+    <ClInclude Include="src\gui\GUIApplication.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

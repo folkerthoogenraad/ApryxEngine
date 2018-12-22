@@ -1,11 +1,13 @@
 #include <iostream>
 #include <memory>
 
+#include "application/EntryPoint.h"
+
+#if 0
+
+#include "game/Game.h"
 #include "ecs/Component.h"
 #include "ecs/EntityComponentSystem.h"
-
-#include "application/EntryPoint.h"
-#include "game/Game.h"
 
 namespace apryx {
 
@@ -41,7 +43,6 @@ namespace apryx {
 }
 
 
-#if 1
 
 namespace apryx {
 	class TestGame : public Game {
@@ -95,10 +96,28 @@ namespace apryx {
 	};
 }
 
-
-
 std::shared_ptr<apryx::Application> createApplication()
 {
 	return std::make_shared<apryx::TestGame>();
 }
+
+
+#elif 0
+
+#include "city\CityApplication.h"
+
+std::shared_ptr<apryx::Application> createApplication()
+{
+	return std::make_shared<apryx::CityApplication>();
+}
+
+#elif 1
+
+#include "gui/GUIApplication.h"
+
+std::shared_ptr<apryx::Application> createApplication()
+{
+	return std::make_shared<apryx::GUIApplication>();
+}
+
 #endif
