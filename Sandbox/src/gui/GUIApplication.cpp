@@ -16,8 +16,10 @@ namespace apryx {
 		style.textFont = context->loadFont("fonts/OpenSans.ttf", 16);
 		style.componentFont = context->loadFont("fonts/Exo2.ttf", 16);
 
-		style.textFont->scale(1.0f / context->getWindow()->dpiScale());
-		style.componentFont->scale(1.0f / context->getWindow()->dpiScale());
+		style.textFont->scale(2);
+		style.componentFont->scale(2);
+		//style.textFont->scale(1.0f / context->getWindow()->dpiScale());
+		//style.componentFont->scale(1.0f / context->getWindow()->dpiScale());
 
 		ui.setStyle(style);
 

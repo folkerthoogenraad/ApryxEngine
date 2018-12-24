@@ -111,13 +111,23 @@ std::shared_ptr<apryx::Application> createApplication()
 	return std::make_shared<apryx::CityApplication>();
 }
 
-#elif 1
+#elif 0
 
 #include "gui/GUIApplication.h"
 
 std::shared_ptr<apryx::Application> createApplication()
 {
 	return std::make_shared<apryx::GUIApplication>();
+}
+
+
+#elif 1
+
+#include "physics/PhysicsApp.h"
+
+std::shared_ptr<apryx::Application> createApplication()
+{
+	return std::make_shared<apryx::PhysicsApp>();
 }
 
 #endif

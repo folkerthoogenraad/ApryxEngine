@@ -2,6 +2,9 @@
 
 namespace apryx{
 
+	// Kinda sad that this has to exist. I think we can do without it if we use Component<T> as a template
+	// TODO think about the component and create a way to create components from arbatrary things
+
     struct Component{
 		int entityId;
 		virtual ~Component() {}

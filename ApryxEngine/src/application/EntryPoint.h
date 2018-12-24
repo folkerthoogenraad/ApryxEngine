@@ -33,7 +33,7 @@ int main()
 	double secondCount = 0;
 	int fps = 0;
 
-	const bool useDtMax = true;
+	const bool useDtMax = false;
 
 	double dtMax = 1.0 / 60.0;
 
