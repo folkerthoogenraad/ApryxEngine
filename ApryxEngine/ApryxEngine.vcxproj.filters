@@ -10,7 +10,6 @@
     <ClCompile Include="src\input\Gamepad.cpp" />
     <ClCompile Include="src\input\InputManager.cpp" />
     <ClCompile Include="src\console\Console.cpp" />
-    <ClCompile Include="src\game\Entity.cpp" />
     <ClCompile Include="src\game\Scene.cpp" />
     <ClCompile Include="src\graphics\Camera2D.cpp" />
     <ClCompile Include="src\graphics\Image.cpp" />
@@ -41,6 +40,10 @@
     <ClCompile Include="src\ecs\Component.cpp" />
     <ClCompile Include="src\ui\UIComponent.cpp" />
     <ClCompile Include="src\ui\Label.cpp" />
+    <ClCompile Include="src\ecs\Entity.cpp" />
+    <ClCompile Include="src\game\Entity2D.cpp" />
+    <ClCompile Include="src\ui\TextField.cpp" />
+    <ClCompile Include="src\ui\EditableText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\application\Application.h" />
@@ -95,7 +98,6 @@
     <ClInclude Include="src\opengl\GLTexture.h" />
     <ClInclude Include="src\opengl\GLVertexBufferObject.h" />
     <ClInclude Include="src\resources\Context.h" />
-    <ClInclude Include="src\game\Entity.h" />
     <ClInclude Include="src\game\SceneLoader.h" />
     <ClInclude Include="src\time\Timer.h" />
     <ClInclude Include="src\ui\ApryxUI.h" />
@@ -118,5 +120,8 @@
     <ClInclude Include="src\math\LineSegment3.h" />
     <ClInclude Include="src\math\Line2.h" />
     <ClInclude Include="src\ui\Label.h" />
+    <ClInclude Include="src\game\Entity2D.h" />
+    <ClInclude Include="src\ui\TextField.h" />
+    <ClInclude Include="src\ui\EditableText.h" />
   </ItemGroup>
 </Project>

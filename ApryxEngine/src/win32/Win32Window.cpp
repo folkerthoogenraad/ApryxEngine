@@ -74,6 +74,11 @@ namespace apryx {
 			return MapVirtualKey(scancode, MAPVK_VSC_TO_VK_EX);
 		}
 
+		if (wParam == KEY_ANY_ALT)
+		{
+			return MapVirtualKey(scancode, MAPVK_VSC_TO_VK_EX);
+		}
+
 		return wParam;
 	}
 
@@ -471,6 +476,8 @@ namespace apryx {
 			point.y = GET_Y_LPARAM(lParam);
 
 			ScreenToClient(m_Hwnd, &point);
+
+			return FALSE;
 		}
 		break;
 
@@ -487,6 +494,13 @@ namespace apryx {
 			m_Height = height;
 
 			m_Resized = true;
+
+
+			InputEvent event;
+			event.m_EventType = InputEvent::WindowResize;
+			event.m_WindowSize = Vector2f(width, height) / dpiScale();
+
+			m_InputEvents.push_back(event);
 		}
 		break;
 
@@ -524,10 +538,30 @@ namespace apryx {
 			InputEvent event;
 			event.m_EventType = message == WM_KEYUP ? InputEvent::KeyboardReleased : InputEvent::KeyboardPressed;
 			event.m_KeyCode = (int) GetVirtualKey(wParam, lParam);
+			event.m_Repeated = IsRepeated(lParam);
 
-			if (!IsRepeated(lParam) || message == WM_KEYUP) {
-				m_InputEvents.push_back(event);
+			{
+				int dir = 1;
+
+				if (message == WM_KEYUP) dir = 0;
+
+				// TODO find if missed messages work like this.
+				if (wParam == VK_CONTROL)
+					m_CrtlDown = dir;
+				
+				if (wParam == VK_MENU)
+					m_AltDown = dir;
+
+				if (wParam == VK_SHIFT)
+					m_ShiftDown = dir;
+
 			}
+
+			event.m_CrtlDown = m_CrtlDown > 0;
+			event.m_AltDown = m_AltDown > 0;
+			event.m_ShiftDown = m_ShiftDown > 0;
+
+			m_InputEvents.push_back(event);
 		}
 		break;
 
@@ -543,18 +577,73 @@ namespace apryx {
 		}
 		break;
 
-
-		case WM_MOUSEMOVE:
+		case WM_LBUTTONDOWN:
+		case WM_MBUTTONDOWN:
+		case WM_RBUTTONDOWN:
 		{
 			InputEvent event;
-			event.m_EventType = InputEvent::MouseMove;
+
+			event.m_EventType = InputEvent::MousePressed;
 
 			POINT p;
 
 			p.x = GET_X_LPARAM(lParam);
 			p.y = GET_Y_LPARAM(lParam);
 
-			event.m_MousePosition = Vector2f(p.x, p.y);
+			event.m_MousePosition = Vector2f(p.x, p.y) / dpiScale();
+
+			if (message == WM_LBUTTONDOWN)
+				event.m_MouseButton = 0;
+			else if (message == WM_RBUTTONDOWN)
+				event.m_MouseButton = 1;
+			else
+				event.m_MouseButton = 2;
+
+			m_InputEvents.push_back(event);
+		}
+
+		case WM_LBUTTONUP:
+		case WM_MBUTTONUP:
+		case WM_RBUTTONUP:
+		{
+			InputEvent event;
+
+			event.m_EventType = InputEvent::MouseReleased;
+
+			POINT p;
+
+			p.x = GET_X_LPARAM(lParam);
+			p.y = GET_Y_LPARAM(lParam);
+
+			event.m_MousePosition = Vector2f(p.x, p.y) / dpiScale();
+
+			if (message == WM_LBUTTONUP)
+				event.m_MouseButton = 0;
+			else if (message == WM_RBUTTONUP)
+				event.m_MouseButton = 1;
+			else
+				event.m_MouseButton = 2;
+
+			m_InputEvents.push_back(event);
+		}
+
+		case WM_MOUSEMOVE:
+		{
+			InputEvent event;
+
+			event.m_EventType = InputEvent::MouseMove;
+			
+
+			POINT p;
+
+			p.x = GET_X_LPARAM(lParam);
+			p.y = GET_Y_LPARAM(lParam);
+
+			event.m_MousePosition = Vector2f(p.x, p.y) / dpiScale();
+
+			event.m_MouseDelta = event.m_MousePosition - m_MousePosition;
+
+			m_MousePosition = event.m_MousePosition;
 
 			m_InputEvents.push_back(event);
 		}

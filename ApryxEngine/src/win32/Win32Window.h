@@ -28,7 +28,14 @@ namespace apryx {
 
 		float m_DPIScale = 1;
 
+		int m_MouseDownCount = 0;
+		Vector2f m_MousePosition;
+
 		std::vector<InputEvent> m_InputEvents;
+
+		int m_CrtlDown = 0;
+		int m_AltDown = 0;
+		int m_ShiftDown = 0;
 	public:
 		Win32Window(std::string title, int width, int height, bool full, bool vsync);
 		~Win32Window();

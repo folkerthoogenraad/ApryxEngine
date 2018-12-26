@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-#include "Entity.h"
+#include "Entity2D.h"
 
 #include <assert.h>
 

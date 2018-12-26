@@ -20,11 +20,15 @@
 
 #define KEY_ANY_SHIFT		0x10
 #define KEY_ANY_CONTROL		0x11
+#define KEY_ANY_ALT			0x12
 
 #define KEY_LSHIFT			0xA0
 #define KEY_RSHIFT			0xA1
 #define KEY_LCONTROL		0xA2
 #define KEY_RCONTROL		0xA3
+#define KEY_LALT			0xA4
+#define KEY_RALT			0xA5
+
 
 #define KEY_SPACE			0x20
 #define KEY_PRIOR			0x21
@@ -130,7 +134,6 @@ namespace apryx {
 			MousePressed = 0,
 			MouseReleased,
 			MouseMove,
-			MouseDrag,
 			MouseScroll,
 
 			KeyboardTyped,
@@ -142,6 +145,8 @@ namespace apryx {
 			GamepadAxisChanged,
 			GamepadConnected,
 			GamepadDisconnected,
+
+			WindowResize,
 		};
 	public:
 		bool m_Consumed = false;
@@ -152,11 +157,10 @@ namespace apryx {
 			struct {
 				int m_UnicodeKey;
 				int m_KeyCode;
+				bool m_Repeated;
 			};
 			struct {
 				int m_MouseButton;
-			};
-			struct {
 				Vector2f m_MouseStartPosition; 
 				Vector2f m_MousePosition;
 				Vector2f m_MouseDelta;
@@ -171,10 +175,13 @@ namespace apryx {
 
 				float m_GamepadAxisValue;
 			};
+			struct {
+				Vector2f m_WindowSize;
+			};
 		};
 
+		// TODO make these work
 		bool m_CrtlDown, m_ShiftDown, m_AltDown;
-		bool m_Repeat = false;
 	public:
 		InputEvent();
 		~InputEvent() = default;
@@ -189,9 +196,9 @@ namespace apryx {
 		bool isAltDown() const { return m_AltDown; };
 		bool isModifierDown() const { return isCrtlDown() || isAltDown() || isShiftDown(); };
 
-		bool isRepeated() const { return m_Repeat; }
+		bool isRepeated() const { return m_Repeated; }
 
-		bool isMotionEvent() const { return m_EventType == EventType::MouseDrag || m_EventType == EventType::MouseMove; }
+		bool isMotionEvent() const { return m_EventType == EventType::MouseMove; }
 
 		int getKeyCode() const { return m_KeyCode; }
 		int getMouseButton() const { return m_MouseButton; }

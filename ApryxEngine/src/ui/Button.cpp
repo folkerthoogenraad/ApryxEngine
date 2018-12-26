@@ -2,9 +2,11 @@
 
 #include "math/math.h"
 
+#include <iostream>
+
 namespace apryx {
 	Button::Button(std::string text, ButtonType type)
-		: m_Text(text), m_Type(type)
+		: m_EditableText(text), m_Type(type)
 	{ }
 
 	void Button::init(ApryxUI *ui)
@@ -25,6 +27,10 @@ namespace apryx {
 		Paint backgroundPaint;
 		backgroundPaint.setColor(style.primary);
 
+		if (m_Pressed) {
+			backgroundPaint.setColor(style.primaryPressed);
+		}
+
 		Paint textPaint;
 		textPaint.setFont(m_Font);
 		textPaint.setVerticalAlignment(Paint::VAlign::Center);
@@ -34,25 +40,41 @@ namespace apryx {
 			textPaint.setColor(style.contrast);
 		}
 		if (m_Type == ButtonType::Secondary) {
-			textPaint.setColor(style.primary);
+			textPaint.setColor(backgroundPaint.getColor());
 			backgroundPaint.setStyle(Paint::Stroke);
 		}
 
 		float rounding = min_t(bounds.height() / 2.0f, 20.0f);
 
 		graphics.drawRoundedRectangle(backgroundPaint, bounds, rounding);
-		graphics.drawText(textPaint, bounds.center(), m_Text);
+		graphics.drawText(textPaint, bounds.center(), m_EditableText);
 	}
 
 	Size Button::getPreferredSize() const
 	{
 		Size size = Size(128, 40);
 
-		Rectanglef boundingBox = m_Font->measureText(m_Text);
+		Rectanglef boundingBox = m_Font->measureText(m_EditableText);
 
 		size.width = max_t(boundingBox.width() + 40, size.width);
 		size.height = max_t(boundingBox.height() + 24, size.height);
 
 		return size;
+	}
+
+	void Button::onMousePressed(InputEvent event)
+	{
+		m_Pressed = true;
+		redraw();
+	}
+	void Button::onMouseReleased(InputEvent event)
+	{
+		m_Pressed = false;
+		redraw();
+	}
+
+	void Button::onMouseClick(InputEvent event)
+	{
+
 	}
 }

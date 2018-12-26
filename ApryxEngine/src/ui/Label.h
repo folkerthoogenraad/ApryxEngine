@@ -11,7 +11,7 @@ namespace apryx {
 
 	class Label : public UIComponent {
 	private:
-		std::string m_Text;
+		std::string m_EditableText;
 		std::shared_ptr<Font> m_Font;
 	public:
 		Label(std::string text = "Sample Text");
@@ -25,8 +25,8 @@ namespace apryx {
 		void setFont(std::shared_ptr<Font> font) { m_Font = font; }
 		const std::shared_ptr<Font> &getFont() const { return m_Font; }
 
-		void setText(std::string str) { m_Text = std::move(str); }
-		const std::string &getText() const { return m_Text; }
+		void setText(std::string str) { m_EditableText = std::move(str); }
+		const std::string &getText() const { return m_EditableText; }
 	};
 
 }

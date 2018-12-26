@@ -111,7 +111,7 @@ std::shared_ptr<apryx::Application> createApplication()
 	return std::make_shared<apryx::CityApplication>();
 }
 
-#elif 0
+#elif 1
 
 #include "gui/GUIApplication.h"
 

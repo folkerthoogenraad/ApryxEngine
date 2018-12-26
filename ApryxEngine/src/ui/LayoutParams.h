@@ -17,9 +17,6 @@ namespace apryx {
 		LayoutScaling m_WidthScaling = WrapContent;
 		LayoutScaling m_HeightScaling = WrapContent;
 
-		// For when Exact
-		// Vector2f m_Size = Vector2f(-1, -1);
-
 		// For when MatchParent
 		Vector2f m_Weight = Vector2f(1, 1);
 

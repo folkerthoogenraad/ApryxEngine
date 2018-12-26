@@ -11,7 +11,6 @@ namespace apryx {
 		case InputEvent::EventType::MousePressed: return stream << "MousePressed";
 		case InputEvent::EventType::MouseReleased: return stream << "MouseReleased";
 		case InputEvent::EventType::MouseMove: return stream << "MouseMove";
-		case InputEvent::EventType::MouseDrag: return stream << "MouseDrag";
 
 		case InputEvent::EventType::KeyboardTyped: return stream << "KeyboardTyped";
 		case InputEvent::EventType::KeyboardPressed: return stream << "KeyboardPressed";

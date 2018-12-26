@@ -53,7 +53,7 @@ namespace apryx {
 
 		// Actually do the layouting
 		for (int i = 0; i < getChildCount(); i++) {
-			UIComponent* child = getChild(i);
+			auto child = getChild(i);
 			Size prefSize = child->getPreferredSize();
 			const LayoutParams &params = child->getLayoutParams();
 			

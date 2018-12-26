@@ -1,4 +1,4 @@
-#include "Entity.h"
+#include "Entity2D.h"
 
 #include "math/math.h"
 

@@ -27,13 +27,17 @@ namespace apryx {
 
 		float getHeight() const { return m_Height; }
 
-		Rectanglef measureText(const std::string &text) const;
 
 		// Only use if you know what you are doing. So just dont actually.
 		void setHeight(float height) { m_Height = height; }
 		void setCharacter(char index, FontCharacter character);
 
 		void scale(float scaleFactor);
+	
+	public:
+		int getIndexByOffset(const std::string &text, Vector2f index) const;
+		Vector2f getOffsetByIndex(const std::string &text, int index) const;
+		Rectanglef measureText(const std::string &text) const;
 	};
 
 	class FontBuilder {

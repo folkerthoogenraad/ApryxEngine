@@ -16,15 +16,17 @@ namespace apryx {
 		Application::init(context);
 		
 		
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 			Entity e = m_System.createEntity();
 			Ball *b = m_System.addComponent<Ball>(e);
 			
 			b->position = Vector2f(
-				random_range(-1, 1),
-				random_range(-1, 1)
+				random_range(-10, 10),
+				random_range(-10, 10)
 			);
 			b->radius = 1;
+
+			m_Selected = e;
 		}
 	}
 
@@ -33,9 +35,10 @@ namespace apryx {
 		graphics.save();
 
 		float aspect = graphics.getWidth() / graphics.getHeight();
+		const float size = 10;
 
 		graphics.setMatrix(
-			Matrix4f::orthographic(-10 * aspect, 10 * aspect, 10, -10, -10, 10)
+			Matrix4f::orthographic(-size * aspect, size  * aspect, size, -size, -10, 10)
 		);
 
 		graphics.drawClear(Color32::black());
@@ -53,42 +56,59 @@ namespace apryx {
 
 	void PhysicsApp::update()
 	{
-		static bool animate = false;
+		Ball *b = m_System.getComponent<Ball>(m_Selected);
 
-		if (m_Context->input.isKeyPressed(KEY_SPACE))
-			animate = true;
+		if (b != nullptr) {
 
-		if (animate) {
-			m_System.process<Ball>([&](Entity e1, Ball &ball) {
+			float width = m_Context->getWindow()->getWidth();
+			float height = m_Context->getWindow()->getHeight();
 
-				m_System.process<Ball>([&](Entity e2, Ball &other) {
-					// Same object collision
-					if (e1.id == e2.id)
-						return;
+			float aspect = width / height;
+			const float size = 10;
 
-					float distance = (ball.position - other.position).magnitude();
+			Vector2f mouse = m_Context->input.getMousePosition();
 
-					float overlap = -(distance - ball.radius - other.radius);
+			mouse.x /= width;
+			mouse.y /= height;
 
-					if (overlap < 0)
-						return;
+			mouse.y *= size * 2;
+			mouse.y -= size;
 
-					// Direction from ball to other
-					Vector2f direction = (other.position - ball.position);
+			mouse.x *= size * 2 * aspect;
+			mouse.x -= size * aspect;
 
-					if (direction.sqrmagnitude() == 0) {
-						direction = Vector2f(1, 0);
-					}
-					else {
-						direction.normalize();
-					}
-
-					ball.position -= direction * (overlap / 2);
-					other.position += direction * (overlap / 2);
-				});
-
-			});
+			b->position = mouse;
 		}
+
+		m_System.process<Ball>([&](Entity e1, Ball &ball) {
+
+			m_System.process<Ball>([&](Entity e2, Ball &other) {
+				// Same object collision
+				if (e1.id == e2.id)
+					return;
+
+				float distance = (ball.position - other.position).magnitude();
+
+				float overlap = -(distance - ball.radius - other.radius);
+
+				if (overlap < 0)
+					return;
+
+				// Direction from ball to other
+				Vector2f direction = (other.position - ball.position);
+
+				if (direction.sqrmagnitude() == 0) {
+					direction = Vector2f(1, 0);
+				}
+				else {
+					direction.normalize();
+				}
+
+				ball.position -= direction * (overlap / 2);
+				other.position += direction * (overlap / 2);
+			});
+
+		});
 	}
 
 	void PhysicsApp::destroy()

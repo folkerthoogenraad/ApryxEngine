@@ -28,17 +28,24 @@ namespace apryx {
 
 	void InputManager::processEvents(const std::vector<InputEvent>& inputs)
 	{
+		m_Events = inputs;
+
 		for (auto &event : inputs) {
 			switch (event.m_EventType)
 			{
 			case InputEvent::KeyboardPressed:
-				m_ButtonsPressed.insert(event.m_KeyCode);
-				m_DownKeys.insert(event.m_KeyCode);
+				if (!event.isRepeated()) {
+					m_ButtonsPressed.insert(event.m_KeyCode);
+					m_DownKeys.insert(event.m_KeyCode);
+				}
 				break;
 
 			case InputEvent::KeyboardReleased:
 				m_ButtonsReleased.insert(event.m_KeyCode);
 				m_DownKeys.erase(event.m_KeyCode); 
+				break;
+			case InputEvent::MouseMove:
+				m_MousePosition = event.getMousePosition();
 				break;
 			}
 		}

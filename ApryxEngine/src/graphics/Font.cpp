@@ -8,6 +8,73 @@ namespace apryx {
 		return m_Characters[c];
 	}
 
+	int Font::getIndexByOffset(const std::string & text, Vector2f index) const
+	{
+		// TODO in the y dir
+		Vector2f offset;
+
+		for (int i = 0; i < text.size(); i++) {
+			char c = text[i];
+
+			if (index.x <= offset.x)
+				return i - 1;
+
+			if (c == '\n') {
+				offset.x = 0;
+				offset.y += getHeight(); // TODO nice font spacing
+				continue;
+			}
+			if (c == ' ') {
+				offset.x += 3; // TODO nice spacebar handling
+				continue;
+			}
+
+			auto &r = getCharacter(c);
+
+			if (!r)
+				continue;
+
+			auto &fc = *r;
+
+			offset.x += fc.xadvance;
+		}
+
+		return text.size();
+	}
+
+	Vector2f Font::getOffsetByIndex(const std::string & text, int index) const
+	{
+		Vector2f offset;
+
+		for (int i = 0; i < text.size(); i++) {
+			char c = text[i];
+
+			if (i == index)
+				return offset;
+
+			if (c == '\n') {
+				offset.x = 0;
+				offset.y += getHeight(); // TODO nice font spacing
+				continue;
+			}
+			if (c == ' ') {
+				offset.x += 3; // TODO nice spacebar handling
+				continue;
+			}
+
+			auto &r = getCharacter(c);
+
+			if (!r)
+				continue;
+
+			auto &fc = *r;
+
+			offset.x += fc.xadvance;
+		}
+
+		return offset;
+	}
+
 	Rectanglef Font::measureText(const std::string & text) const
 	{
 		float xoffset = 0;
@@ -53,8 +120,12 @@ namespace apryx {
 	{
 		m_Height *= scaleFactor;
 
-		for (auto c : m_Characters) {
+		for (auto &c : m_Characters) {
 			if (c) {
+				c->xoffset *= scaleFactor;
+				c->yoffset *= scaleFactor;
+				c->xadvance *= scaleFactor;
+
 				c->sprite.setSize(c->sprite.getSize() * scaleFactor);
 				c->sprite.setOrigin(c->sprite.getOrigin() * scaleFactor);
 			}

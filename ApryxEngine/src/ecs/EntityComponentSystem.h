@@ -131,13 +131,22 @@ namespace apryx{
 		template<typename C1>
 		void process(const std::function<void(Entity, C1 &)> &f) {
 
+			auto &list1 = getComponentList<C1>();
+			int index1 = 0;
+
 			for (size_t i = 0; i < entities.size(); i++) {
+				Entity e = entities[i];
 
-				// TODO use a smart search (knowing the order of the entities)
-				C1 *c1 = getComponent<C1>(entities[i]);
+				// TODO this can be optimized even further when overshooting just recorrecting the rest (maybe even not linearly)
+				while (e.id > list1.get<C1>(index1)->entityId) {
+					index1++;
 
-				if (c1 != nullptr) {
-					f(entities[i], *c1);
+					if (index1 >= list1.size)
+						return;
+				}
+
+				if (e.id == list1.get<C1>(index1)->entityId) {
+					f(entities[i], *list1.get<C1>(index1));
 				}
 			}
 

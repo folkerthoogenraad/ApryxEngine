@@ -16,6 +16,8 @@ namespace apryx {
 
 	class PhysicsApp : public Application {
 		EntityComponentSystem m_System;
+
+		Entity m_Selected = Entity::None;
 	public:
 		virtual void init(std::shared_ptr<Context> context) override;
 

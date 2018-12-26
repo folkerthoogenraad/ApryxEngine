@@ -33,8 +33,8 @@ namespace apryx {
 		float getGap() const { return m_Gap; }
 
 		virtual int getChildCount() const { return m_Children.size(); }
-		virtual const UIComponent *getChild(int index) const { return m_Children[index].get(); }
-		virtual UIComponent *getChild(int index) { return m_Children[index].get(); }
+		virtual const std::shared_ptr<UIComponent> getChild(int index) const { return m_Children[index]; }
+		virtual std::shared_ptr<UIComponent> getChild(int index) { return m_Children[index]; }
 
 	};
 

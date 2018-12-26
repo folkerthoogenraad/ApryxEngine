@@ -3,6 +3,7 @@
 #include "ui/LinearLayout.h"
 #include "ui/Label.h"
 #include "ui/Button.h"
+#include "ui/TextField.h"
 
 namespace apryx {
 
@@ -13,31 +14,31 @@ namespace apryx {
 
 		ApryxUIStyle style;
 
-		style.textFont = context->loadFont("fonts/OpenSans.ttf", 16);
-		style.componentFont = context->loadFont("fonts/Exo2.ttf", 16);
+		float dpi = m_Context->getWindow()->dpiScale();
+		
+		style.textFont = context->loadFont("fonts/OpenSans.ttf", (int) (16 * dpi));
+		style.componentFont = context->loadFont("fonts/Exo2.ttf", (int) (16 * dpi));
 
-		style.textFont->scale(2);
-		style.componentFont->scale(2);
-		//style.textFont->scale(1.0f / context->getWindow()->dpiScale());
-		//style.componentFont->scale(1.0f / context->getWindow()->dpiScale());
+		style.textFont->scale(1.0f / dpi);
+		style.componentFont->scale(1.0f / dpi);
 
 		ui.setStyle(style);
 
 		ui.init(context);
 
 		LayoutParams params;
-		params.m_HeightScaling = LayoutParams::MatchParent;
+		params.m_WidthScaling = LayoutParams::MatchParent;
 
 		auto layout = std::make_shared<LinearLayout>(LinearLayout::Horizontal);
-		layout->addComponent(std::make_shared<Button>("Test123"));
-		layout->addComponent(std::make_shared<Button>("Text321"));
+		layout->addComponent(std::make_shared<Button>("Submit"));
+		layout->addComponent(std::make_shared<Button>("Cancel", Button::Secondary));
 
-		auto label1 = std::make_shared<Label>("text123");
+		auto label1 = std::make_shared<TextField>("Username ...");
 
 		label1->setLayoutParams(params);
 
 		layout->addComponent(label1);
-		layout->addComponent(std::make_shared<Label>("Text321"));
+		layout->addComponent(std::make_shared<Label>("There is some extra information text here."));
 
 		ui.setMainComponent(layout);
 		ui.updateLayout(getContext().getWindow()->getWidth(), getContext().getWindow()->getHeight());
@@ -53,7 +54,10 @@ namespace apryx {
 
 	void GUIApplication::update()
 	{
-		ui.update();
+		ui.processEvents(m_Context->input.getEvents());
+
+		if (ui.shouldRedraw())
+			redraw();
 	}
 
 	void GUIApplication::destroy()

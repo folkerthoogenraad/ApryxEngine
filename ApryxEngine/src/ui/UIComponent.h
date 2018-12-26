@@ -5,6 +5,8 @@
 
 #include "math/Rectangle.h"
 
+#include <assert.h>
+
 namespace apryx {
 
 	struct Insets {
@@ -37,8 +39,8 @@ namespace apryx {
 
 		void requestLayoutUpdate() { if (m_Parent != nullptr) m_Parent->requestLayoutUpdate(); else updateLayout(getLayoutBounds()); }
 
-		Rectanglef getLayoutBounds() { return m_LayoutBounds; }
-		Rectanglef getLocalBounds();
+		Rectanglef getLayoutBounds() const { return m_LayoutBounds; }
+		Rectanglef getLocalBounds() const;
 
 		virtual void updateLayout(Rectanglef newSize) { m_LayoutBounds = newSize; }
 
@@ -48,13 +50,19 @@ namespace apryx {
 		void setID(std::string id) { m_ID = std::move(id); }
 
 		virtual int getChildCount() const { return 0; }
-		virtual const UIComponent *getChild(int index) const { return nullptr; }
-		virtual UIComponent *getChild(int index) { return nullptr; }
+		virtual const std::shared_ptr<UIComponent> getChild(int index) const { return nullptr; }
+		virtual std::shared_ptr<UIComponent> getChild(int index) { return nullptr; }
 
 		void setParent(UIComponent *component) { m_Parent = component; }
 		UIComponent *getParent() { return m_Parent; }
 
+		virtual bool inBounds(Vector2f position) const;
+
+		std::shared_ptr<UIComponent> getComponentAtPosition(Vector2f position) const;
+
 		ApryxUI *getUI() { return m_UI; }
+
+		void redraw();
 
 		// Update the layout parameters and update the new layout
 		void setLayoutParams(LayoutParams newParams) { m_LayoutParams = newParams; requestLayoutUpdate(); }
@@ -64,6 +72,23 @@ namespace apryx {
 
 		// Returns the layout parameters for this component
 		const LayoutParams &getLayoutParams() const { return m_LayoutParams; }
+
+	public:
+		virtual void onKeyPressed(InputEvent event) { assert(event.getType() == InputEvent::KeyboardPressed); }
+		virtual void onKeyReleased(InputEvent event) { assert(event.getType() == InputEvent::KeyboardReleased); }
+		virtual void onKeyTyped(InputEvent event) { assert(event.getType() == InputEvent::KeyboardTyped); }
+
+		virtual void onMousePressed(InputEvent event) { assert(event.getType() == InputEvent::MousePressed); }
+		virtual void onMouseDrag(InputEvent event) { assert(event.getType() == InputEvent::MouseMove); }
+		virtual void onMouseReleased(InputEvent event) { assert(event.getType() == InputEvent::MouseReleased); }
+
+		virtual void onMouseClick(InputEvent event) { assert(event.getType() == InputEvent::MouseReleased); }
+
+		virtual void onHoverStart(InputEvent event) { }
+		virtual void onHoverEnd(InputEvent event) { }
+
+		virtual void onFocusGain(InputEvent event) {};
+		virtual void onFocusLose(InputEvent event) {};
 	};
 
 }
